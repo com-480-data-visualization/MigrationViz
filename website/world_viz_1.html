@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- HEAVILY INSPIRED FROM https://bl.ocks.org/d3noob/013054e8d7807dff76247b81b0e29030 by Malcolm Maclean
+NEED TO CHECK similarities and how it looks lie
+-->
+
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v6.js"></script>
+
+<!-- Load the sankey.js function-->
+<script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/sankey.js" defer></script>
+
+<!-- NEEDS TO BE REMOVED LATER, very ugly fix of local access problem -->
+<script type='text/javascript' src='../data_world/united_data.js'></script>
+
+<!-- Create a div where the graph will take place -->
+<div id="world_viz_1" style="max-width: 900px;"></div>
+
+<!-- Add style to links -->
+<style>
+    .link {
+        fill: none;
+        stroke: #0000;
+        stroke-opacity: .2;
+    }
+
+    .link:hover {
+        stroke-opacity: .5;
+    }
+</style>
+
+<script>
+
+// set the dimensions and margins of the graph
+var margin = {top: 10, right: 10, bottom: 10, left: 10},
+    width = 450 - margin.left - margin.right
+    height = 480 - margin.top - margin.bottom
+
+// append svg object to the body of the page 
+var svg = d3.selet('world_viz_1')
+            .append('svg')
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.left + margin.right)
+            .append('g')
+            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ")");
+
+// Color scale used 
+var color = d3.scaleOrdinal(d3.schemeCategory20)
+
+// Set the sankey diagram properties
+var sankey = d3.sankey()
+        .nodeWidth(36)
+        .nodePadding(290)
+        .size([width, height])
+
+// load the data 
+d3.json
+
+</script>
