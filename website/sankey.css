@@ -1,0 +1,12 @@
+/* HEAVILY INSPIRED FROM https://bl.ocks.org/d3noob/013054e8d7807dff76247b81b0e29030 by Malcolm Maclean
+NEED TO CHECK similarities and how it looks like */
+
+.link {
+    fill: none;
+    stroke: #0000;
+    stroke-opacity: .2;
+}
+
+.link:hover {
+    stroke-opacity: .5;
+}
