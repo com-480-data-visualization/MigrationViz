@@ -1,6 +1,32 @@
 body {
-    margin: 0;
     font-family: Arial, sans-serif;
     background-color: white;
     color: black;
+}
+
+h1 { 
+    text-align: center;
+    margin-top: 0;
+    padding-top: 300px;
+    font-size: 220px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 100px;
+}
+
+.slide {
+    height : 100vh;
+    width: 100vw;
+    /*padding: 10%;*/
+
+}
+
+.red {
+    background-color: red;
+}
+
+.black {
+    background-color: black;
 }
