@@ -2,6 +2,8 @@
 
 Project for COM-480 Data Visualization Course at EPFL
 
+Live Website [here](https://com-480-data-visualization.github.io/MigrationViz/website/index.html)
+
 ## Problematic
 
 ## Target Audience
