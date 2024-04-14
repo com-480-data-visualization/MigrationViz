@@ -17,10 +17,16 @@ h2 {
 }
 
 .slide {
-    height : 100vh;
+    height: 100vh;
     width: 100vw;
-    /*padding: 10%;*/
+    scroll-snap-align: start;
+    text-align: center;
+}
 
+.mendatory-scrolling{
+    height: 100vh; /* S'assure que le conteneur principal prend toute la hauteur de la fenêtre */
+    overflow-y: scroll; /* Permet le défilement vertical */
+    scroll-snap-type: y mandatory; /* Active le scroll snapping vertical obligatoire */
 }
 
 .red {
@@ -30,3 +36,39 @@ h2 {
 .black {
     background-color: black;
 }
+
+#fixedMenu {
+    position: fixed;
+    top: 50%;
+    right: 10px;
+    /*transform: translateY(-50%);*/
+    z-index: 10;
+  }
+  
+  #fixedMenu a {
+    display: block;
+    padding: 5px;
+    margin: 5px 0;
+    text-align: center;
+    color: white;
+    background-color: cornflowerblue;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  
+  #fixedMenu a:hover {
+    background-color: darkblue;
+  }
+
+  /* Style pour le lien actif */
+  #fixedMenu a.active {
+    background-color: #ddd;
+    color: black;
+    font-weight: bold;
+  }
+  
+  /* Style pour le reste du contenu */
+  main {
+    padding-left: 50px; /* Assurez-vous qu'il y a suffisamment d'espace pour le menu fixé */
+  }
+  
