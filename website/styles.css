@@ -72,3 +72,42 @@ h2 {
     padding-left: 50px; /* Assurez-vous qu'il y a suffisamment d'espace pour le menu fixé */
   }
   
+/* --------------------------------------------------------------*/
+/* ----------------   AUTHORS SECTION    ------------------------*/
+/* --------------------------------------------------------------*/
+
+.author-profiles {
+  display: flex;
+  justify-content: center;
+}
+
+.author {
+  margin: 0 10px;
+  text-align: center;
+}
+
+.author p {
+  margin: 4px 0;
+}
+
+.profile-photo {
+  width: 300px; 
+  height: 300px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.github-link {
+  font-size: 32px;
+  color: blue; 
+  display: inline-block;
+  margin: 4px 0;
+}
+
+.github-link:hover {
+  color: black;
+}
+
+/* --------------------------------------------------------------*/
+/* --------------------------------------------------------------*/
+/* --------------------------------------------------------------*/
