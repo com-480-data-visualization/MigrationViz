@@ -1,3 +1,8 @@
+html, body {
+  max-width: 100vw; /* assure que la largeur du body ne dépasse pas la largeur de la fenêtre */
+  overflow-x: hidden; /* cache la barre de défilement horizontale */
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: white;
@@ -24,7 +29,6 @@ h2 {
 }
 
 .mendatory-scrolling{
-    height: 100vh; /* S'assure que le conteneur principal prend toute la hauteur de la fenêtre */
     overflow-y: scroll; /* Permet le défilement vertical */
     scroll-snap-type: y mandatory; /* Active le scroll snapping vertical obligatoire */
 }
@@ -62,8 +66,8 @@ h2 {
 
   /* Style pour le lien actif */
   #fixedMenu a.active {
-    background-color: #ddd;
-    color: black;
+    background-color: darkblue;
+    color: white;
     font-weight: bold;
   }
   
