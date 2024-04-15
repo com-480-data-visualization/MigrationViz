@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Attachez l'événement de défilement pour mettre à jour le menu
-    window.addEventListener('scroll', updateMenu);
+    document.querySelector('main').addEventListener('scroll', updateMenu);
 
     // Attachez un écouteur d'événements à tous vos liens de navigation pour le défilement fluide
     document.querySelectorAll('#fixedMenu a').forEach(function(anchor) {
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function updateMenu() {
     var sections = document.querySelectorAll('main .slide');
     var menuLinks = document.querySelectorAll('#fixedMenu a');
-    var scrollPosition = window.scrollY || document.documentElement.scrollTop;
+    var scrollPosition = document.querySelector('main').scrollTop;
 
     sections.forEach((section, index) => {
         // Calculer où la section se situe dans la page
