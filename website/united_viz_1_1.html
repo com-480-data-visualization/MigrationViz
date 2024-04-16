@@ -22,7 +22,7 @@
     
     // set width and height of svg
     const width = 1000
-    const height = 750
+    const height = 600
     const aspect = 1.5 // width/height
 
     // Source: https://brendansudol.github.io/writing/responsive-d3
@@ -137,6 +137,8 @@ function updateMapPoints(data) {
             .style("border-width", "2px")
             .style("border-radius", "5px")
             .style("padding", "5px");
+    
+    var rad = d3.scaleSqrt().range([1, 2.2]); // Here you can change the size of the circles (the size of the circles according to the nr of death each circle is standing for)
 
     // Adjust scale
     const circles = svg.selectAll("circle").data(data, d => d.long + d.lat + d.name);
@@ -153,7 +155,7 @@ function updateMapPoints(data) {
     circles.enter().append("circle")
         .attr("cx", d => projection([d.long, d.lat])[0])
         .attr("cy", d => projection([d.long, d.lat])[1])
-        .attr("r", 4)
+        .attr("r", d => rad(d.num_death))
         .attr("class", "circle")
         .style("fill", "69b3a2")
         .attr("stroke", "#69b3a2")
@@ -173,11 +175,11 @@ function updateMapPoints(data) {
     }
 
     function mousemove(event, d) {
-        Tooltip
-            .html(d.name + "<br>" + "long: " + d.long + "<br>" + "lat: " + d.lat)
-            .style("left", (event.pageX) / 2 + "px")
-            .style("top", (event.pageY) / 2 - 30 + "px");
-    }
+    Tooltip
+        .html(d.name + "<br>" + "Number of deaths: " + d.num_death)
+       // .style("left", (projection([d.long, d.lat])[0]) + "px") // Use projection to get the x-coordinate
+        //.style("top", (projection([d.long, d.lat])[1] - 30) + "px") // Use projection to get the y-coordinate and adjust for tooltip height
+}
 
     function mouseleave(event, d) {
         Tooltip.style("opacity", 0);
@@ -232,7 +234,7 @@ function sumNrPerMonth(data) {
 }
 
 function Timeline(data) {
-    const margin = {top: 20, right: 40, bottom: 440, left: 40},
+    const margin = {top: 20, right: 20, bottom: 400, left: 200},
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
     
