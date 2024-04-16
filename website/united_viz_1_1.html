@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v6.js"></script>
+<!-- NEEDS TO BE REMOVED LATER, very ugly fix of local access problem -->
+<script type='text/javascript' src='../data_world/united_data.js'></script>
+
+<!-- Create a div where the graph will take place -->
+<div id="my_dataviz" style="max-width: 900px;"></div>
+
+<style>
+  .circle:hover{
+    stroke: black;
+    stroke-width: 4px;
+  }
+</style>
+
+<script>
+    
+    // set width and height of svg
+    const width = 1000
+    const height = 750
+    const aspect = 1.5 // width/height
+
+    // Source: https://brendansudol.github.io/writing/responsive-d3
+
+    function responsivefy(svg) {
+      // get container + svg aspect ratio
+      var container = d3.select(svg.node().parentNode),
+          width = parseInt(svg.style("width")),
+          height = parseInt(svg.style("height")),
+          aspect = width / height;
+  
+      // add viewBox and preserveAspectRatio properties,
+      // and call resize so that svg resizes on inital page load
+      svg.attr("viewBox", "0 0 " + width + " " + height)
+          .attr("perserveAspectRatio", "xMinYMid")
+          .call(resize);
+  
+      // to register multiple listeners for same event type, 
+      // you need to add namespace, i.e., 'click.foo'
+      // necessary if you call invoke this function for multiple svgs
+      // api docs: https://github.com/mbostock/d3/wiki/Selections#on
+      d3.select(window).on("resize." + container.attr("id"), resize);
+  
+      // get width of container and resize svg to fit it
+      function resize() {
+          var targetWidth = parseInt(container.style("width"));
+          svg.attr("width", targetWidth);
+          svg.attr("height", Math.round(targetWidth / aspect));
+      }
+  }
+
+  
+
+  
+    // The svg
+    const svg = d3.select("#my_dataviz")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .call(responsivefy)
+
+    
+    // Map and projection
+    const projection = d3.geoMercator()
+        .center([4, 47])                // GPS of location to zoom on
+        .scale(800)                       // This is like the zoom
+        .translate([ width/2, height/2 ])
+
+
+    // Load external data and boot
+    d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then( function(data){
+        // Draw the map
+        svg.append("g")
+            .selectAll("path")
+            .data(data.features)
+            .join("path")
+              .attr("fill", "#b8b8b8")
+              .attr("d", d3.geoPath()
+                  .projection(projection)
+              )
+            .style("stroke", "black")
+            .style("opacity", .3)
+    
+    })
+
+
+
+function sumNrPerMonth(data) {
+    // Initialize an empty object to store sums for each month
+    const sums = {};
+
+    // Iterate over the data
+    data.forEach(entry => {
+        // Extract the month from the date_found
+        const date = parseDate(entry.date_found)
+        const month = date.getMonth() + 1; // JavaScript months are zero-based, so add 1
+        const year = date.getFullYear();
+
+        // If the month is not yet in the sums object, initialize it to 0
+        if (!sums[year][month]) {
+            sums[year][month] = 0;
+        }
+        // Add the 'Nr' value to the sum for the month
+        sums[year][month] += parseInt(entry.Nr);
+    });
+
+    return sums;
+}
+
+
+// Get the right Dateformat
+function parseDate(dateString) {
+    // Split the date string into day, month, and year components
+    const [day, month, year] = dateString.split('/');
+
+    // If the year is in the format '93', adjust it to '1993'
+    const parsedYear = parseInt(year) < 93 ? '20' + year : '19' + year;
+
+    // Construct a new date object with the components in the correct order
+    return new Date(parsedYear, month - 1, day); 
+}
+
+// Update the Points on the map according to the selected timeperiod
+function updateMapPoints(data) {
+    // Select or create Tooltip
+    var Tooltip = d3.select("#my_dataviz")
+            .append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0)
+            .style("background-color", "white")
+            .style("border", "solid")
+            .style("border-width", "2px")
+            .style("border-radius", "5px")
+            .style("padding", "5px");
+
+    // Adjust scale
+    const circles = svg.selectAll("circle").data(data, d => d.long + d.lat + d.name);
+
+    // Update existing points
+    circles
+        .attr("cx", d => projection([d.long, d.lat])[0])
+        .attr("cy", d => projection([d.long, d.lat])[1])
+        .on("mouseover", mouseover)
+        .on("mousemove", mousemove)
+        .on("mouseleave", mouseleave);
+
+    // Enter new points
+    circles.enter().append("circle")
+        .attr("cx", d => projection([d.long, d.lat])[0])
+        .attr("cy", d => projection([d.long, d.lat])[1])
+        .attr("r", 4)
+        .attr("class", "circle")
+        .style("fill", "69b3a2")
+        .attr("stroke", "#69b3a2")
+        .attr("stroke-width", 1)
+        .attr("fill-opacity", .4)
+        .on("mouseover", mouseover)
+        .on("mousemove", mousemove)
+        .on("mouseleave", mouseleave);
+
+    // Remove exiting points
+    circles.exit().remove();
+
+    // Define mouseover, mousemove, and mouseleave functions
+    function mouseover(event, d) {
+        this.setAttribute("class", "circle-hover");
+        Tooltip.style("opacity", 1);
+    }
+
+    function mousemove(event, d) {
+        Tooltip
+            .html(d.name + "<br>" + "long: " + d.long + "<br>" + "lat: " + d.lat)
+            .style("left", (event.pageX) / 2 + "px")
+            .style("top", (event.pageY) / 2 - 30 + "px");
+    }
+
+    function mouseleave(event, d) {
+        Tooltip.style("opacity", 0);
+    }
+}
+
+
+// The function for choosing the different time periods
+function brushCallback(event, data, xScale) {
+    var selection = event.selection; // Get the brush selection
+
+    if (!selection) {
+        updateMapPoints([]); // No selection, update map with empty data
+    } else {
+        var newDateRange = selection.map(xScale.invert); // Convert pixel coordinates to date values using the xScale
+        var filteredData = data.filter(function(d) {
+            return d.date_found >= newDateRange[0] && d.date_found <= newDateRange[1];
+        });
+        console.log(filteredData); // Log filtered data to console for debugging
+        updateMapPoints(filteredData); // Update map with filtered data
+    }
+}
+
+function sumNrPerMonth(data) {
+    // Initialize an empty object to store sums for each month
+    const sums = {};
+
+    // Iterate over the data
+    data.forEach(entry => {
+        // Extract the month and year from the date_found
+        const date = parseDate(entry.date_found);
+        const month = date.getMonth() + 1; // JavaScript months are zero-based, so add 1
+        const year = date.getFullYear();
+
+        // Format the month and year as desired (assuming leading zeros for month)
+        const formattedMonth = month < 10 ? '0' + month : month;
+        const formattedYear = year;
+
+        // Combine month and year to create the key
+        const key = `${formattedMonth}.${formattedYear}`;
+
+        // If the key is not yet in the sums object, initialize it to 0
+        if (!sums[key]) {
+            sums[key] = 0;
+        }
+
+        // Add the 'num_death' value to the sum for the month
+        sums[key] += parseInt(entry.num_death);
+    });
+
+    return sums;
+}
+
+function Timeline(data) {
+    const margin = {top: 20, right: 40, bottom: 440, left: 40},
+        width = 960 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+    
+    var sumPerMonth = sumNrPerMonth(data); // If we want to define it later, the function needs to be adapted to the new datetime
+    // Parse date_found property of data using parseDate function
+    data.forEach(function(d) {
+        d.date_found = parseDate(d.date_found);
+    });
+
+
+    var timeline = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var dates = data.map(d => d.date_found);
+    var minDate = d3.min(dates);
+    var maxDate = d3.max(dates);
+    
+    const maxSum = Object.values(sumPerMonth)
+        .reduce((max, yearData) => {
+            const yearMax = Math.max(...Object.values(yearData));
+            return yearMax > max ? yearMax : max;
+        }, 0);
+
+    var lineData = Object.keys(sumPerMonth).map(function(key) {
+        return { date: key, value: sumPerMonth[key] };
+    });
+
+    // Parse date strings into Date objects
+    lineData.forEach(function(d) {
+        var parts = d.date.split('.');
+        d.date = new Date(parseInt(parts[1]), parseInt(parts[0]) - 1);
+    });
+
+    var x = d3.scaleTime()
+        .domain(d3.extent(lineData, function(d) { return d.date; }))
+        .rangeRound([0, width]);
+    
+    var y = d3.scaleLinear()
+        .domain([0, d3.max(lineData, function(d) { return d.value; })])
+        .range([height, 0]);
+
+    var line = d3.line()
+        .x(function(d) { return x(d.date); })
+        .y(function(d) { return y(d.value); });
+
+    timeline.append("path")
+        .datum(lineData)
+        .attr("class", "line")
+        .attr("d", line);
+
+
+    var brush = d3.brushX()
+      .extent([[0, 0], [width, height]])
+      .on("end", function(event) { brushCallback(event, data, x); }); // Pass event parameter and x scale
+
+    timeline.append("g")
+        .attr("class", "brush")
+        .call(brush);
+
+    // Append the line on the bottom, define the ticks
+    timeline.append("g")
+        .attr("class", "axis axis--x")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x)
+        .ticks(d3.timeYear)
+        .tickPadding(0))
+        .selectAll("text")
+        .attr("x", 6);
+
+    timeline.append("g")
+        .attr("class", "axis axis--y")
+        .call(d3.axisLeft(y)
+        .ticks(4));
+    
+    // Calculate default start and end dates
+    var endDate = maxDate;
+    var startDate = new Date(endDate.getFullYear() - 5, endDate.getMonth(), endDate.getDate()); // 5 years ago
+
+    // Set initial brush selection
+    var initialSelection = [x(startDate), x(endDate)];
+
+    // Initialize brush with initial selection
+    brush.move(timeline.select('.brush'), initialSelection);
+
+}
+
+    Timeline(united)
+    </script>
