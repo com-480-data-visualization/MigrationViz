@@ -52,7 +52,7 @@
         var path = sankey.links();
 
         // load the data
-        d3.json("../data_world/sankey_2020_continent_test.json").then(function(sankeydata){
+        d3.json("data/sankey_2020_continent_test.json").then(function(sankeydata){
             graph = sankey(sankeydata);
 
         // add the links

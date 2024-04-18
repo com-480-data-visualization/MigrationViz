@@ -52,8 +52,8 @@ h2 {
   
   #fixedMenu a {
     display: block;
-    padding: 5px;
-    margin: 5px 0;
+    padding: 5px 10px;
+    margin: 5px 0px;
     text-align: center;
     color: white;
     background-color: cornflowerblue;
@@ -67,6 +67,7 @@ h2 {
 
   /* Style pour le lien actif */
   #fixedMenu a.active {
+    padding: 5px 5px;
     background-color: darkblue;
     color: white;
     font-weight: bold;
@@ -121,7 +122,7 @@ h2 {
 }
 
 .linkedin-link:hover {
-  color: blue;
+  color: #2867B2;
 }
 
 /* --------------------------------------------------------------*/
