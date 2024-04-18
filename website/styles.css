@@ -1,6 +1,6 @@
 html, body {
   max-width: 100vw; /* assure que la largeur du body ne dépasse pas la largeur de la fenêtre */
-  overflow-x: hidden; /* cache la barre de défilement horizontale */
+  margin : 0;
 }
 
 body {
@@ -31,6 +31,7 @@ h2 {
 .mendatory-scrolling{
     overflow-y: scroll; /* Permet le défilement vertical */
     scroll-snap-type: y mandatory; /* Active le scroll snapping vertical obligatoire */
+    height: 100vh;
 }
 
 .red {
@@ -103,13 +104,24 @@ h2 {
 
 .github-link {
   font-size: 32px;
-  color: blue; 
+  color: green; 
   display: inline-block;
   margin: 4px 0;
 }
 
 .github-link:hover {
   color: black;
+}
+
+.linkedin-link {
+  font-size: 32px;
+  color: green; 
+  display: inline-block;
+  margin: 4px 0;
+}
+
+.linkedin-link:hover {
+  color: blue;
 }
 
 /* --------------------------------------------------------------*/
