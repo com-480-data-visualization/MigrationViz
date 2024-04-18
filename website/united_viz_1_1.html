@@ -25,44 +25,12 @@
     const height = 600
     const aspect = 1.5 // width/height
 
-    // Source: https://brendansudol.github.io/writing/responsive-d3
-
-    function responsivefy(svg) {
-      // get container + svg aspect ratio
-      var container = d3.select(svg.node().parentNode),
-          width = parseInt(svg.style("width")),
-          height = parseInt(svg.style("height")),
-          aspect = width / height;
-  
-      // add viewBox and preserveAspectRatio properties,
-      // and call resize so that svg resizes on inital page load
-      svg.attr("viewBox", "0 0 " + width + " " + height)
-          .attr("perserveAspectRatio", "xMinYMid")
-          .call(resize);
-  
-      // to register multiple listeners for same event type, 
-      // you need to add namespace, i.e., 'click.foo'
-      // necessary if you call invoke this function for multiple svgs
-      // api docs: https://github.com/mbostock/d3/wiki/Selections#on
-      d3.select(window).on("resize." + container.attr("id"), resize);
-  
-      // get width of container and resize svg to fit it
-      function resize() {
-          var targetWidth = parseInt(container.style("width"));
-          svg.attr("width", targetWidth);
-          svg.attr("height", Math.round(targetWidth / aspect));
-      }
-  }
-
-  
-
-  
     // The svg
     const svg = d3.select("#my_dataviz")
       .append("svg")
       .attr("width", width)
       .attr("height", height)
-      .call(responsivefy)
+     // .call(responsivefy)
 
     
     // Map and projection
@@ -79,15 +47,87 @@
             .selectAll("path")
             .data(data.features)
             .join("path")
-              .attr("fill", "#b8b8b8")
+              .attr("fill", "#b8b8b8") // Change color of the Map
+              .style("opacity", .7) // Change opacity of the country fill
               .attr("d", d3.geoPath()
                   .projection(projection)
               )
-            .style("stroke", "black")
-            .style("opacity", .3)
-    
+            .style("stroke", "black") // Linecolor
+            .style("opacity", .3) // Opacity of map, total
     })
 
+
+    var Tooltip = d3.select("#my_dataviz")
+            .append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0)
+            .style("background-color", "white")
+            .style("border", "solid")
+            .style("border-width", "2px")
+            .style("border-radius", "5px")
+            .style("padding", "5px");
+    
+    var rad = d3.scaleSqrt().range([1.5, 2.6]); // Here you can change the size of the circles (the size of the circles according to the nr of death each circle is standing for)
+
+    // Define mouseover, mousemove, and mouseleave function
+    function mouseover(event, d) {
+        this.setAttribute("class", "circle-hover");
+        Tooltip.style("opacity", 1);
+    }
+
+    function mousemove(event, d) {
+    Tooltip
+        .html(d.name + "<br>" + "Number of deaths: " + d.num_death)
+        .style("left", (event.pageX) + "px")
+        .style("top", (event.pageY - 30) + "px");
+    }
+
+    function mouseleave(event, d) {
+        Tooltip.style("opacity", 0);
+    }
+
+
+function proportionalAreaCircle() {
+        const margin = {top: 20, right: 20, bottom: 400, left: 200},
+        width = 960 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+
+    const sumTotal = 10; //Needs to be calculated
+    var sumPartiel = 3; //Needs to be calculated
+    var colors = ['steelblue', 'darkblue']
+
+    var data = [sumTotal, sumPartiel];
+    var R = data.map(function(d) {
+            return Math.sqrt(d / Math.max(...data));
+        });
+
+    console.log(R)
+
+    var propcircle = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var maxRadius = Math.max(...R);
+
+    var lowestY = 40 + maxRadius * 40;
+
+    var circles = propcircle.selectAll("circle")
+            .data(R)
+            .enter()
+            .append("circle")
+            .attr("cx", 40) // x-coordinate of the center (remains unchanged)
+            .attr("cy", function(d, i) { 
+        // Calculate the y-coordinate of the center relative to the lowest point of the largest circle
+                return lowestY - d * 40; 
+            }) 
+            .attr("r", function(d) { return d * 40; }) // radius
+            .attr("fill", function(d, i) { return colors[i]; })
+            .style("opacity", .3); // Use specified colors
+    
+    propcircle.attr("viewBox", "0 0 200 " + R.reduce((acc, cur) => acc + cur * 2 * 100, 0));
+}
 
 
 function sumNrPerMonth(data) {
@@ -97,7 +137,7 @@ function sumNrPerMonth(data) {
     // Iterate over the data
     data.forEach(entry => {
         // Extract the month from the date_found
-        const date = parseDate(entry.date_found)
+        const date = parseDate(entry.date_sorted)
         const month = date.getMonth() + 1; // JavaScript months are zero-based, so add 1
         const year = date.getFullYear();
 
@@ -125,20 +165,10 @@ function parseDate(dateString) {
     return new Date(parsedYear, month - 1, day); 
 }
 
+
+
 // Update the Points on the map according to the selected timeperiod
 function updateMapPoints(data) {
-    // Select or create Tooltip
-    var Tooltip = d3.select("#my_dataviz")
-            .append("div")
-            .attr("class", "tooltip")
-            .style("opacity", 0)
-            .style("background-color", "white")
-            .style("border", "solid")
-            .style("border-width", "2px")
-            .style("border-radius", "5px")
-            .style("padding", "5px");
-    
-    var rad = d3.scaleSqrt().range([1, 2.2]); // Here you can change the size of the circles (the size of the circles according to the nr of death each circle is standing for)
 
     // Adjust scale
     const circles = svg.selectAll("circle").data(data, d => d.long + d.lat + d.name);
@@ -166,24 +196,7 @@ function updateMapPoints(data) {
         .on("mouseleave", mouseleave);
 
     // Remove exiting points
-    circles.exit().remove();
-
-    // Define mouseover, mousemove, and mouseleave functions
-    function mouseover(event, d) {
-        this.setAttribute("class", "circle-hover");
-        Tooltip.style("opacity", 1);
-    }
-
-    function mousemove(event, d) {
-    Tooltip
-        .html(d.name + "<br>" + "Number of deaths: " + d.num_death)
-       // .style("left", (projection([d.long, d.lat])[0]) + "px") // Use projection to get the x-coordinate
-        //.style("top", (projection([d.long, d.lat])[1] - 30) + "px") // Use projection to get the y-coordinate and adjust for tooltip height
-}
-
-    function mouseleave(event, d) {
-        Tooltip.style("opacity", 0);
-    }
+    circles.exit().remove()
 }
 
 
@@ -196,7 +209,7 @@ function brushCallback(event, data, xScale) {
     } else {
         var newDateRange = selection.map(xScale.invert); // Convert pixel coordinates to date values using the xScale
         var filteredData = data.filter(function(d) {
-            return d.date_found >= newDateRange[0] && d.date_found <= newDateRange[1];
+            return d.date_sorted >= newDateRange[0] && d.date_sorted <= newDateRange[1];
         });
         console.log(filteredData); // Log filtered data to console for debugging
         updateMapPoints(filteredData); // Update map with filtered data
@@ -210,7 +223,7 @@ function sumNrPerMonth(data) {
     // Iterate over the data
     data.forEach(entry => {
         // Extract the month and year from the date_found
-        const date = parseDate(entry.date_found);
+        const date = parseDate(entry.date_sorted);
         const month = date.getMonth() + 1; // JavaScript months are zero-based, so add 1
         const year = date.getFullYear();
 
@@ -234,24 +247,24 @@ function sumNrPerMonth(data) {
 }
 
 function Timeline(data) {
-    const margin = {top: 20, right: 20, bottom: 400, left: 200},
-        width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
+    const margin = {top: 20, right: 0, bottom: 450, left: 40}, // right need to be 0, so that it is exactly on the line of Europe carte right. Left needs space, in order to see the scale. 
+        width = 1000 - margin.left - margin.right,
+        height = 600 - margin.top - margin.bottom;
     
     var sumPerMonth = sumNrPerMonth(data); // If we want to define it later, the function needs to be adapted to the new datetime
     // Parse date_found property of data using parseDate function
     data.forEach(function(d) {
-        d.date_found = parseDate(d.date_found);
+        d.date_sorted = parseDate(d.date_sorted);
     });
 
 
-    var timeline = d3.select("body").append("svg")
+    var timeline = d3.select("#my_dataviz").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var dates = data.map(d => d.date_found);
+    var dates = data.map(d => d.date_sorted);
     var minDate = d3.min(dates);
     var maxDate = d3.max(dates);
     
