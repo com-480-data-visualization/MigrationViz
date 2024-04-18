@@ -104,13 +104,24 @@ h2 {
 
 .github-link {
   font-size: 32px;
-  color: blue; 
+  color: green; 
   display: inline-block;
   margin: 4px 0;
 }
 
 .github-link:hover {
   color: black;
+}
+
+.linkedin-link {
+  font-size: 32px;
+  color: green; 
+  display: inline-block;
+  margin: 4px 0;
+}
+
+.linkedin-link:hover {
+  color: blue;
 }
 
 /* --------------------------------------------------------------*/
