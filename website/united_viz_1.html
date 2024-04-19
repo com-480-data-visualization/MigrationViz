@@ -7,6 +7,8 @@
 <script src="https://d3js.org/d3.v6.js"></script>
 <!-- NEEDS TO BE REMOVED LATER, very ugly fix of local access problem -->
 <script type='text/javascript' src='../data_world/united_data.js'></script>
+<script type='text/javascript' src='../data_world/unhcr_data.js'></script>
+
 
 <!-- Create a div where the graph will take place -->
 <div id="my_dataviz" style="max-width: 900px;"></div>
@@ -79,25 +81,34 @@
       {long: -3.83, lat: 58, name: "Morlaix"}, // Morlaix
     ];
 
+    const color = d3.scaleQuantize([1, 3500000], d3.schemeBlues[7])
+    // Adding refugees and asylum seekers together
+    var myMap = new Map();
+    unhcr.forEach(function(dictionary) {
+      myMap.set(dictionary.country, dictionary.refugees + dictionary.asylum_seekers);
+    });
+
     // Load external data and boot
     d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then( function(data){
-    
+
         // Filter data
         // data.features = data.features.filter( d => d.properties.name=="France")
-
-
     
         // Draw the map
         svg.append("g")
             .selectAll("path")
             .data(data.features)
             .join("path")
-              .attr("fill", "#b8b8b8")
+              // .attr("fill", "#b8b8b8")
+              .attr("fill", function(d) {d.total = myMap.get(d.id) || 0; return color(d.total)})
               .attr("d", d3.geoPath()
                   .projection(projection)
               )
             .style("stroke", "black")
-            .style("opacity", .3)
+            .style("opacity", .8)
+            .attr("fake", d=> console.log(d.id, myMap.get(d.id) || 0))
+
+            //  function (d) { d.total = data.get(d.id) || 0; return colorScale(d.total); }
     
         // create a tooltip
         const Tooltip = d3.select("#my_dataviz")
@@ -131,11 +142,11 @@
           .join("circle")
             .attr("cx", d => projection([d.long, d.lat])[0])
             .attr("cy", d => projection([d.long, d.lat])[1])
-            .attr("r", 4)
+            .attr("r", 2.)
             .attr("class", "circle")
             .style("fill", "69b3a2")
             .attr("stroke", "#69b3a2")
-            .attr("stroke-width", 1 )
+            .attr("stroke-width", .5 )
             .attr("fill-opacity", .4)
           .on("mouseover", mouseover)
           .on("mousemove", mousemove)
