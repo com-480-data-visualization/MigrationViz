@@ -1,0 +1,130 @@
+html, body {
+  max-width: 100vw; /* assure que la largeur du body ne dépasse pas la largeur de la fenêtre */
+  margin : 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: white;
+    color: black;
+}
+
+h1 { 
+    text-align: center;
+    margin-top: 0;
+    padding-top: 300px;
+    font-size: 220px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 100px;
+}
+
+.slide {
+    height: 100vh;
+    width: 100vw;
+    scroll-snap-align: start;
+    text-align: center;
+}
+
+.mendatory-scrolling{
+    overflow-y: scroll; /* Permet le défilement vertical */
+    scroll-snap-type: y mandatory; /* Active le scroll snapping vertical obligatoire */
+    height: 100vh;
+}
+
+.red {
+    background-color: red;
+}
+
+.black {
+    background-color: black;
+}
+
+#fixedMenu {
+    position: fixed;
+    top: 50%;
+    right: 10px;
+    /*transform: translateY(-50%);*/
+    z-index: 10;
+  }
+  
+  #fixedMenu a {
+    display: block;
+    padding: 5px 10px;
+    margin: 5px 0px;
+    text-align: center;
+    color: white;
+    background-color: cornflowerblue;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  
+  #fixedMenu a:hover {
+    background-color: darkblue;
+  }
+
+  /* Style pour le lien actif */
+  #fixedMenu a.active {
+    padding: 5px 5px;
+    background-color: darkblue;
+    color: white;
+    font-weight: bold;
+  }
+  
+  /* Style pour le reste du contenu */
+  main {
+    padding-left: 50px; /* Assurez-vous qu'il y a suffisamment d'espace pour le menu fixé */
+  }
+  
+/* --------------------------------------------------------------*/
+/* ----------------   AUTHORS SECTION    ------------------------*/
+/* --------------------------------------------------------------*/
+
+.author-profiles {
+  display: flex;
+  justify-content: center;
+}
+
+.author {
+  margin: 0 10px;
+  text-align: center;
+}
+
+.author p {
+  margin: 4px 0;
+}
+
+.profile-photo {
+  width: 300px; 
+  height: 300px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.github-link {
+  font-size: 32px;
+  color: green; 
+  display: inline-block;
+  margin: 4px 0;
+}
+
+.github-link:hover {
+  color: black;
+}
+
+.linkedin-link {
+  font-size: 32px;
+  color: green; 
+  display: inline-block;
+  margin: 4px 0;
+}
+
+.linkedin-link:hover {
+  color: #2867B2;
+}
+
+/* --------------------------------------------------------------*/
+/* --------------------------------------------------------------*/
+/* --------------------------------------------------------------*/

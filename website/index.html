@@ -5,18 +5,121 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.ico" />
     <meta name="author" content="Nicolas Filimonov, Casimir Nüsperling, Lola Bardel, Stefanie Helfenstein" />
-    <title>Main Page</title>
-    <link rel="stylesheet" href="styles.css"> 
+
+    <title>Migration visualization Project</title>
+    <!-- Generale Files -->
+    <link rel="stylesheet" href="css/styles.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+
+    <!-- Files for sankey -->
+    <link rel="stylesheet" href="css/sankey.css">
+    <script src="https://unpkg.com/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+
+    <!-- Files for united -->
+    <link rel="stylesheet" href="css/united.css">
+    <script type='text/javascript' src='data/united_data.js'></script>
+
+
+    <!-- Files for swiss map -->
+    <link rel="stylesheet" href="css/swiss_map.css">
 </head>
 <body>
-    <main>
 
+    <div id="fixedMenu">
+        <a href="#Title">Titre</a>
+        <a href="#Intro">Introduction</a>
+        <a href="#Sankey">Sankey</a>
+        <a href="#UNDESCA">UNDESCA</a>
+        <a href="#United">United</a>
+        <a href="#Authors">Authors</a>
+    </div>
+
+    <main class="mendatory-scrolling">
+        <section class="slide" id="Title">
+        
+            <h1>MIGRATION</h1>
+
+        </section> 
+
+        <section class="slide" id="Intro">
+            <h2>Introduction</h2>
+        </section>
+
+        <section class="slide" id="Sankey">
+            <h2>Sankey</h2>
+            <script src="js/sankey.js"></script>
+        </section>
+
+        <section class="slide" id="UNDESCA">
+            <h2>UNDESCA | UNHCR</h2>
+
+            
+        </section>
+
+        <section class="slide" id="United">
+            <h2>United</h2>
+            <script src="js/united.js"></script>
+        </section>
+
+
+        <section class="slide" id="Authors">
+            <h2>Authors</h2>
+            <div class="author-profiles">
+                <div class="author">
+                    <img src="images/pp.png" alt="Lola Bardel" class="profile-photo">
+                    <p>Lola Bardel</p>
+                    <a href="https://github.com/Lola-Bardel" class="github-link" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/lola-bardel" class="linkedin-link" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+                <div class="author">
+                    <img src="images/pp.png" alt="Nicolas Filimonov" class="profile-photo">
+                    <p>Nicolas Filimonov</p>
+                    <a href="https://github.com/Rayjine" class="github-link" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/nicolas-filimonov-b7778b200" class="linkedin-link" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+                <div class="author">
+                    <img src="images/pp.png" alt="Stefanie Helfenstein" class="profile-photo">
+                    <p>Stefanie Helfenstein</p>
+                    <a href="https://github.com/shelfens" class="github-link" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+                <div class="author">
+                    <img src="images/pp.png" alt="Casimir Nüsperling" class="profile-photo">
+                    <p>Casimir Nüsperling</p>
+                    <a href="https://github.com/cmaximilian" class="github-link" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/casimir-nüsperling-733213223" class="linkedin-link" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+            <p>© Copyright 2024</p>
+
+        </section>
     </main>
 
-    <script src="scripts.js"></script>
-</body>
+    <script src="js/scripts.js"></script>
 
-<footer>
-    <p>© Copyright 2024</p>
-</footer>
+</body>
 </html>
+
+<!-- 
+    TO-DO :
+    - points on the side to navigate
+    - test rectangle with visualization of United
+    - add standard css as Casimir said
+
+
+-->
