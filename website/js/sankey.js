@@ -8,8 +8,8 @@ var formatNumber = d3.format(",.0f") // zero decimal places
 format = function(d) {return formatNumber(d);},
 color = d3.scaleOrdinal(d3.schemeCategory10);
 
-// append the svg object to the body of the page
-var svg = d3.select("#Sankey").append("svg")
+// append the svg_sankey object to the body of the page
+var svg_sankey = d3.select("#sankey-viz").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
 .append("g")
@@ -29,7 +29,7 @@ d3.json("data/sankey_2020_continent_test.json").then(function(sankeydata){
 graph = sankey(sankeydata);
 
 // add the links
-var link = svg.append("g").selectAll(".link")
+var link = svg_sankey.append("g").selectAll(".link")
 .data(graph.links)
 .enter().append("path")
     .attr("class", "link")
@@ -43,7 +43,7 @@ link.append("title")
 });
 
 // add in the nodes
-var node = svg.append("g").selectAll(".node")
+var node = svg_sankey.append("g").selectAll(".node")
 .data(graph.nodes)
 .enter().append("g")
 .attr("class", "node");

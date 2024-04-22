@@ -34,14 +34,6 @@ h2 {
     height: 100vh;
 }
 
-.red {
-    background-color: red;
-}
-
-.black {
-    background-color: black;
-}
-
 #fixedMenu {
     position: fixed;
     top: 50%;
@@ -56,19 +48,19 @@ h2 {
     margin: 5px 0px;
     text-align: center;
     color: white;
-    background-color: cornflowerblue;
+    background-color: #c7522a;
     border-radius: 5px;
     text-decoration: none;
   }
   
   #fixedMenu a:hover {
-    background-color: darkblue;
+    background-color: #008585;
   }
 
   /* Style pour le lien actif */
   #fixedMenu a.active {
     padding: 5px 5px;
-    background-color: darkblue;
+    background-color: #008585;
     color: white;
     font-weight: bold;
   }
@@ -77,6 +69,28 @@ h2 {
   main {
     padding-left: 50px; /* Assurez-vous qu'il y a suffisamment d'espace pour le menu fixé */
   }
+/* --------------------------------------------------------------*/
+/* ---------------------   2 COLUMNS     ------------------------*/
+/* --------------------------------------------------------------*/
+
+.two-columns {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start; /* Align items at the top */
+}
+
+.text-column {
+  flex: 1; /* Takes up 1 part of the available space */
+  padding-right: 20px; /* Optional padding for spacing */
+}
+
+.viz-column {
+  flex: 2; /* Takes up 2 parts of the available space */
+  /* No padding-right here if you want the viz to be full width */
+}
+
+
+
   
 /* --------------------------------------------------------------*/
 /* ----------------   AUTHORS SECTION    ------------------------*/
@@ -105,7 +119,7 @@ h2 {
 
 .github-link {
   font-size: 32px;
-  color: green; 
+  color: #c7522a; 
   display: inline-block;
   margin: 4px 0;
 }
@@ -116,7 +130,7 @@ h2 {
 
 .linkedin-link {
   font-size: 32px;
-  color: green; 
+  color: #c7522a; 
   display: inline-block;
   margin: 4px 0;
 }
