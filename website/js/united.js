@@ -65,49 +65,6 @@
     }
 
 
-function proportionalAreaCircle() {
-        var margin = {top: 20, right: 20, bottom: 400, left: 200},
-        width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
-
-    var sumTotal = 10; //Needs to be calculated
-    var sumPartiel = 3; //Needs to be calculated
-    var colors = ['steelblue', 'darkblue']
-
-    var data = [sumTotal, sumPartiel];
-    var R = data.map(function(d) {
-            return Math.sqrt(d / Math.max(...data));
-        });
-
-    console.log(R)
-
-    var propcircle = d3.select("body").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    var maxRadius = Math.max(...R);
-
-    var lowestY = 40 + maxRadius * 40;
-
-    var circles = propcircle.selectAll("circle")
-            .data(R)
-            .enter()
-            .append("circle")
-            .attr("cx", 40) // x-coordinate of the center (remains unchanged)
-            .attr("cy", function(d, i) { 
-        // Calculate the y-coordinate of the center relative to the lowest point of the largest circle
-                return lowestY - d * 40; 
-            }) 
-            .attr("r", function(d) { return d * 40; }) // radius
-            .attr("fill", function(d, i) { return colors[i]; })
-            .style("opacity", .3); // Use specified colors
-    
-    propcircle.attr("viewBox", "0 0 200 " + R.reduce((acc, cur) => acc + cur * 2 * 100, 0));
-}
-
-
 function sumNrPerMonth(data) {
     // Initialize an empty object to store sums for each month
     var sums = {};
@@ -144,13 +101,41 @@ function parseDate(dateString) {
 }
 
 
-
 // Update the Points on the map according to the selected timeperiod
 function updateMapPoints(data) {
-
     // Adjust scale
-    var circles = svg.selectAll("circle").data(data, d => d.long + d.lat + d.name);
+    const circles = svg.selectAll("circle").data(data, d => d.long + d.lat + d.name + d.num_death);
 
+    // Now you can calculate the sum of num_death
+    var partialSum = d3.sum(data, d => d.num_death);
+    console.log(partialSum);
+
+    d3.select("#partialSumText").remove();
+    d3.select("#totalSumText").remove();
+
+    var partialSumText = svg.append("text")
+        .attr("id", "partialSumText")
+        .attr("x", 980 - 10) // Adjust x position to place it on the right
+        .attr("y", 40) // Adjust y position to place it at the top
+        .attr("text-anchor", "end") // Align text to the end (right)
+        .text("Number of Deaths in the selected Timeperiod: " + partialSum)
+        //.style("font-family", "Arial")
+       // .style("font-size", "14px")
+        .style("fill", "black")
+        .style("font-weight", "bold")
+        .style("font-style", "italic"); 
+
+
+    var totalSumText = svg.append("text")
+        .attr("id", "totalSumText")
+        .attr("x", 980 - 10) // Adjust x position to place it on the right
+        .attr("y", 20) // Adjust y position to place it below partialSum
+        .attr("text-anchor", "end") // Align text to the end (right)
+        .text("Total Number of Deaths : " + totalSum)
+        .style("fill", "black")
+        .style("font-weight", "bold")
+        .style("font-style", "italic");
+      // Set text content
     // Update existing points
     circles
         .attr("cx", d => projection([d.long, d.lat])[0])
@@ -175,6 +160,49 @@ function updateMapPoints(data) {
 
     // Remove exiting points
     circles.exit().remove()
+
+
+    var data = [totalSum, partialSum];
+
+    const margin = {top: 0, right: 20, bottom: 60, left: 600},
+        width = 900 - margin.left - margin.right,
+        height = 80- margin.top - margin.bottom;
+
+    var R = data.map(function(d) {
+            return Math.sqrt(d / Math.max(...data));
+        });
+
+    var propcircle = svg.append("svg")
+        .attr("id", "propcircle")
+       // .attr("width", 780)
+        //.attr("height", 80)
+        .append("g")
+        .attr("transform", "translate(" + 890+ "," + 50 + ")");
+
+    var maxRadius = Math.max(...R);
+
+    var lowestY = 40 + maxRadius * 40;
+
+    var circles2 = propcircle.selectAll("circle")
+        .data(R)
+        .enter()
+        .append("circle")
+        .attr("cx", 40) // x-coordinate of the center (remains unchanged)
+        .attr("cy", function(d, i) { // Calculate the y-coordinate of the center relative to the lowest point of the largest circle
+            return lowestY - d * 40; 
+        }) 
+        .attr("r", function(d) { return d * 40; }) // radius
+        .attr("fill", function(d, i) { 
+        if (i === 0) {
+            return "blue"; // Color for the first circle
+        } else {
+            return "red"; // Color for the second circle
+        }
+        })
+        .style("opacity", .3); // Use specified colors
+
+    propcircle.attr("viewBox", "0 0 200 " + R.reduce((acc, cur) => acc + cur * 2 * 100, 0));
+
 }
 
 
