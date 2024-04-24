@@ -3,6 +3,8 @@
     var height = 600
     var aspect = 1.5 // width/height
 
+    const totalSum = d3.sum(united, d => d.num_death);
+
     // The svg
     var svg = d3.select("#united-viz")
       .append("svg")
