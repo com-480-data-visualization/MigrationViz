@@ -1,0 +1,42 @@
+.tooltip {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 7px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/*  
+----- BUTTON ----- 
+Toggle Radios v1.1
+by Adam Culpepper | @adamculpepper
+https://github.com/adamculpepper/toggle-radios
+*/
+
+.toggle-radio {
+    background: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: inline-flex;
+    margin: 20px;
+}
+
+.toggle-radio>input+label:not(:last-of-type) {
+    border-right: 1px solid #ccc;
+}
+
+.toggle-radio>input[type='radio'] {
+    display: none;
+}
+
+.toggle-radio>input+label {
+    display: inline-block;
+    margin-bottom: 0;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+/* Transitions */
+.toggle-radio>input:checked+label {
+    transition: background 300ms linear;
+    background: lightblue;
+}

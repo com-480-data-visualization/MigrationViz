@@ -1,29 +1,43 @@
-    // set width and height of svg
-    var width = 800
-    var height = 600
-    var aspect = 1.5 // width/height
+    // set width and height of svg_united
+    var width = 1000
+    var height = 800
+    var aspect = width / height;
 
     const totalSum = d3.sum(united, d => d.num_death);
 
-    // The svg
-    var svg = d3.select("#united-viz")
+    // The svg_united
+    var svg_group = d3.select("#united-viz")
       .append("svg")
       .attr("width", width)
       .attr("height", height)
-     // .call(responsivefy)
+      .attr("viewBox", `0 0 ${width} ${height}`)
+      .attr("preserveAspectRatio", "xMinYMid")
+      .call(responsivefy);
 
-    
+    var svg_united = svg_group.append("g")
+        .attr("id", "map-group")
+        .attr("height", 200);
+
+    var timelineGroup = svg_group.append("g")
+        .attr("id", "timeline-group")
+        .attr("transform", `translate(0, ${635})`);
+
+    timelineGroup.append("rect")
+        .attr("width", width)
+        .attr("height", height)
+        .style("fill", "white");
+
     // Map and projection
     var projection = d3.geoMercator()
-        .center([4, 47])                // GPS of location to zoom on
-        .scale(800)                       // This is like the zoom
+        .center([4, 35])                // GPS of location to zoom on
+        .scale(500)                       // This is like the zoom
         .translate([ width/2, height/2 ])
 
 
     // Load external data and boot
     d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then( function(data){
         // Draw the map
-        svg.append("g")
+        svg_united.append("g")
             .selectAll("path")
             .data(data.features)
             .join("path")
@@ -106,7 +120,7 @@ function parseDate(dateString) {
 // Update the Points on the map according to the selected timeperiod
 function updateMapPoints(data) {
     // Adjust scale
-    const circles = svg.selectAll("circle").data(data, d => d.long + d.lat + d.name + d.num_death);
+    const circles = svg_united.selectAll("circle").data(data, d => d.long + d.lat + d.name + d.num_death);
 
     // Now you can calculate the sum of num_death
     var partialSum = d3.sum(data, d => d.num_death);
@@ -115,7 +129,7 @@ function updateMapPoints(data) {
     d3.select("#partialSumText").remove();
     d3.select("#totalSumText").remove();
 
-    var partialSumText = svg.append("text")
+    var partialSumText = svg_united.append("text")
         .attr("id", "partialSumText")
         .attr("x", 980 - 10) // Adjust x position to place it on the right
         .attr("y", 40) // Adjust y position to place it at the top
@@ -128,7 +142,7 @@ function updateMapPoints(data) {
         .style("font-style", "italic"); 
 
 
-    var totalSumText = svg.append("text")
+    var totalSumText = svg_united.append("text")
         .attr("id", "totalSumText")
         .attr("x", 980 - 10) // Adjust x position to place it on the right
         .attr("y", 20) // Adjust y position to place it below partialSum
@@ -174,7 +188,7 @@ function updateMapPoints(data) {
             return Math.sqrt(d / Math.max(...data));
         });
 
-    var propcircle = svg.append("svg")
+    var propcircle = svg_united.append("svg")
         .attr("id", "propcircle")
        // .attr("width", 780)
         //.attr("height", 80)
@@ -258,6 +272,7 @@ function Timeline(data) {
     var margin = {top: 20, right: 0, bottom: 450, left: 40}, // right need to be 0, so that it is exactly on the line of Europe carte right. Left needs space, in order to see the scale. 
         width = 1000 - margin.left - margin.right,
         height = 600 - margin.top - margin.bottom;
+        aspect = width / height;
     
     var sumPerMonth = sumNrPerMonth(data); // If we want to define it later, the function needs to be adapted to the new datetime
     // Parse date_found property of data using parseDate function
@@ -266,11 +281,11 @@ function Timeline(data) {
     });
 
 
-    var timeline = d3.select("#united-viz").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+    timeline = timelineGroup.append("g")
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
 
     var dates = data.map(d => d.date_sorted);
     var minDate = d3.min(dates);

@@ -9,11 +9,29 @@ body {
     color: black;
 }
 
+#united-viz, #undesa-viz, #sankey-viz {
+  max-width: 45vw;
+  max-height: 45vh;
+  margin:auto;
+}
+
+.right {
+    margin-right: 100px;
+}
+
 h1 { 
     text-align: center;
     margin-top: 0;
-    padding-top: 300px;
-    font-size: 220px;
+    font-size: 175px;
+}
+
+#Title h1{
+    text-shadow: 2px 2px 4px white; /* x-offset, y-offset, blur-radius, color */
+}
+
+#Intro p{
+  text-align: center;
+  font-size: 30px;
 }
 
 h2 {
@@ -27,9 +45,10 @@ h3 {
 }
 
 p {
-    text-align: center;
-    font-size: 30px;
+    font-size: 25px;
 }
+
+
 
 .slide {
     height: 100vh;
@@ -79,6 +98,14 @@ p {
   main {
     padding-left: 50px; /* Assurez-vous qu'il y a suffisamment d'espace pour le menu fixé */
   }
+
+#Title{
+  background-image: url('../images/hero_background.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+  
 /* --------------------------------------------------------------*/
 /* ---------------------   2 COLUMNS     ------------------------*/
 /* --------------------------------------------------------------*/
@@ -91,7 +118,9 @@ p {
 
 .text-column {
   flex: 1; /* Takes up 1 part of the available space */
-  padding-right: 20px; /* Optional padding for spacing */
+  padding-right: 50px; /* Optional padding for spacing */
+  padding-left: 50px;
+  text-align: left;
 }
 
 .viz-column {

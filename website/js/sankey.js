@@ -3,6 +3,22 @@ var margin = {top:10, right:10, bottom:10, left:200},
 width = 900 - margin.left - margin.right,
 height = 700 - margin.top - margin.bottom;
 
+// Inspiration for the responsify function comes from
+// Brendan Sudol and his blog
+// https://brendansudol.github.io/writing/responsive-d3
+function responsivefy(svg) {
+    container = d3.select(svg.node().parentNode)
+    svg.call(resize)
+    d3.select(window).on("resize." + container.style("id"), resize)
+    function resize() {
+        var containerWidth = parseInt(container.style("width"));
+        var svgHeight = parseInt(svg.style("height"))
+        var svgWidth = parseInt(svg.style("width"))
+        svg.attr("width", containerWidth);
+        svg.attr("height", Math.round(containerWidth * svgHeight / svgWidth));
+    }
+}
+
 //format variable
 var formatNumber = d3.format(",.0f") // zero decimal places
 format = function(d) {return formatNumber(d);},
@@ -10,9 +26,9 @@ color = d3.scaleOrdinal(d3.schemeCategory10);
 
 // append the svg_sankey object to the body of the page
 var svg_sankey = d3.select("#sankey-viz").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-.append("g")
+    .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
+    .call(responsivefy)
+    .append("g")
     .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")");
 
