@@ -310,6 +310,7 @@ function Timeline(data) {
         .attr("d", line);
 
 
+
     var brush = d3.brushX()
       .extent([[0, 0], [width, height]])
       .on("end", function(event) { brushCallback(event, data, x); }); // Pass event parameter and x scale
