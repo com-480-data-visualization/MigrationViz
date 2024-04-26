@@ -20,8 +20,11 @@ Overall, the website design is to be done. We are yet to find a color scheme, a 
 
 Specific plugin made available through the flexibility of D3.js allows us to produce Sankey diagram as well as maps
 
+<img src="../images/sketch_website.png" alt="alt text" />
 
 ## Sankey diagram : flow by continent from origin to destination
+<img src="../images/sketch_sankey.png" alt="alt text" />
+
 **_Explanation:_** As an introduction to our website, we start by representing the flow of migration between continents via a Sankey diagram. The idea behind it is to provide basic numbers: for example, more than half of the migration in Asia, Europe and Africa stays in its continent of origin. When hovering on the links as well as the continents, numbers are displayed to allow digging for more information. 
 
 The visualization will be improved by adding a timeline allowing users to choose to display data from 1990 to 2020 by 5-years slices, to explore evolution over time. Depending on easiness of implementation, clarity as well as design choices, we may put color only on the continent names and not on the links, unlike what is depicted here. 
@@ -37,9 +40,10 @@ The work in the following weeks will consist of realizing the tasks below:
 
 ## Interactive map of migration and refugee data 
 **_Explanation:_** 
-
+<img src="../images/sketch_migr1.png" alt="alt text" />
 The screenshot above shows the total number of refugees per country in 2020. It is just the first functional proof of concept  implementation, so still a bit buggy. 
 
+<img src="../images/sketch_migr2.png" alt="alt text" />
 The screenshot above can be accessed by pressing the “Percentage refugees in migrants” button. It shows what percentage of migrants are refugees in every country in 2020.
 
 To achieve a complete visualization, the following steps are required:
@@ -56,6 +60,8 @@ To achieve a complete visualization, the following steps are required:
 </ul>
 
 ## Map of refugee deaths at European Borders
+<img src="../images/sketch_europe.jpg" alt="alt text" />
+
 **_Explanation:_** Focusing on the Mediterranean region, we visualize the deaths of the people trying to reach Europe. We display the information of their death as points of varying diameters, related with the reported number of people that died for each tragedy. When hovering, complementary information that the database may furnish are displayed. This visualization aims to highlight the individuality of the tragedies that stroke. We try to emphasize the fact that on our map, points stand for people and not only for data. 
 
 Furthermore, in order to be able to explore the data further, you can choose the time period you want to have displayed on an interactive timeline. The cursor is adjustable. On the y axis the total number of deaths per month is displayed as a line over time. 
