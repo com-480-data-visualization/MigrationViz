@@ -39,10 +39,9 @@ The work in the following weeks will consist of realizing the tasks below:
 **_Extra ideas:_** If time allows, we could let the public choose if the data is to be displayed by continent (as it is actually done) or more fine-tuned by sub-continent (western Asia, Sub-Saharian Africa…), but questions around readability are raised. Visualization of evolution over time could also be interesting to characterize, but we do not already have a clear idea in mind on this subject.
 
 ## Interactive map of migration and refugee data 
-**_Explanation:_** 
 <img src="../images/sketch_migr1.png" alt="alt text" />
 
-The screenshot above shows the total number of refugees per country in 2020. It is just the first functional proof of concept  implementation, so still a bit buggy. 
+**_Explanation:_** The screenshot above shows the total number of refugees per country in 2020. It is just the first functional proof of concept  implementation, so still a bit buggy. 
 
 <img src="../images/sketch_migr2.png" alt="alt text" />
 The screenshot above can be accessed by pressing the “Percentage refugees in migrants” button. It shows what percentage of migrants are refugees in every country in 2020.
