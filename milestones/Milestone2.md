@@ -41,6 +41,7 @@ The work in the following weeks will consist of realizing the tasks below:
 ## Interactive map of migration and refugee data 
 **_Explanation:_** 
 <img src="../images/sketch_migr1.png" alt="alt text" />
+
 The screenshot above shows the total number of refugees per country in 2020. It is just the first functional proof of concept  implementation, so still a bit buggy. 
 
 <img src="../images/sketch_migr2.png" alt="alt text" />
@@ -60,7 +61,7 @@ To achieve a complete visualization, the following steps are required:
 </ul>
 
 ## Map of refugee deaths at European Borders
-<img src="../images/sketch_europe.jpg" alt="alt text" />
+<img src="../images/sketch_europe.png" alt="alt text" />
 
 **_Explanation:_** Focusing on the Mediterranean region, we visualize the deaths of the people trying to reach Europe. We display the information of their death as points of varying diameters, related with the reported number of people that died for each tragedy. When hovering, complementary information that the database may furnish are displayed. This visualization aims to highlight the individuality of the tragedies that stroke. We try to emphasize the fact that on our map, points stand for people and not only for data. 
 
