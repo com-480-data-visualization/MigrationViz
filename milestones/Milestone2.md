@@ -14,11 +14,10 @@ With MigrationViz, we aim to build a site which invites people to explore human 
 <ul>
 <li>D3.js (Lecture 4 and 5)  coupled with a very useful resource found on the web "D3.js tips and tricks" from Malcolm Maclean</li>
 <li> Application of recommendations found in lectures "Do and don't in data viz" (lecture 7) and storytelling (lecture 12)</li>
+<lil> Specific plugin made available through the flexibility of D3.js allows us to produce Sankey diagram as well as maps. </lil>
 </ul>
 
-Overall, the website design is to be done. We are yet to find a color scheme, a font that reflects well the subject we are addressing, but we already put in place a slide-like organization of the structure, as depicted below.
-
-Specific plugin made available through the flexibility of D3.js allows us to produce Sankey diagram as well as maps
+As seen in the figure below, we chose to organize our website in a slide-like structure. For the first part of the project, we focused on the technical implementation of the visualization, which explains the actual simplicity of the website design. We will improve it over the course of the semester, by finding a color scheme and a font that reflects well the subject we are addressing.
 
 <img src="../images/sketch_website.png" alt="alt text" />
 
@@ -27,7 +26,7 @@ Specific plugin made available through the flexibility of D3.js allows us to pro
 
 **_Explanation:_** As an introduction to our website, we start by representing the flow of migration between continents via a Sankey diagram. The idea behind it is to provide basic numbers: for example, more than half of the migration in Asia, Europe and Africa stays in its continent of origin. When hovering on the links as well as the continents, numbers are displayed to allow digging for more information. 
 
-The visualization will be improved by adding a timeline allowing users to choose to display data from 1990 to 2020 by 5-years slices, to explore evolution over time. Depending on easiness of implementation, clarity as well as design choices, we may put color only on the continent names and not on the links, unlike what is depicted here. 
+We will improve the visualization by adding a timeline allowing users to choose to display data from 1990 to 2020 by 5-years slices, to explore evolution over time. Depending on easiness of implementation and clarity we may put color only on the continent names and not on the links, unlike what is depicted here.
 
 The work in the following weeks will consist of realizing the tasks below:
 <ul>
@@ -36,7 +35,7 @@ The work in the following weeks will consist of realizing the tasks below:
   <li> addition of origin and destination above the column that are at the moment unnamed </li>
 </ul>
 
-**_Extra ideas:_** If time allows, we could let the public choose if the data is to be displayed by continent (as it is actually done) or more fine-tuned by sub-continent (western Asia, Sub-Saharian Africa…), but questions around readability are raised. Visualization of evolution over time could also be interesting to characterize, but we do not already have a clear idea in mind on this subject.
+**_Extra ideas:_** If time allows, we could let the public choose if the data is to be displayed by continent (as it is actually done) or more fine-tuned by sub-continent (western Asia, southern Africa…), but questions around readability are raised. Visualization of evolution over time could also be interesting to characterize, but we do not already have a clear idea in mind.
 
 ## Interactive map of migration and refugee data 
 <img src="../images/sketch_migr1.png" alt="alt text" />
