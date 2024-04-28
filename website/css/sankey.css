@@ -1,7 +1,5 @@
 /* HEAVILY INSPIRED FROM https://bl.ocks.org/d3noob/013054e8d7807dff76247b81b0e29030 by Malcolm Maclean
 NEED TO CHECK similarities and how it looks like */
-
-
 .node rect {
   cursor: pointer;
   fill-opacity: .9;

@@ -3,16 +3,32 @@ var margin = {top:10, right:10, bottom:10, left:200},
 width = 900 - margin.left - margin.right,
 height = 700 - margin.top - margin.bottom;
 
+// Inspiration for the responsify function comes from
+// Brendan Sudol and his blog
+// https://brendansudol.github.io/writing/responsive-d3
+function responsivefy(svg) {
+    container = d3.select(svg.node().parentNode)
+    svg.call(resize)
+    d3.select(window).on("resize." + container.style("id"), resize)
+    function resize() {
+        var containerWidth = parseInt(container.style("width"));
+        var svgHeight = parseInt(svg.style("height"))
+        var svgWidth = parseInt(svg.style("width"))
+        svg.attr("width", containerWidth);
+        svg.attr("height", Math.round(containerWidth * svgHeight / svgWidth));
+    }
+}
+
 //format variable
 var formatNumber = d3.format(",.0f") // zero decimal places
 format = function(d) {return formatNumber(d);},
 color = d3.scaleOrdinal(d3.schemeCategory10);
 
-// append the svg object to the body of the page
-var svg = d3.select("#Sankey").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-.append("g")
+// append the svg_sankey object to the body of the page
+var svg_sankey = d3.select("#sankey-viz").append("svg")
+    .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
+    .call(responsivefy)
+    .append("g")
     .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")");
 
@@ -29,7 +45,7 @@ d3.json("data/sankey_2020_continent_test.json").then(function(sankeydata){
 graph = sankey(sankeydata);
 
 // add the links
-var link = svg.append("g").selectAll(".link")
+var link = svg_sankey.append("g").selectAll(".link")
 .data(graph.links)
 .enter().append("path")
     .attr("class", "link")
@@ -43,7 +59,7 @@ link.append("title")
 });
 
 // add in the nodes
-var node = svg.append("g").selectAll(".node")
+var node = svg_sankey.append("g").selectAll(".node")
 .data(graph.nodes)
 .enter().append("g")
 .attr("class", "node");
