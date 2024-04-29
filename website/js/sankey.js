@@ -41,7 +41,9 @@ var sankey = d3.sankey()
 var path = sankey.links();
 
 // load the data
-d3.json("data/sankey_2020_continent_test.json").then(function(sankeydata){
+// FIXME: unconstant size of sankey diagram
+// FIXME: hover tool does not function correctly anymore (sometime works, sometime not)
+d3.json("data/sankey_1990.json").then(function(sankeydata){
 graph = sankey(sankeydata);
 
 // add the links
