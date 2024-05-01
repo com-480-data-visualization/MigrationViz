@@ -51,7 +51,7 @@
     })
 
 
-    var Tooltip = d3.select("#united-viz")
+    var Tooltip = d3.select(".hover-info")
             .append("div")
             .attr("class", "tooltip")
             .style("opacity", 0)
@@ -70,16 +70,27 @@
     }
 
     function mousemove(event, d) {
-    Tooltip
-        .html(d.name + "<br>" + "Number of deaths: " + d.num_death)
-        .style("left", (event.pageX) + "px")
-        .style("top", (event.pageY - 30) + "px");
+        Tooltip
+            .html(`<strong>${d.name}</strong><br>Number of deaths: ${d.num_death}`)
+
+        // Update the content of the info panel
+        var infoContent = `<h2>${d.name}</h2>`;
+        infoContent += `<p>Number of deaths: ${d.num_death}</p>`;
+        updateInfoPanel(infoContent);
     }
+    
 
     function mouseleave(event, d) {
         Tooltip.style("opacity", 0);
     }
 
+    function updateInfoPanel(content) {
+        // Select the info panel element
+        var infoPanel = document.querySelector('.hover-info');
+    
+        // Update its HTML content with the provided information
+        infoPanel.innerHTML = content;
+    }    
 
 function sumNrPerMonth(data) {
     // Initialize an empty object to store sums for each month
