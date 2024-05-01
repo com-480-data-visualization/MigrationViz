@@ -22,7 +22,7 @@ function responsivefy(svg) {
 //format variable
 var formatNumber = d3.format(",.0f") // zero decimal places
 format = function(d) {return formatNumber(d);},
-color = d3.scaleOrdinal(d3.schemeCategory10);
+color = d3.scaleOrdinal(d3.schemeTableau10); 
 
 // append the svg_sankey object to the body of the page
 var svg_sankey = d3.select("#sankey-viz").append("svg")
@@ -53,6 +53,19 @@ var link = svg_sankey.append("g").selectAll(".link")
     .attr("class", "link")
     .attr("d", d3.sankeyLinkHorizontal())
     .attr("stroke-width", function(d) {return d.width});
+    // .on("mouseover", function(event,d){
+    //     div.transition()
+    //         .duration(200)
+    //         .style("opacity", .9);
+    //     div.html("from " + d.source.name + " to " + d.target.name + "\n" + format(d.value) + d.close)
+    //         .style("left", (event.pageX) + "px")
+    //         .style("top", (event.pageY - 28) + "px");
+    // })
+    // .on("mouseout", function(d) {
+    //     div.transition()
+    //         .duration(500)
+    //         .style("opacity", 0)
+    // })
 
 // add the link titles that appear when hovering on the links
 link.append("title")
