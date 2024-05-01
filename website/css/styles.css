@@ -22,8 +22,8 @@ body {
 h1 { 
     text-align: center;
     margin-top: 0;
-    font-size: 175px;
-}
+    font-size: calc(8vw + 8vh);
+  }
 
 #Title h1{
     text-shadow: 2px 2px 4px white; /* x-offset, y-offset, blur-radius, color */
@@ -31,21 +31,21 @@ h1 {
 
 #Intro p{
   text-align: center;
-  font-size: 30px;
+  font-size: calc(1vw + 1vh);
 }
 
 h2 {
     text-align: center;
-    font-size: 100px;
+    font-size: calc(4vw + 4vh);
 }
 
 h3 {
     text-align: center;
-    font-size: 40px;
+    font-size: calc(2vw + 2vh);
 }
 
 p {
-    font-size: 25px;
+    font-size: calc(1vw + 1vh);
 }
 
 
@@ -93,11 +93,7 @@ p {
     color: white;
     font-weight: bold;
   }
-  
-  /* Style pour le reste du contenu */
-  main {
-    padding-left: 50px; /* Assurez-vous qu'il y a suffisamment d'espace pour le menu fixé */
-  }
+
 
 #Title{
   background-image: url('../images/hero_background.webp');
