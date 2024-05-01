@@ -3,6 +3,33 @@ var margin = {top:10, right:10, bottom:10, left:200},
 width = 900 - margin.left - margin.right,
 height = 700 - margin.top - margin.bottom;
 
+//////////// SLIDER ///////////
+const years = [1990, 1995, 2000, 2005, 2010, 2015, 2020]
+
+const slider = d3.select('#sankey-slider')
+    .append("input")
+    .attr("type", "range")
+    .attr("min", 0)
+    .attr("max", years.length - 1)
+    .attr("value", 0)
+    .attr("step", 1)
+    .attr("ticks", years )
+// var slider = d3.slider()
+//     .min(1990)
+//     .max(2020)
+//     .stepValues(steps)
+//     .ticks(7);
+
+// d3.select('#sankey-slider').call(slider);
+
+function updateSankeyViz(selectedYear) {
+    d3.json("sankey_" + selectedYear + ".json").then(function(data){
+
+    });
+}
+
+//////////// SANKEY ///////////
+
 // Inspiration for the responsify function comes from
 // Brendan Sudol and his blog
 // https://brendansudol.github.io/writing/responsive-d3
