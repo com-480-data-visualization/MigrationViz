@@ -177,9 +177,9 @@ p {
 .info-panel {
   /*position: absolute;*/
  /* Adjust as needed */
-  left: 10px;
+  left: 0px;
   width: 300px; /* Fixed width */
-  height: 345px;/* Maximum height */
+  height: 445px;/* Maximum height */
   overflow-y: auto; /* Enable vertical scrollbar if content exceeds maximum height */
   background-color: #f9f9f9;
   border: 1px solid #ddd;

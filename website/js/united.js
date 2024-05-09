@@ -1,3 +1,4 @@
+
 // set width and height of svg_united
 var width = 1000
 var height = 800
@@ -53,15 +54,11 @@ d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/w
 var Tooltip = d3.select(".hover-info")
     .append("div")
     .attr("class", "tooltip")
-    .style("opacity", 0)
-    .style("background-color", "white")
-    .style("border", "solid")
-    .style("border-width", "2px")
-    .style("border-radius", "5px")
-    .style("padding", "5px");
-    
+
 var rad = d3.scaleSqrt().range([1.8, 2.6]);
 
+
+Timeline(united)
 // Define the function to zoom
 function zoomed(event, data) {
     const { transform } = event; 
@@ -80,7 +77,7 @@ function zoomed(event, data) {
     
 // Define mouseover, mousemove, and mouseleave function
 function mouseover(event, d) {
-    this.setAttribute("class", "circle-hover");
+   // this.setAttribute("class", "circle-hover");
     Tooltip.style("opacity", 1);
  }
 
@@ -147,10 +144,9 @@ function updateMapPoints(data) {
         .attr("x", 980 - 10) 
         .attr("y", 40) 
         .attr("text-anchor", "end") 
+        .attr("class", "text_sum")
         .text("Partial Number of Deaths : " + partialSum)
-        .style("fill", "black")
-        .style("font-weight", "bold")
-        .style("font-style", "italic"); 
+
 
     // Add the new text for the total sum
     var totalSumText = svg_united.append("text")
@@ -158,10 +154,8 @@ function updateMapPoints(data) {
         .attr("x", 980 - 10) 
         .attr("y", 20) 
         .attr("text-anchor", "end") 
-        .text("Total Number of Deaths : " + totalSum)
-        .style("fill", "black")
-        .style("font-weight", "bold")
-        .style("font-style", "italic");
+        .attr("class", "text_sum")
+        .text("Total Number of Deaths : " + totalSum);
 
     // Update existing points
     circles
@@ -177,10 +171,6 @@ function updateMapPoints(data) {
         .attr("cy", d => projection([d.long, d.lat])[1])
         .attr("r", d => rad(d.num_death))
         .attr("class", "circle")
-        .style("fill", "74a892")
-        .attr("stroke", "#74a892")
-        .attr("stroke-width", 1)
-        .attr("fill-opacity", .4)
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave);
@@ -334,8 +324,11 @@ function Timeline(data) {
     // Append line to timeline
     timeline.append("path")
         .datum(lineData)
-        .attr("class", "line")
-        .attr("d", line);
+        .attr("class", "line_tl")
+        .attr("d", line)
+      //  .style("fill", "none");
+        //.attr("stroke", "#008585");
+
 
     // Initialize brush element
     var brush = d3.brushX()
@@ -371,5 +364,3 @@ function Timeline(data) {
     // Initialize brush with initial selection
     brush.move(timeline.select('.brush'), initialSelection);
 }
-
-Timeline(united)

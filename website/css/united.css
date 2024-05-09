@@ -1,7 +1,29 @@
-
-
-.circle:hover {
-  stroke: black;
-  stroke-width: 4px;
+.circle {
+  stroke: #74a892;
+  fill: 74a892;
+  fill-opacity: .4;
+  stroke-width: 1;
 }
 
+
+.text_sum {
+  fill: black;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.line_tl {
+  fill: black;
+  fill-opacity: 0.8;
+  stroke: #74a892; /* Set line color */
+  stroke-width: 1.5px;
+}
+
+.tooltip {
+  background-color: white;
+  opacity: 0;
+  border: solid;
+  border-width: 2px;
+  border-radius: 5px;
+  padding: 5px
+}
