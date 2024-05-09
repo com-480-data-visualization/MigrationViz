@@ -83,9 +83,11 @@ function mouseover(event, d) {
 
 function mousemove(event, d) {
     Tooltip
-        .html(`<strong>${d.name}</strong><br>Number of deaths: ${d.num_death}`)
+        .html(`<strong>${d.name}</strong><br>Number of deaths: ${d.num_death}<br>Date found: ${d.date_found}<br>Cause of death: ${d.cause_death}`)
     var infoContent = `<h2>${d.name}</h2>`;
-    infoContent += `<p>Number of deaths: ${d.num_death}</p>`;
+    infoContent += `<p><em>Number of deaths:</em> ${d.num_death}</p>`;
+    infoContent += `<p><em>Date found:</em> ${d.date_found}</p>`;
+    infoContent += `<p><em>Cause of death:</em> ${d.cause_death}</p>`;
     updateInfoPanel(infoContent);
 }
     
