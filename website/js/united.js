@@ -7,6 +7,13 @@ var aspect = width / height;
 // The total sum of deaths reported by united against refugee deaths
 const totalSum = d3.sum(united, d => d.num_death);
 
+
+// Map and projection
+var projection = d3.geoMercator()
+    .center([4, 35])                // GPS of location to zoom on
+    .scale(500)                       // This is like the zoom
+    .translate([ width/2, height/2 ])
+
 // The svg_united
 var svg_group = d3.select("#united-viz")
     .append("svg")
@@ -19,6 +26,23 @@ var svg_group = d3.select("#united-viz")
 var svg_united = svg_group.append("g")
     .attr("id", "map-group")
     .attr("height", 200);
+    
+// Load external data and boot
+d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then( function(data){
+    svg_united.append("g")
+        .selectAll("path")
+        .data(data.features)
+        .join("path")
+            .attr("fill", "#74a892") // Change color of the Map
+            .style("opacity", 1) // Change opacity of the country fill
+            .attr("d", d3.geoPath()
+                .projection(projection)
+            )
+        .style("stroke", "black") // Linecolor
+        .style("opacity", .55) // Opacity of map, total
+})
+
+
 
 var timelineGroup = svg_group.append("g")
     .attr("id", "timeline-group")
@@ -29,36 +53,15 @@ timelineGroup.append("rect")
     .attr("height", height)
     .style("fill", "white");
 
-// Map and projection
-var projection = d3.geoMercator()
-    .center([4, 35])                // GPS of location to zoom on
-    .scale(500)                       // This is like the zoom
-    .translate([ width/2, height/2 ])
-
-
-// Load external data and boot
-d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then( function(data){
-    svg_united.append("g")
-        .selectAll("path")
-        .data(data.features)
-        .join("path")
-            .attr("fill", "#b8b8b8") // Change color of the Map
-            .style("opacity", .7) // Change opacity of the country fill
-            .attr("d", d3.geoPath()
-                .projection(projection)
-            )
-        .style("stroke", "black") // Linecolor
-        .style("opacity", .3) // Opacity of map, total
-})
-
 var Tooltip = d3.select(".hover-info")
     .append("div")
     .attr("class", "tooltip")
 
 var rad = d3.scaleSqrt().range([1.8, 2.8]);
 
-
 Timeline(united)
+
+
 // Define the function to zoom
 function zoomed(event, data) {
     const { transform } = event; 
@@ -77,7 +80,6 @@ function zoomed(event, data) {
     
 // Define mouseover, mousemove, and mouseleave function
 function mouseover(event, d) {
-   // this.setAttribute("class", "circle-hover");
     Tooltip.style("opacity", 1);
  }
 
@@ -328,19 +330,24 @@ function Timeline(data) {
         .datum(lineData)
         .attr("class", "line_tl")
         .attr("d", line)
-      //  .style("fill", "none");
-        //.attr("stroke", "#008585");
 
 
     // Initialize brush element
     var brush = d3.brushX()
       .extent([[0, 0], [width, height]])
-      .on("end", function(event) { brushCallback(event, data, x); }); // Pass event parameter and x scale
+      .on("end", function(event) { brushCallback(event, data, x); 
+      }); 
 
+    // Calculate default start and end dates
+    var endDate = maxDate;
+    var startDate = new Date(endDate.getFullYear() - 5, endDate.getMonth(), endDate.getDate()); // 5 years ago
+            
+    var initialSelection = [x(startDate), x(endDate)];
     // Append the brush element to the timeline
     timeline.append("g")
         .attr("class", "brush")
-        .call(brush);
+        .call(brush)
+        .call(brush.move, initialSelection);
 
     // Append the line on the bottom, define the ticks
     timeline.append("g")
@@ -355,14 +362,4 @@ function Timeline(data) {
         .attr("class", "axis axis--y")
         .call(d3.axisLeft(y)
         .ticks(4));
-
-    // Calculate default start and end dates
-    var endDate = maxDate;
-    var startDate = new Date(endDate.getFullYear() - 5, endDate.getMonth(), endDate.getDate()); // 5 years ago
-
-    // Set initial brush selection
-    var initialSelection = [x(startDate), x(endDate)];
-
-    // Initialize brush with initial selection
-    brush.move(timeline.select('.brush'), initialSelection);
 }
