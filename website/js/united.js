@@ -55,7 +55,7 @@ var Tooltip = d3.select(".hover-info")
     .append("div")
     .attr("class", "tooltip")
 
-var rad = d3.scaleSqrt().range([1.8, 2.6]);
+var rad = d3.scaleSqrt().range([1.8, 2.8]);
 
 
 Timeline(united)
