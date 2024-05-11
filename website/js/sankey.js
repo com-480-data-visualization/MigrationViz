@@ -18,6 +18,8 @@ function responsivefy(svg) {
 
 const years = [1990, 1995, 2000, 2005, 2010, 2015, 2020]
 
+const continentOrder = ["AFRICA", "EUROPE", "ASIA", "LATIN AMERICA AND THE CARIBBEAN","NORTHERN AMERICA", "OTHER", "OCEANIA"];
+
 // dimension and margin of graph
 var margin = {top:10, right:10, bottom:10, left:200},
     width = 900 - margin.left - margin.right,
@@ -29,30 +31,30 @@ var margin = {top:10, right:10, bottom:10, left:200},
 const slider = d3.select('#sankey-slider')
     .append("input")
     .attr("type", "range")
-    .attr("min", 1990)
-    .attr("max", 2020)
-    .attr("value", 0)
-    .attr("step", 5)
-    .attr("list", "tickmarks")
-    .on("input", function(){
-        const selectedYear = years[this.value];
+    .attr("min", years[0]) // Utiliser la première année pour le minimum
+    .attr("max", years[years.length - 1]) // Utiliser la dernière année pour le maximum
+    .attr("value", years[0]) // Définir la valeur initiale sur la première année
+    .attr("step", 5) // Supposer que le pas est de 5 ans, ajuster si nécessaire
+    .on("input", function() {
+        const selectedYear = parseInt(this.value); // Utiliser la valeur du curseur comme année
         updateSankeyViz(selectedYear);
     });
 
-// add ticks to slider 
-slider.append("datalist")
-.attr("id", "tickmarks")
-.selectAll("option")
-.data(years)
-.enter().append("option")
-.attr("value", function(d) { return d; });
+// Add ticks to slider (this assumes you want tick marks at each step/each year)
+const datalist = slider.append("datalist")
+    .attr("id", "tickmarks");
+
+datalist.selectAll("option")
+    .data(years)
+    .enter().append("option")
+    .attr("value", function(d) { return d; });
 
 ////////////// FUNCTIONS ////////////////////
 function produce_sankey(data) {
     // FIXME: unconstant size of sankey diagram
     // FIXME: hover tool does not function correctly anymore (sometime works, sometime not)
     // FIXME: should we keep the original order of countries (alphabetical ?) when switching dataset
-    var graph = sankey(data);
+    var graph = sankey(data);    
 
     // add the links
     var link = svg_sankey.append("g").selectAll(".link")
@@ -89,23 +91,38 @@ function produce_sankey(data) {
                 return d.name + "\n" + format(d.value); });
                 
     // add the titles for the nodes
+    // Ajoutez les titres pour les nœuds
     node.append("text")
-    .attr("x", function(d) {return d.x0-6;})
-    .attr("y", function(d) {return (d.y1 + d.y0)/ 2;})
-    .attr("dy", "0.35em")
-    .attr("text-anchor", "end")
-    .text(function(d) {return d.name;})
-    .filter(function(d) {return d.x0 < width/2;})
-    .attr("x", function(d) {return dx1 + 6;})
-    .attr("text-anchor", "start");
+        .attr("x", function(d) {
+            // Si le nœud est plus à droite que la moitié de la largeur, dessinez le texte à gauche du nœud.
+            // Sinon, dessinez le texte à droite du nœud.
+            return d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6;
+        })
+        .attr("y", function(d) { return (d.y1 + d.y0) / 2; })
+        .attr("dy", "0.35em")
+        .attr("text-anchor", function(d) {
+            // Si le nœud est à droite, ancrez le texte à 'end' pour qu'il s'étende vers la gauche.
+            // Si le nœud est à gauche, ancrez le texte à 'start' pour qu'il s'étende vers la droite.
+            return d.x0 < width / 2 ? "start" : "end";
+        })
+        .text(function(d) { return d.name; })
+        .filter(function(d) { 
+            // Appliquer un filtre pour changer la couleur du texte pour une meilleure visibilité si nécessaire
+            return d.x0 < (margin.left + 6); // Exemple de condition, ajustez selon vos besoins
+        })
 }
+
 
 // Update sankey viz based on year chosen via slider
 function updateSankeyViz(selectedYear) {
-    d3.json("sankey_" + selectedYear + ".json").then(function(data){
+    d3.json("data/sankey_" + selectedYear + ".json").then(function(data) {
+        svg_sankey.selectAll("*").remove();  // Clear previous visualization
         produce_sankey(data);
+    }).catch(function(error) {
+        console.error("Failed to load data for year:", selectedYear, error);
     });
 }
+
 
 // format variable 
 var formatNumber = d3.format(",.0f") // zero decimal places
