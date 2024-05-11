@@ -1,4 +1,5 @@
 
+function initializeUnited() {
 // set width and height of svg_united
 var width = 1000
 var height = 800
@@ -53,9 +54,6 @@ timelineGroup.append("rect")
     .attr("height", height)
     .style("fill", "white");
 
-var Tooltip = d3.select(".hover-info")
-    .append("div")
-    .attr("class", "tooltip")
 
 var rad = d3.scaleSqrt().range([1.8, 2.8]);
 
@@ -80,12 +78,10 @@ function zoomed(event, data) {
     
 // Define mouseover, mousemove, and mouseleave function
 function mouseover(event, d) {
-    Tooltip.style("opacity", 1);
- }
+    infoPanel.style("opacity", 1);
+}
 
 function mousemove(event, d) {
-    Tooltip
-        .html(`<strong>${d.name}</strong><br>Number of deaths: ${d.num_death}<br>Date found: ${d.date_found}<br>Cause of death: ${d.cause_death}`)
     var infoContent = `<h2>${d.name}</h2>`;
     infoContent += `<p><em>Number of deaths:</em> ${d.num_death}</p>`;
     infoContent += `<p><em>Date found:</em> ${d.date_found}</p>`;
@@ -94,7 +90,7 @@ function mousemove(event, d) {
 }
     
 function mouseleave(event, d) {
-    Tooltip.style("opacity", 0);
+    infoPanel.style("opacity", 0);
 }
 
 // Update the Info Panel on the website
@@ -184,8 +180,8 @@ function updateMapPoints(data) {
 
     // Initialize zoom element
     var zoom = d3.zoom()
-      .scaleExtent([0.5, 8])
-      .on("zoom", function(event) {zoomed(event, data); })
+    .scaleExtent([0.5, 8])
+    .on("zoom", function(event) {zoomed(event, data); })
     
     svg_united.call(zoom);
 
@@ -334,9 +330,9 @@ function Timeline(data) {
 
     // Initialize brush element
     var brush = d3.brushX()
-      .extent([[0, 0], [width, height]])
-      .on("end", function(event) { brushCallback(event, data, x); 
-      }); 
+        .extent([[0, 0], [width, height]])
+        .on("end", function(event) { brushCallback(event, data, x); 
+        }); 
 
     // Calculate default start and end dates
     var endDate = maxDate;
@@ -363,3 +359,7 @@ function Timeline(data) {
         .call(d3.axisLeft(y)
         .ticks(4));
 }
+
+}
+
+initializeUnited();

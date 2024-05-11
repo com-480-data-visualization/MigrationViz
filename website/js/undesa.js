@@ -1,4 +1,5 @@
-// Define the size of the svg map         
+// Define the size of the svg map    
+
 const width_undesa = 945
 const height_undesa = 480
 const svg_undesa = d3.select("#undesa-viz")
@@ -125,9 +126,10 @@ Promise.all([
 // Strong inspiration from document by Yan Holtz for tooltip    
 // https://d3-graph-gallery.com/graph/bubblemap_tooltip.html
 // https://d3-graph-gallery.com/graph/choropleth_hover_effect.html
-const Tooltip_undesa = d3.select("#undesa-viz")
-    .append("div")
-    .attr("class", "tooltip")
+const Tooltip_undesa = d3.select("#undesa-viz").append("div")
+    .attr("class", "tooltip-undesa")
+    .style("opacity", 0);
+
 const mouseover_undesa = function (event, d) {
     Tooltip_undesa.style("opacity", 1)
     // Change the svg order in the DOM tree, so that this svg
@@ -156,8 +158,9 @@ var mousemove_undesa = function (event, d) {
         // ----------
         // TODO: Add country classes to circles and make stroke width bigger when hovering over country
         .html(countries[countries.findIndex(({ cca3 }) => cca3 === d.id)]['flag'] + "<b>&ensp;" + d.properties.name + "</b>" + "<br>" + d.id + "<br>" + "some value")
-        .style("left", (event.x - parseInt(d3.select(".tooltip").style("width")) / 2) + "px")
-        .style("top", (event.y + 30) + "px")
+        .style("left", (event.pageX + 10) + "px")
+        .style("top", (event.pageY + 10) + "px")
+        .style("opacity", 1);
 }
 var mouseleave_undesa = function (event, d) {
     Tooltip_undesa.style("opacity", 0)
@@ -206,4 +209,4 @@ var talk = function (value) {
 
 }
 
-console.log("Undesa", undesa)
+    console.log("Undesa", undesa)
