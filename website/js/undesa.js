@@ -31,12 +31,13 @@ unhcr.forEach(function (dictionary) {
 });
 // Continent colors
 // https://unstats.un.org/unsd/methodology/m49/#geo-regions
+
 var continentColors =
 {
-    "Africa": "#f07d00",
+    "Africa": "#c7522a",
     "Europe": "#0069b3",
-    "Asia": "#b80d7f",
-    "Americas": "#ffcc01",
+    "Asia": "#f7b801",
+    "Americas": "#008585",
     "Oceania": "#e40613",
     "Antarctica": "#21bbef"
     // green: #00963f

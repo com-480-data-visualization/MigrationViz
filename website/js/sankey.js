@@ -4,11 +4,11 @@
 // FIXME There are multiple mistakes in this code (missing ; container defined without var which could be a problem for later)
 // but I did not write it thus I will not change it
 function responsivefy(svg) {
-    container = d3.select(svg.node().parentNode)
+    container_sankey = d3.select(svg.node().parentNode)
     svg.call(resize)
-    d3.select(window).on("resize." + container.style("id"), resize)
+    d3.select(window).on("resize." + container_sankey.style("id"), resize)
     function resize() {
-        var containerWidth = parseInt(container.style("width"));
+        var containerWidth = parseInt(container_sankey.style("width"));
         var svgHeight = parseInt(svg.style("height"))
         var svgWidth = parseInt(svg.style("width"))
         svg.attr("width", containerWidth);
@@ -19,6 +19,17 @@ function responsivefy(svg) {
 const years = [1990, 1995, 2000, 2005, 2010, 2015, 2020]
 
 const continentOrder = ["AFRICA", "EUROPE", "ASIA", "LATIN AMERICA AND THE CARIBBEAN","NORTHERN AMERICA", "OTHER", "OCEANIA"];
+
+const continentColors_Sankey = {
+    "AFRICA": "#c7522a",
+    "ASIA": "#f7b801",
+    "EUROPE": "#3066be",
+    "LATIN AMERICA AND THE CARIBBEAN": "#008585",
+    "NORTHERN AMERICA": "#d1b1cb",
+    "OCEANIA": "#e40613",
+    "OTHER": "#4E0110"
+};
+
 
 // dimension and margin of graph
 var margin = {top:10, right:10, bottom:10, left:200},
@@ -77,18 +88,23 @@ function produce_sankey(data) {
     .attr("class", "node");
     
     // add the rectangles for the nodes 
+    // add the rectangles for the nodes 
     node.append("rect")
-    .attr("x", function(d) {return d.x0;})
-    .attr("y", function(d) {return d.y0;})
-    .attr("height", function(d) {return d.y1 - d.y0; })
-    .attr("width", sankey.nodeWidth())
-    .style("fill", function(d) {
-        return d.color = color(d.name.replace(/ .*/, "")); })
+        .attr("x", function(d) { return d.x0; })
+        .attr("y", function(d) { return d.y0; })
+        .attr("height", function(d) { return d.y1 - d.y0; })
+        .attr("width", sankey.nodeWidth())
+        .style("fill", function(d) {
+            return continentColors_Sankey[d.name.toUpperCase()] || "#ccc"; // Default color if no match
+        })
         .style("stroke", function(d) {
-            return d3.rgb(d.color).darker(2); })
-            .append("title")
-            .text(function(d) {
-                return d.name + "\n" + format(d.value); });
+            return d3.rgb(continentColors_Sankey[d.name.toUpperCase()] || "#ccc").darker(2);
+        })
+        .append("title")
+        .text(function(d) {
+            return d.name + "\n" + format(d.value);
+        });
+
                 
     // add the titles for the nodes
     // Ajoutez les titres pour les nœuds
@@ -122,7 +138,6 @@ function updateSankeyViz(selectedYear) {
         console.error("Failed to load data for year:", selectedYear, error);
     });
 }
-
 
 // format variable 
 var formatNumber = d3.format(",.0f") // zero decimal places
