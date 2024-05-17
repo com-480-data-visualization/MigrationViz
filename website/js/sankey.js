@@ -75,12 +75,6 @@ function produce_sankey(data) {
         .attr("d", d3.sankeyLinkHorizontal())
         .attr("stroke-width", function(d) {return d.width});
     
-    // add the link titles that appear when hovering on the links
-    link.append("title")
-    .text(function(d) {
-        return "from " + d.source.name + " to " + d.target.name + "\n" + format(d.value);
-    });
-    
     // add in the nodes
     var node = svg_sankey.append("g").selectAll(".node")
     .data(graph.nodes)
@@ -100,10 +94,6 @@ function produce_sankey(data) {
         .style("stroke", function(d) {
             return d3.rgb(continentColors_Sankey[d.name.toUpperCase()] || "#ccc").darker(2);
         })
-        .append("title")
-        .text(function(d) {
-            return d.name + "\n" + format(d.value);
-        });
 
                 
     // add the titles for the nodes
@@ -121,11 +111,57 @@ function produce_sankey(data) {
             // Si le nœud est à gauche, ancrez le texte à 'start' pour qu'il s'étende vers la droite.
             return d.x0 < width / 2 ? "start" : "end";
         })
+
         .text(function(d) { return d.name; })
         .filter(function(d) { 
             // Appliquer un filtre pour changer la couleur du texte pour une meilleure visibilité si nécessaire
             return d.x0 < (margin.left + 6); // Exemple de condition, ajustez selon vos besoins
         })
+
+        // Append a tooltip div to the body which will be used for displaying details about nodes or links
+    var tooltip_sankey = d3.select("#sankey-viz").append("div")
+        .attr("class", "tooltip-undesa")
+        .style("opacity", 0)
+        .style("position", "absolute")
+        .style("text-align", "center")
+        .style("width", "120px")
+        .style("height", "auto")
+        .style("padding", "2px")
+        .style("pointer-events", "none");
+
+    // Add event handlers for links
+    link
+        .on("mouseover", function(event, d) {
+            tooltip_sankey.html(`From: ${d.source.name}<br>To: ${d.target.name}<br>Value: ${format(d.value)}`)
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY + 10) + "px")
+                .style("opacity", 1);
+        })
+        .on("mousemove", function(event) {
+            tooltip_sankey.style("left", (event.pageX + 10) + "px")
+                        .style("top", (event.pageY + 10) + "px");
+        })
+        .on("mouseout", function() {
+            tooltip_sankey.style("opacity", 0);
+        });
+
+    // Existing event handlers for nodes, ensure they are correctly set up
+    node.selectAll("rect")
+        .on("mouseover", function(event, d) {
+            tooltip_sankey.html(`Name: ${d.name}<br>Value: ${format(d.value)}`)
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY + 10) + "px")
+                .style("opacity", 1);
+        })
+        .on("mousemove", function(event) {
+            tooltip_sankey.style("left", (event.pageX + 10) + "px")
+                        .style("top", (event.pageY + 10) + "px");
+        })
+        .on("mouseout", function() {
+            tooltip_sankey.style("opacity", 0);
+        });
+
+            
 }
 
 
