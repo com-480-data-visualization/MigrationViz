@@ -24,13 +24,15 @@ var svg_group = d3.select("#united-viz")
     .attr("preserveAspectRatio", "xMinYMid")
     .call(responsivefy);
 
+var svg_map = svg_group.append("g")
+        .attr("id", "map-group");
+
 var svg_united = svg_group.append("g")
-    .attr("id", "map-group")
-    .attr("height", 200);
+        .attr("id", "points-group");
     
 // Load external data and boot
 d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then( function(data){
-    svg_united.append("g")
+    svg_map.append("g")
         .selectAll("path")
         .data(data.features)
         .join("path")
@@ -57,7 +59,7 @@ timelineGroup.append("rect")
 
 var rad = d3.scaleSqrt().range([1.8, 2.8]);
 
-Timeline(united)
+
 
 
 // Define the function to zoom
@@ -359,6 +361,8 @@ function Timeline(data) {
         .call(d3.axisLeft(y)
         .ticks(4));
 }
+
+Timeline(united)
 
 }
 
