@@ -67,7 +67,7 @@ function zoomed(event, data) {
     const { transform } = event; 
     projection.scale(transform.k * 800)
         .translate([transform.x, transform.y]);
-    svg_united.selectAll("path")
+    svg_map.selectAll("path")
         .attr("d", d3.geoPath().projection(projection));
     
     svg_united.selectAll(".circle")
@@ -185,7 +185,8 @@ function updateMapPoints(data) {
     .scaleExtent([0.5, 8])
     .on("zoom", function(event) {zoomed(event, data); })
     
-    svg_united.call(zoom);
+    //svg_united.call(zoom);
+    svg_map.call(zoom);
 
     // Create a string with the two sums in it
     var sum_deaths = [totalSum, partialSum];
