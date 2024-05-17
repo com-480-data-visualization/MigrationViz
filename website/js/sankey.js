@@ -36,29 +36,58 @@ var margin = {top:10, right:10, bottom:10, left:200},
     width = 900 - margin.left - margin.right,
     height = 700 - margin.top - margin.bottom;
 
-// define slider
-// TODO Add years to slider
-// FIXME Find out how to select with slider which data year you want to expose
-const slider = d3.select('#sankey-slider')
-    .append("input")
+// Add a container for the slider and ticks
+const container = d3.select('#sankey-slider')
+    .append("div")
+    .attr("class", "slider-container")
+    .style("transform", "translateX(0%)"); // to modify
+
+// Add the title
+container.append("label")
+    .attr("for", "sankey-range")
+    .text("Timeline")
+    .style("margin-bottom", "10px")
+    .style("display", "block")
+    .style("text-align", "center");
+
+// Create the slider
+const slider = container.append("input")
     .attr("type", "range")
-    .attr("min", years[0]) // Utiliser la première année pour le minimum
-    .attr("max", years[years.length - 1]) // Utiliser la dernière année pour le maximum
-    .attr("value", years[0]) // Définir la valeur initiale sur la première année
-    .attr("step", 5) // Supposer que le pas est de 5 ans, ajuster si nécessaire
+    .attr("id", "sankey-range")
+
+    .attr("min", years[0])
+    .attr("max", years[years.length - 1]) 
+    .attr("value", years[0])
+    .attr("step", 5) // Assume the step is 5 years, adjust if necessary
+    .style("width", "100%")
     .on("input", function() {
-        const selectedYear = parseInt(this.value); // Utiliser la valeur du curseur comme année
-        updateSankeyViz(selectedYear);
+        const selectedYear = parseInt(this.value); // Use the slider value as the year
+        updateSankeyViz(selectedYear); 
     });
 
-// Add ticks to slider (this assumes you want tick marks at each step/each year)
-const datalist = slider.append("datalist")
-    .attr("id", "tickmarks");
+// Add ticks to the slider
+const tickContainer = container.append("div")
+    .attr("class", "tick-container");
 
-datalist.selectAll("option")
+tickContainer.selectAll("div")
     .data(years)
-    .enter().append("option")
-    .attr("value", function(d) { return d; });
+    .enter().append("div")
+    .attr("class", "tick")
+    .style("position", "absolute")
+    .style("left", d => `${(d - years[0]) / (years[years.length - 1] - years[0]) * 100}%`)
+    .style("transform", "translateX(0%)")
+    .text(d => d);
+
+// const minYear = parseInt(slider.attr("min"));
+// const maxYear = parseInt(slider.attr("max"));
+// const step = parseInt(slider.attr("step"));
+
+// for (let year = minYear; year <= maxYear; year += step) {
+//     tickContainer.append("div")
+//         .attr("class", "tick")
+//         .style("left", `${(year - minYear) / (maxYear - minYear) * 100}%`)
+//         .text(year);
+// }
 
 ////////////// FUNCTIONS ////////////////////
 function produce_sankey(data) {
