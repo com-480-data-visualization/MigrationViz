@@ -159,8 +159,27 @@ function produce_sankey(data) {
         })
         .on("mouseout", function() {
             tooltip_sankey.style("opacity", 0);
+        })
+        .on("click", function(event, clickedNode) {
+            event.stopPropagation();  // Prevent click from propagating to the SVG background
+    
+            // Reset all nodes and links to a lower opacity
+            node.selectAll("rect").style("opacity", 0.2);
+            link.style("opacity", 0.1);
+    
+            // Highlight the selected node
+            d3.select(this).style("opacity", 1);
+    
+            // Highlight links and connected nodes
+            link.filter(d => d.source === clickedNode || d.target === clickedNode)
+                .style("opacity", 1)  // Make connected links fully visible
+                .each(function(d) {
+                    // Select the nodes connected by these links and make them fully visible
+                    node.selectAll("rect")
+                        .filter(n => n === d.source || n === d.target)
+                        .style("opacity", 1);
+                });
         });
-
             
 }
 
@@ -175,6 +194,17 @@ function updateSankeyViz(selectedYear) {
     });
 }
 
+// Function to determine if a node is on the left or right
+function isNodeOnLeft(node) {
+    return node.x0 < width / 2;
+}
+
+// Update links based on the node click
+function updateLinkOpacity(clickedNode) {
+    link.style("opacity", d => (d.source === clickedNode || d.target === clickedNode) ? 1 : 0.1);
+}
+
+
 // format variable 
 var formatNumber = d3.format(",.0f") // zero decimal places
 var format = function(d) {return formatNumber(d);};
@@ -185,8 +215,14 @@ var svg_sankey = d3.select("#sankey-viz").append("svg")
     .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
     .call(responsivefy)
     .append("g")
-    .attr("transform",
-        "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    .on("click", function(event) {
+        // Check if the click is outside of nodes
+        if (!event.target('.node')) {
+            node.selectAll("rect").style("opacity", 1);
+            link.style("opacity", 1);
+        }
+    });
 
 // set the sankey diagram properties
 var sankey = d3.sankey()
