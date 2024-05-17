@@ -37,13 +37,13 @@ var margin = {top:10, right:10, bottom:10, left:200},
     height = 700 - margin.top - margin.bottom;
 
 // Add a container for the slider and ticks
-const container = d3.select('#sankey-slider')
+const container_timeline = d3.select('#sankey-slider')
     .append("div")
     .attr("class", "slider-container")
     .style("transform", "translateX(0%)"); // to modify
 
 // Add the title
-container.append("label")
+container_timeline.append("label")
     .attr("for", "sankey-range")
     .text("Timeline")
     .style("margin-bottom", "10px")
@@ -51,7 +51,7 @@ container.append("label")
     .style("text-align", "center");
 
 // Create the slider
-const slider = container.append("input")
+const slider = container_timeline.append("input")
     .attr("type", "range")
     .attr("id", "sankey-range")
 
@@ -66,7 +66,7 @@ const slider = container.append("input")
     });
 
 // Add ticks to the slider
-const tickContainer = container.append("div")
+const tickContainer = container_timeline.append("div")
     .attr("class", "tick-container");
 
 tickContainer.selectAll("div")

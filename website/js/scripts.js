@@ -39,7 +39,7 @@ function updateMenu() {
     });
 }
 
-const container = document.querySelector('.container');
+var container = document.querySelector('.container');
 container.addEventListener('wheel', (e) => {
   e.preventDefault();
   container.scrollLeft += e.deltaY;
