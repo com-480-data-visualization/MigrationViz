@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('main').addEventListener('scroll', updateMenu);
 
     // Attachez un écouteur d'événements à tous vos liens de navigation pour le défilement fluide
-    document.querySelectorAll('#fixedMenu a').forEach(function(anchor) {
+    document.querySelectorAll('a').forEach(function(anchor) {
         anchor.addEventListener('click', function(e) {
             e.preventDefault(); // Empêche le comportement par défaut du lien
             // Utilise l'attribut href du lien pour trouver l'élément cible
@@ -38,3 +38,9 @@ function updateMenu() {
         }
     });
 }
+
+const container = document.querySelector('.container');
+container.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  container.scrollLeft += e.deltaY;
+});

@@ -10,8 +10,8 @@
     <script src="https://d3js.org/d3-geo-projection.v4.min.js"></script>
     <!-- Load data -->
     <!-- TODO: Find better way to import data -->
-    <script type='text/javascript' src='../data_world/unhcr_data.js'></script>
     <script type='text/javascript' src='../data_world/undesa_data.js'></script>
+    <script type='text/javascript' src='../data_world/unhcr_data.js'></script>
 </head>
 
 <body>
@@ -119,9 +119,6 @@
         const color = d3.scaleQuantize([0.0, 100.0], d3.schemeBlues[5]);
         console.log("color", color(0.0), color(20), color(80), color(-99))
         var myMap = new Map();
-        unhcr.forEach(function (dictionary) {
-            myMap.set(dictionary.country, dictionary.refugees + dictionary.asylum_seekers);
-        });
         // Continent colors
         // https://unstats.un.org/unsd/methodology/m49/#geo-regions
         var continentColors =

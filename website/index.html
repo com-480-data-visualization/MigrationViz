@@ -21,71 +21,138 @@
     <link rel="stylesheet" href="css/united.css">
     <script type='text/javascript' src='data/united_data.js'></script>
 
+    <!-- Files for undesa -->
+    <script src="https://d3js.org/d3.v6.js"></script>
+    <script src="https://d3js.org/d3-geo-projection.v4.min.js"></script>
+    <link rel="stylesheet" href="css/undesa.css">
+    <script type='text/javascript' src='data/undesa_data.js'></script>
+    <script type='text/javascript' src='data/unhcr_data.js'></script>
 
+ 
     <!-- Files for swiss map -->
     <link rel="stylesheet" href="css/swiss_map.css">
 </head>
+
 <body>
 
     <div id="fixedMenu">
-        <a href="#Title">Titre</a>
+        <a href="#Title">Hero</a>
         <a href="#Intro">Introduction</a>
         <a href="#Sankey">Sankey</a>
-        <a href="#UNDESCA">UNDESCA</a>
+        <a href="#UNDESA">UNDESA</a>
         <a href="#United">United</a>
         <a href="#Authors">Authors</a>
     </div>
 
     <main class="mendatory-scrolling">
         <section class="slide" id="Title">
-        
+
             <h1>MIGRATION</h1>
 
-        </section> 
+        </section>
 
         <section class="slide" id="Intro">
             <h2>Introduction</h2>
             <h3>Exploring the Human Journey: Visualizing Global Migration Patterns</h3>
-            <p>Welcome to our interactive visualization project, where we delve into the complicated patterns of global human migration.</p>
-            <p>Our work is driven by the recognition that behind every statistic, there's a human story - a narrative of hope, struggle, and resilience. </p>
-            <p>This project aims to bridge the gap between the depersonalized data often encountered in migration and the individual experiences that data represents.</p>
-            <p>Prepared with love by the authors</p>
+            <p>Welcome to our interactive visualization project, where we delve into the complicated patterns of global
+                human migration.</p>
+            <p>Our work is driven by the recognition that behind every statistic, there's a human story - a narrative of
+                hope, struggle, and resilience. </p>
+            <p>This project aims to bridge the gap between the depersonalized data often encountered in migration and
+                the individual experiences that data represents.</p>
+            <p>Prepared with love by the <a href="#Authors">Authors</a></p>
+
         </section>
 
         <section class="slide" id="Sankey">
+            <h2>Sankey</h2>
             <div class="two-columns">
                 <div class="text-column">
-                    <!-- Your text content here -->
-                    <h2>Sankey</h2>
-                    <p>Some paragraph text...</p>
+
+                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tellus lectus, ultrices in
+                        tortor sit amet, dignissim placerat nisl. Aenean facilisis imperdiet auctor. Proin hendrerit,
+                        nisl a vulputate pulvinar, eros mauris lobortis dui, vel suscipit erat ligula quis sem. Maecenas
+                        ultrices risus at ipsum tincidunt, sed placerat lacus malesuada. Fusce aliquet orci quis tempus
+                        vulputate. Proin a purus non ex hendrerit volutpat non id libero. Praesent vitae mauris tellus.
+                        Suspendisse tempor nunc leo. Morbi sapien enim, ultricies a porttitor eget, tempus non velit.
+                    </p>
                 </div>
-                <div class="viz-column">
-                    <div id="sankey-viz"></div>
-                    <script src="js/sankey.js"></script>
+                <div class="viz-column right">
+                    <div id="sankey-slider"></div>
+                    <div id="sankey-viz">
+                        <script src="js/sankey.js"></script>
+                    </div>
                 </div>
             </div>
-            
+
         </section>
 
-        <section class="slide" id="UNDESCA">
-            <h2>UNDESCA | UNHCR</h2>
+        <section class="slide" id="UNDESA">
+            <h2>UNDESA</h2>
+            <div class="two-columns">
+                <div class="viz-column">
+                    <div class="toggle-radio" data-style="rounded" data-color="#7CACEB">
+                        <input type="radio" name="default" id="default_Option1" value="Option1" onclick="talk(value);" checked>
+                        <label for="default_Option1">Refugees</label>
+                        <input type="radio" name="default" id="default_Option2" value="Option2" onclick="talk(value);">
+                        <label for="default_Option2">Percentage refugees in migrants</label>
+                        <!-- <input type="radio" name="default" id="default_Option3" value="Option3" onclick="talk(value);">
+                        <label for="default_Option3">Option 3</label> -->
+                    </div>
 
-            
+                    <div id="undesa-viz">
+                        <script src="js/undesa.js"></script>
+                    </div>
+                    
+
+                </div>
+                <div class="text-column right">
+                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tellus lectus, ultrices in
+                        tortor sit amet, dignissim placerat nisl. Aenean facilisis imperdiet auctor. Proin hendrerit,
+                        nisl a vulputate pulvinar, eros mauris lobortis dui, vel suscipit erat ligula quis sem. Maecenas
+                        ultrices risus at ipsum tincidunt, sed placerat lacus malesuada. Fusce aliquet orci quis tempus
+                        vulputate. Proin a purus non ex hendrerit volutpat non id libero. Praesent vitae mauris tellus.
+                        Suspendisse tempor nunc leo. Morbi sapien enim, ultricies a porttitor eget, tempus non velit.
+                    </p>
+            </div>
+
         </section>
 
         <section class="slide" id="United">
-            <div class="two-columns">
-                <div class="text-column">
-                    <!-- Your text content here -->
+            <div class="container">
+                <div class="slide" id="United">
                     <h2>United</h2>
-                    <p>Some paragraph text...</p>
+                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tellus lectus, ultrices in
+                        tortor sit amet, dignissim placerat nisl. Aenean facilisis imperdiet auctor. Proin hendrerit,
+                        nisl a vulputate pulvinar, eros mauris lobortis dui, vel suscipit erat ligula quis sem. Maecenas
+                        ultrices risus at ipsum tincidunt, sed placerat lacus malesuada. Fusce aliquet orci quis tempus
+                        vulputate. Proin a purus non ex hendrerit volutpat non id libero. Praesent vitae mauris tellus.
+                        Suspendisse tempor nunc leo. Morbi sapien enim, ultricies a porttitor eget, tempus non velit.
+                    </p>
                 </div>
-                <div class="viz-column">
-                    <div id="united-viz"></div>
-                    <script src="js/united.js"></script>
+                <div class = "slide" id="United">
+                    <h2>United</h2>
+                    <div class="two-columns">
+                        <div class="text-column">
+                            <p> You can zoom in and out of the map as you wish. The points repesent deadly events on the border and inside of Europe. Choose the timeperiod you are interested in. To the right, you receive additional information on the event. 
+                            </p>
+                        </div>
+                        <div class="viz-column right">
+                            <div id="united-viz">
+                                <script src="js/united.js"></script>
+                            </div>
+                        </div>
+                        <div class="info-panel">
+                            <h2>Info Panel</h2>
+                            <img src="images/konturen_person.png">
+                            <div class="hover-info">
+                                <!-- Hover tool information will be dynamically updated here -->
+                                <p>This is where your hover tool information can be displayed.</p>
+                              </div>
+                        </div>
                 </div>
+            </div>
         </section>
-
 
         <section class="slide" id="Authors">
             <h2>Authors</h2>
@@ -106,7 +173,8 @@
                     <a href="https://github.com/Rayjine" class="github-link" target="_blank">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="https://www.linkedin.com/in/nicolas-filimonov-b7778b200" class="linkedin-link" target="_blank">
+                    <a href="https://www.linkedin.com/in/nicolas-filimonov-b7778b200" class="linkedin-link"
+                        target="_blank">
                         <i class="fab fa-linkedin"></i>
                     </a>
                 </div>
@@ -123,7 +191,8 @@
                     <a href="https://github.com/cmaximilian" class="github-link" target="_blank">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="https://www.linkedin.com/in/casimir-nüsperling-733213223" class="linkedin-link" target="_blank">
+                    <a href="https://www.linkedin.com/in/casimir-nüsperling-733213223" class="linkedin-link"
+                        target="_blank">
                         <i class="fab fa-linkedin"></i>
                     </a>
                 </div>
@@ -136,6 +205,7 @@
     <script src="js/scripts.js"></script>
 
 </body>
+
 </html>
 
 <!-- 

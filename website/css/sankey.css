@@ -1,7 +1,5 @@
 /* HEAVILY INSPIRED FROM https://bl.ocks.org/d3noob/013054e8d7807dff76247b81b0e29030 by Malcolm Maclean
 NEED TO CHECK similarities and how it looks like */
-
-
 .node rect {
   cursor: pointer;
   fill-opacity: .9;
@@ -28,3 +26,15 @@ NEED TO CHECK similarities and how it looks like */
   stroke: steelblue;
   stroke-width: 4px;
 }
+
+/* div.tooltip{
+  position: absolute;
+  text-align: center;
+  width: 60px;
+  height: 28px;
+  padding: 2px;
+  background-color: antiquewhite;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+} */
