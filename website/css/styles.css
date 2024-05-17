@@ -55,6 +55,7 @@ h1 {
     text-align: center;
     margin-top: 0;
     font-size: calc(8vw + 8vh);
+    font-family: initial;
   }
 
 #Title h1{
@@ -119,11 +120,14 @@ p {
   }
 
 
-#Title{
+ #Title{
+  /*
   background-image: url('../images/hero_background.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  */
+  position:relative;
 }
   
 /* --------------------------------------------------------------*/
