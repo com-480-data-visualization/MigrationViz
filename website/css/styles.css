@@ -21,6 +21,11 @@ html, body {
   text-align: center;
 }
 
+#Intro {
+  margin-right: 120px;
+  margin-left: 120px;
+}
+
 .fullscreen-text {
   display: flex;
   justify-content: center;
