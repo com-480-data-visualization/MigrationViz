@@ -27,6 +27,29 @@ NEED TO CHECK similarities and how it looks like */
   stroke-width: 4px;
 }
 
+.slider-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.tick-container {
+  position: relative;
+  width: 100%;
+  height: 20px; /* Adjust as necessary to fit your design */
+  margin-top: 5px;
+}
+
+.tick {
+  position: absolute;
+  white-space: nowrap;
+  font-size: 12px;
+  text-align: center;
+  transform: translateX(-50%);
+}
+
 /* div.tooltip{
   position: absolute;
   text-align: center;
