@@ -1,15 +1,16 @@
-// Code from https://www.youtube.com/watch?v=vpChBWgwrgw&t=88s
+// Code from Szenia Zadvornykh
+// CodePen https://codepen.io/zadvorsky/pen/xxwbBQV/license?editors=0010
 
 // JavaScript Coding Part
 
-console.clear();
-console.log('freewebsitecode.com');
 
 const config = {
-  src: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/175711/open-peeps-sheet.png',
-  rows: 15,
-  cols: 7 };
-
+  src: 'images/open-peeps-sheet.png',
+  rows: 7, // 15
+  cols: 15 }; // 7
+  // src: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/175711/open-peeps-sheet.png',
+  // src: 'data/open-peeps-sheet-test.png',
+  // src: 'images/hero_compressed.png',
   
 
 // UTILS
@@ -65,8 +66,10 @@ const normalWalk = ({ peep, props }) => {
     startY,
     endX } =
   props;
-
-  const xDuration = 10;
+  
+  // console.log("peep.width", peep.width)
+  // console.log("peep.rect", peep.rect)
+  const xDuration = canvas.width/peep.width;
   const yDuration = 0.25;
 
   const tl = gsap.timeline();
@@ -175,21 +178,41 @@ function createPeeps() {
     naturalWidth: width,
     naturalHeight: height
   } = img;
-  const total = rows * cols;
-  const rectWidth = width / rows;
-  const rectHeight = height / cols;
 
-  for (let i = 0; i < total; i++) {
+  // canvas width / peeps width 
+  // 3000 / 240  * 10
+  // 105
+
+  const total = rows * cols;
+  const rectWidth = width / cols;
+  const rectHeight = height / rows;
+  const number_people =  Math.floor((canvas.clientWidth * devicePixelRatio / rectWidth)*14);
+  // console.log("LOG", total, rectWidth, rectHeight, number_people)
+  
+  let iter = number_people%total
+  for (let i = 0; i < iter; i++) {
     if (selectedIndices.includes(i)) {
       allPeeps.push(new Peep({
         image: img,
         rect: [
-          i % rows * rectWidth,
-          (i / rows | 0) * rectHeight,
+        i % cols * rectWidth,
+        (i / cols | 0) * rectHeight,
+        rectWidth,
+        rectHeight] }));
+    }
+  }
+
+  for (let j = 0; j < Math.floor(number_people/total); j++) {
+    for (let i = 0; i < total; i++) {
+      if (selectedIndices.includes(i)) {
+        allPeeps.push(new Peep({
+          image: img,
+          rect: [
+          i % cols * rectWidth,
+          (i / cols | 0) * rectHeight,
           rectWidth,
-          rectHeight
-        ]
-      }));
+          rectHeight] }));
+      }
     }
   }
 }
