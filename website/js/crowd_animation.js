@@ -5,11 +5,12 @@
 
 
 const config = {
-  src: 'images/hero_compressed.png',
-  rows: 1, // 15
-  cols: 18 }; // 7
+  src: 'images/open-peeps-sheet.png',
+  rows: 15, // 15
+  cols: 7 }; // 7
   // src: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/175711/open-peeps-sheet.png',
   // src: 'data/open-peeps-sheet-test.png',
+  // src: 'images/hero_compressed.png',
   
 
 // UTILS
