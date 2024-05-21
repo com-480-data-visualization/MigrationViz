@@ -156,29 +156,41 @@ function init() {
   window.addEventListener('resize', resize);
 }
 
+// Define the indices of the peeps you want to display
+const selectedIndices = [1, 3, 6, 8, 9, 10, 11, 12, 13, 14,
+                        15, 18, 19, 20, 22, 23, 24, 25, 26, 27, 28, 29,
+                        32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44,
+                        45, 46, 49, 50, 51, 52, 54, 55, 56, 57, 59,
+                        60, 62, 63, 65, 66, 67, 68, 69, 70, 71, 73,
+                        75, 76, 79, 80, 81, 83, 85, 87,
+                        94, 95, 96, 98, 99, 102, 103
+];
+
 function createPeeps() {
   const {
     rows,
-    cols } =
-  config;
+    cols
+  } = config;
   const {
     naturalWidth: width,
-    naturalHeight: height } =
-  img;
+    naturalHeight: height
+  } = img;
   const total = rows * cols;
   const rectWidth = width / rows;
   const rectHeight = height / cols;
 
   for (let i = 0; i < total; i++) {
-    allPeeps.push(new Peep({
-      image: img,
-      rect: [
-      i % rows * rectWidth,
-      (i / rows | 0) * rectHeight,
-      rectWidth,
-      rectHeight] }));
-
-
+    if (selectedIndices.includes(i)) {
+      allPeeps.push(new Peep({
+        image: img,
+        rect: [
+          i % rows * rectWidth,
+          (i / rows | 0) * rectHeight,
+          rectWidth,
+          rectHeight
+        ]
+      }));
+    }
   }
 }
 
