@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,7 @@
 
     <title> MigrationViz </title>
     <!-- Generale Files -->
-    <link rel="stylesheet" href="css/styles.css"> 
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
 
@@ -28,7 +29,7 @@
     <script type='text/javascript' src='data/undesa_data.js'></script>
     <script type='text/javascript' src='data/unhcr_data.js'></script>
 
- 
+
     <!-- Files for swiss map -->
     <link rel="stylesheet" href="css/swiss_map.css">
 </head>
@@ -41,6 +42,7 @@
         <a href="#Sankey">Sankey</a>
         <a href="#UNDESA">UNDESA</a>
         <a href="#United">United</a>
+        <a href="#United2">United Viz</a>
         <a href="#Authors">Authors</a>
         <a href="#Credits">Credits</a>
     </div>
@@ -52,10 +54,10 @@
             </div>
             <canvas id="canvas" style="height:100%; width:100%; position:static; "></canvas>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js'></script>
-            <script  src="js/crowd_animation.js"></script>
+            <script src="js/crowd_animation.js"></script>
         </section>
 
-        <section class="slide" id="Intro">
+        <section class="slide right" id="Intro">
             <h2>Introduction</h2>
             <h3>Exploring the Human Journey: Visualizing Global Migration Patterns</h3>
             <p>Welcome to our interactive visualization project, where we delve into the complicated patterns of global
@@ -88,7 +90,6 @@
                     </div>
                 </div>
             </div>
-
         </section>
 
         <section class="slide" id="UNDESA">
@@ -96,7 +97,8 @@
             <div class="two-columns">
                 <div class="viz-column">
                     <div class="toggle-radio" data-style="rounded" data-color="#7CACEB">
-                        <input type="radio" name="default" id="default_Option1" value="Option1" onclick="talk(value);" checked>
+                        <input type="radio" name="default" id="default_Option1" value="Option1" onclick="talk(value);"
+                            checked>
                         <label for="default_Option1">Refugees</label>
                         <input type="radio" name="default" id="default_Option2" value="Option2" onclick="talk(value);">
                         <label for="default_Option2">Percentage refugees in migrants</label>
@@ -107,7 +109,7 @@
                     <div id="undesa-viz">
                         <script src="js/undesa.js"></script>
                     </div>
-                    
+
 
                 </div>
                 <div class="text-column right">
@@ -118,49 +120,49 @@
                         vulputate. Proin a purus non ex hendrerit volutpat non id libero. Praesent vitae mauris tellus.
                         Suspendisse tempor nunc leo. Morbi sapien enim, ultricies a porttitor eget, tempus non velit.
                     </p>
-            </div>
+                </div>
 
         </section>
 
         <section class="slide" id="United">
-            <div class="container">
-                    <div class="subslide">
-                        <h2>United</h2>
-                        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tellus lectus, ultrices in
-                            tortor sit amet, dignissim placerat nisl. Aenean facilisis imperdiet auctor. Proin hendrerit,
-                            nisl a vulputate pulvinar, eros mauris lobortis dui, vel suscipit erat ligula quis sem. Maecenas
-                            ultrices risus at ipsum tincidunt, sed placerat lacus malesuada. Fusce aliquet orci quis tempus
-                            vulputate. Proin a purus non ex hendrerit volutpat non id libero. Praesent vitae mauris tellus.
-                            Suspendisse tempor nunc leo. Morbi sapien enim, ultricies a porttitor eget, tempus non velit.
-                        </p>
+            <h2>United</h2>
+            <div class="fullscreen-text centered-content">
+                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tellus lectus, ultrices in
+                    tortor sit amet, dignissim placerat nisl. Aenean facilisis imperdiet auctor. Proin hendrerit,
+                    nisl a vulputate pulvinar, eros mauris lobortis dui, vel suscipit erat ligula quis sem. Maecenas
+                    ultrices risus at ipsum tincidunt, sed placerat lacus malesuada. Fusce aliquet orci quis tempus
+                    vulputate. Proin a purus non ex hendrerit volutpat non id libero. Praesent vitae mauris tellus.
+                    Suspendisse tempor nunc leo. Morbi sapien enim, ultricies a porttitor eget, tempus non velit.
+                </p>
+            </div>
+
+        </section>
+        <section class="slide top right" id="United2">
+            <div class="two-columns">
+                <div class="text-column">
+                    <p> You can zoom in and out of the map as you wish. The points repesent deadly events on the border
+                        and inside of Europe. Choose the timeperiod you are interested in. To the right, you receive
+                        additional information on the event.
+                    </p>
+                </div>
+                <div class="viz-column">
+                    <div id="united-viz">
+                        <script src="js/united.js"></script>
                     </div>
-                    <div class = "subslide">
-                        <h2>United</h2>
-                        <div class="two-columns">
-                            <div class="text-column">
-                                <p> You can zoom in and out of the map as you wish. The points repesent deadly events on the border and inside of Europe. Choose the timeperiod you are interested in. To the right, you receive additional information on the event. 
-                                </p>
-                            </div>
-                            <div class="viz-column right">
-                                <div id="united-viz">
-                                    <script src="js/united.js"></script>
-                                </div>
-                            </div>
-                            <div class="info-panel">
-                                <h2>Info Panel</h2>
-                                <img src="images/konturen_person.png">
-                                <div class="hover-info">
-                                    <!-- Hover tool information will be dynamically updated here -->
-                                    <p>This is where your hover tool information can be displayed.</p>
-                                </div>
-                            </div>
-                        </div>
+                </div>
+                <div class="info-panel">
+                    <h2>Info Panel</h2>
+                    <img src="images/konturen_person.png">
+                    <div class="hover-info">
+                        <!-- Hover tool information will be dynamically updated here -->
+                        <p>This is where your hover tool information can be displayed.</p>
+                    </div>
                 </div>
         </section>
 
         <section class="slide" id="Authors">
             <h2>Authors</h2>
-            <div class="author-profiles">
+            <div class="author-profiles centered-content">
                 <div class="author">
                     <img src="images/Lola.jpg" alt="Lola Bardel" class="profile-photo">
                     <p>Lola Bardel</p>
@@ -206,15 +208,17 @@
         </section>
 
 
-        <section class="slide" id="Credits" >
+        <section class="slide" id="Credits">
             <h2>Credits</h2>
+            <div class="fullscreen-text centered-content">
                 <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tellus lectus, ultrices in
-                    tortor sit amet, dignissim placerat nisl. Aenean facilisis imperdiet auctor. Proin hendrerit,
-                    nisl a vulputate pulvinar, eros mauris lobortis dui, vel suscipit erat ligula quis sem. Maecenas
-                    ultrices risus at ipsum tincidunt, sed placerat lacus malesuada. Fusce aliquet orci quis tempus
-                    vulputate. Proin a purus non ex hendrerit volutpat non id libero. Praesent vitae mauris tellus.
-                    Suspendisse tempor nunc leo. Morbi sapien enim, ultricies a porttitor eget, tempus non velit.
+                tortor sit amet, dignissim placerat nisl. Aenean facilisis imperdiet auctor. Proin hendrerit,
+                nisl a vulputate pulvinar, eros mauris lobortis dui, vel suscipit erat ligula quis sem. Maecenas
+                ultrices risus at ipsum tincidunt, sed placerat lacus malesuada. Fusce aliquet orci quis tempus
+                vulputate. Proin a purus non ex hendrerit volutpat non id libero. Praesent vitae mauris tellus.
+                Suspendisse tempor nunc leo. Morbi sapien enim, ultricies a porttitor eget, tempus non velit.
                 </p>
+            </div>
 
         </section>
     </main>
