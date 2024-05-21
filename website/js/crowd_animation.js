@@ -68,7 +68,7 @@ const normalWalk = ({ peep, props }) => {
   props;
   
   // console.log("peep.width", peep.width)
-  console.log("peep.rect", peep.rect)
+  // console.log("peep.rect", peep.rect)
   const xDuration = canvas.width/peep.width;
   const yDuration = 0.25;
 
@@ -187,7 +187,7 @@ function createPeeps() {
   const rectWidth = width / cols;
   const rectHeight = height / rows;
   const number_people =  Math.floor((canvas.clientWidth * devicePixelRatio / rectWidth)*14);
-  console.log("LOG", total, rectWidth, rectHeight, number_people)
+  // console.log("LOG", total, rectWidth, rectHeight, number_people)
   
   let iter = number_people%total
   for (let i = 0; i < iter; i++) {
