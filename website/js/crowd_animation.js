@@ -6,8 +6,8 @@
 
 const config = {
   src: 'images/open-peeps-sheet.png',
-  rows: 15, // 15
-  cols: 7 }; // 7
+  rows: 7, // 15
+  cols: 15 }; // 7
   // src: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/175711/open-peeps-sheet.png',
   // src: 'data/open-peeps-sheet-test.png',
   // src: 'images/hero_compressed.png',
