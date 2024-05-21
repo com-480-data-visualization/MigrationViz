@@ -90,7 +90,7 @@ p {
 
 
 .mendatory-scrolling{
-    overflow-y: scroll; /* Permet le défilement vertical */
+    overflow-y: hidden; /* Permet le défilement vertical */
     scroll-snap-type: y mandatory; /* Active le scroll snapping vertical obligatoire */
     height: 100vh;
 }
