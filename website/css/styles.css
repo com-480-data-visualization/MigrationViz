@@ -189,6 +189,19 @@ p {
     font-weight: bold;
   }
 
+  .menu-link {
+    padding: 5px 5px;
+    color: white;
+    background-color: #c7522a;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.menu-link:hover {
+    background-color: #008585;
+}
+
+
 
  #Title{
   /*
