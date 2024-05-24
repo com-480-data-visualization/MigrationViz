@@ -21,7 +21,7 @@ html, body {
   text-align: center;
 }
 
-/* Vertical scrolling */
+/* Vertical scrolling
 .box {
   height: calc(9vw + 9vh);
   overflow: hidden;
@@ -61,7 +61,7 @@ ul {
             transform: translateY(0);
   }
   to {
-    -webkit-transform: translateY(-84%); /* percentage calculation : 100 - (100/ # of items in the list) */
+    -webkit-transform: translateY(-84%); /* percentage calculation : 100 - (100/ # of items in the list)
             transform: translateY(-84%);
   }
 }
@@ -74,7 +74,7 @@ ul {
     -webkit-transform: translateY(-84%);
             transform: translateY(-84%);
   }
-} 
+}  */
 
 #Intro {
   margin-right: 120px;
@@ -110,8 +110,7 @@ body {
     padding-top: 50px;
 }
 
-h1,
-ul li { 
+h1 { 
     text-align: center;
     margin-top: 0;
     font-size: calc(8vw + 8vh);
@@ -123,7 +122,7 @@ ul li {
 }
 
 #Intro p{
-  text-align: center;
+  text-align: justify;
   font-size: calc(1vw + 1vh);
 }
 
@@ -131,6 +130,7 @@ h2 {
     padding-top: calc(1vw + 1vh);
     text-align: center;
     font-size: calc(4vw + 4vh);
+    font-family: Times New Roman;
 }
 
 #Credits h2,
@@ -142,10 +142,11 @@ h2 {
 
 h3 {
     text-align: center;
-    font-size: calc(2vw + 2vh);
+    font-size: calc(1.5vw + 1.5vh);
 }
 
 p {
+    text-align: justify;
     font-size: calc(1vw + 1vh);
 }
 
@@ -256,7 +257,7 @@ p {
 
 .github-link {
   font-size: 32px;
-  color: #c7522a; 
+  color: #008585; 
   display: inline-block;
   margin: 4px 0;
 }
@@ -267,7 +268,7 @@ p {
 
 .linkedin-link {
   font-size: 32px;
-  color: #c7522a; 
+  color: #008585; 
   display: inline-block;
   margin: 4px 0;
 }
