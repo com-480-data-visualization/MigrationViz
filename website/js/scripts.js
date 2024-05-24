@@ -1,4 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const fixedMenu = document.getElementById('fixedMenu');
+
+    // Add mouseenter and mouseleave event listeners
+    fixedMenu.addEventListener('mouseenter', function() {
+        fixedMenu.classList.remove('shrinked');
+        fixedMenu.classList.add('expanded');
+    });
+
+    fixedMenu.addEventListener('mouseleave', function() {
+        fixedMenu.classList.remove('expanded');
+        fixedMenu.classList.add('shrinked');
+    });
+
     // Attachez l'événement de défilement pour mettre à jour le menu
     document.querySelector('main').addEventListener('scroll', updateMenu);
 
@@ -23,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function() {
     updateMenu();
 });
 
-
 function updateMenu() {
     var sections = document.querySelectorAll('main .slide');
     var menuLinks = document.querySelectorAll('#fixedMenu a');
@@ -44,6 +56,6 @@ function updateMenu() {
 
 var container = document.querySelector('.container');
 container.addEventListener('wheel', (e) => {
-  e.preventDefault();
-  container.scrollLeft += e.deltaY;
+    e.preventDefault();
+    container.scrollLeft += e.deltaY;
 });

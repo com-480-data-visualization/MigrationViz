@@ -77,8 +77,8 @@ ul {
 }  */
 
 #Intro, #Credits {
-  margin-right: 120px;
-  margin-left: 120px;
+  margin-right: 160px;
+  margin-left: 160px;
 }
 
 .fullscreen-text {
@@ -103,7 +103,7 @@ body {
 }
 
 .right {
-    margin-right: 120px;
+    margin-right: 150px;
 }
 
 .top {
@@ -177,10 +177,11 @@ p {
 
 #fixedMenu {
     position: fixed;
-    top: 50%;
+    top: 35%;
     right: 10px;
     /*transform: translateY(-50%);*/
     z-index: 10;
+    transition: all 1s;
   }
   
   #fixedMenu a {
@@ -190,8 +191,9 @@ p {
     text-align: center;
     color: white;
     background-color: #a7d7d7;
-    border-radius: 5px;
+    border-radius: 15px;
     text-decoration: none;
+    white-space: nowrap; /* Prevent text from wrapping */
   }
   
   #fixedMenu a:hover {
@@ -205,6 +207,28 @@ p {
     color: white;
     font-weight: bold;
   }
+
+  #fixedMenu.shrinked {
+    width: 20px; /* Adjust as needed */
+    padding: 5px 10px;
+}
+
+#fixedMenu.shrinked a {
+    overflow: hidden; /* Hide overflowing text */
+    padding: 5px 15px;
+    margin: 5px 0px;
+    border-radius: 50%;
+    color: rgba(0, 0, 0, 0);
+}
+
+#fixedMenu.expanded {
+    width: 115px;
+    padding: 5px 10px;
+}
+
+#fixedMenu.expanded a {
+    padding: 5px 10px;
+}
 
   .menu-link {
     padding: 5px 5px;
