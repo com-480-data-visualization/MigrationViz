@@ -21,7 +21,62 @@ html, body {
   text-align: center;
 }
 
-#Intro {
+/* Vertical scrolling
+.box {
+  height: calc(9vw + 9vh);
+  overflow: hidden;
+  position: relative;
+}
+.box::before {
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  content: '';
+  height: 5px;
+  position: absolute;
+  background: linear-gradient(180deg, #0000, rgba(0, 0, 0, 0));
+}
+.box::after {
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 100%;
+  content: '';
+  height: 5px;
+  position: absolute;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0), #0000);
+}
+ul {
+  float: inline-start;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  -webkit-animation: scrollUp 8s ease-in-out infinite normal;
+          animation: scrollUp 8s ease-in-out infinite normal;
+}
+@-webkit-keyframes scrollUp {
+  from {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+  to {
+    -webkit-transform: translateY(-84%); /* percentage calculation : 100 - (100/ # of items in the list)
+            transform: translateY(-84%);
+  }
+}
+@keyframes scrollUp {
+  from {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+  to {
+    -webkit-transform: translateY(-84%);
+            transform: translateY(-84%);
+  }
+}  */
+
+#Intro, #Credits {
   margin-right: 120px;
   margin-left: 120px;
 }
@@ -67,7 +122,7 @@ h1 {
 }
 
 #Intro p{
-  text-align: center;
+  text-align: justify;
   font-size: calc(1vw + 1vh);
 }
 
@@ -75,21 +130,24 @@ h2 {
     padding-top: calc(1vw + 1vh);
     text-align: center;
     font-size: calc(4vw + 4vh);
+    font-family: Times New Roman;
 }
 
 #Credits h2,
 #United h2,
-#Authors h2 {
+#Authors h2,
+#Intro h2 {
   margin-bottom: 0px;
 }
 
 
 h3 {
     text-align: center;
-    font-size: calc(2vw + 2vh);
+    font-size: calc(1.5vw + 1.5vh);
 }
 
 p {
+    text-align: justify;
     font-size: calc(1vw + 1vh);
 }
 
@@ -130,6 +188,19 @@ p {
     color: white;
     font-weight: bold;
   }
+
+  .menu-link {
+    padding: 5px 5px;
+    color: white;
+    background-color: #c7522a;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.menu-link:hover {
+    background-color: #008585;
+}
+
 
 
  #Title{
@@ -188,18 +259,20 @@ p {
 
 .author p {
   margin: 4px 0;
+  text-align: center;
 }
 
 .profile-photo {
-  width: 300px; 
-  height: 300px;
+  width: calc(17vw);
+  height: calc(17vw);
   border-radius: 50%;
   object-fit: cover;
+  background-color: #008585;
 }
 
 .github-link {
   font-size: 32px;
-  color: #c7522a; 
+  color: #008585; 
   display: inline-block;
   margin: 4px 0;
 }
@@ -210,7 +283,7 @@ p {
 
 .linkedin-link {
   font-size: 32px;
-  color: #c7522a; 
+  color: #008585; 
   display: inline-block;
   margin: 4px 0;
 }
@@ -240,6 +313,30 @@ p {
 .info-panel p {
   font-size: 14px;
   text-align: left;  /* Adjust the font size as needed */
+}
+
+/* --------------------------------------------------------------*/
+/* ------------------   CREDITS SECTION   -----------------------*/
+/* --------------------------------------------------------------*/
+
+.credits-list {
+  font-size: calc(1vw + 1vh);
+  text-align: justify;
+  list-style: decimal inside;
+}
+
+.credits-list a {
+  color: #008585;
+  text-decoration: none;
+}
+
+.credits-list a:hover {
+  text-decoration: underline;
+}
+
+.centered-content p {
+  font-size: calc(1vw + 1vh);
+  text-align: center;
 }
 
 /* --------------------------------------------------------------*/

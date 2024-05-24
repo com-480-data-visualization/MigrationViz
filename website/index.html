@@ -52,6 +52,7 @@
             <div style="position:absolute; text-align:center; width:100%; margin-top:5%">
                 <h1>MigrationViz</h1>
             </div>
+            </div>
             <canvas id="canvas" style="height:100%; width:100%; position:static; "></canvas>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js'></script>
             <script src="js/crowd_animation.js"></script>
@@ -60,27 +61,24 @@
         <section class="slide" id="Intro">
             <h2>Introduction</h2>
             <h3>Exploring the Human Journey: Visualizing Global Migration Patterns</h3>
-            <p>Welcome to our interactive visualization project, where we delve into the complicated patterns of global
-                human migration.</p>
-            <p>Our work is driven by the recognition that behind every statistic, there's a human story - a narrative of
-                hope, struggle, and resilience. </p>
-            <p>This project aims to bridge the gap between the depersonalized data often encountered in migration and
-                the individual experiences that data represents.</p>
-            <p>Prepared with love by the <a href="#Authors">Authors</a></p>
-
+            <p>Welcome to our interactive visualization project, where we delve into the complicated patterns of global human migration.</p>
+            <p>Our work is driven by the recognition that behind every statistic, there's a human story - a narrative of hope, struggle, and resilience. </p>
+            <p>This project aims to supply interactive visualizations revolving around the topic of human migration. Doing so, we want to bring our contribution to bridge the gap between the depersonalized data often encountered when addressing the subject of migration and the individual experiences that data represents.</p>
+            <p>Prepared with love and work by the <a href="#Authors" class="menu-link">Authors</a></p>
         </section>
+        
 
         <section class="slide" id="Sankey">
             <h2>Sankey</h2>
             <div class="two-columns">
                 <div class="text-column">
 
-                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tellus lectus, ultrices in
-                        tortor sit amet, dignissim placerat nisl. Aenean facilisis imperdiet auctor. Proin hendrerit,
-                        nisl a vulputate pulvinar, eros mauris lobortis dui, vel suscipit erat ligula quis sem. Maecenas
-                        ultrices risus at ipsum tincidunt, sed placerat lacus malesuada. Fusce aliquet orci quis tempus
-                        vulputate. Proin a purus non ex hendrerit volutpat non id libero. Praesent vitae mauris tellus.
-                        Suspendisse tempor nunc leo. Morbi sapien enim, ultricies a porttitor eget, tempus non velit.
+                    <p> 
+                        Have you ever <b>realized</b> what is the <b>scope of migration at a global scale</b> ? In the wake of a globalized world, human displacement reaches proportions never-before attained. Migration can be time-restricted (for studies, for work) or life-long, voluntereed but also forced. 
+                    </p>
+
+                    <p>
+                        Reasons behind those choices can be economical, political, but also only a question of survival. Investigate how numbers of people changing of country of origin varies over time continent by continent by interacting with the Sankey diagram on the right. 
                     </p>
                 </div>
                 <div class="viz-column right">
@@ -164,7 +162,7 @@
             <h2>Authors</h2>
             <div class="author-profiles centered-content">
                 <div class="author">
-                    <img src="images/Lola.jpg" alt="Lola Bardel" class="profile-photo">
+                    <img src="images/Lola.svg" alt="Lola Bardel" class="profile-photo">
                     <p>Lola Bardel</p>
                     <a href="https://github.com/Lola-Bardel" class="github-link" target="_blank">
                         <i class="fab fa-github"></i>
@@ -174,7 +172,7 @@
                     </a>
                 </div>
                 <div class="author">
-                    <img src="images/Nicolas.jpg" alt="Nicolas Filimonov" class="profile-photo">
+                    <img src="images/Nico.svg" alt="Nicolas Filimonov" class="profile-photo">
                     <p>Nicolas Filimonov</p>
                     <a href="https://github.com/Rayjine" class="github-link" target="_blank">
                         <i class="fab fa-github"></i>
@@ -185,14 +183,14 @@
                     </a>
                 </div>
                 <div class="author">
-                    <img src="images/Stefanie.jpg" alt="Stefanie Helfenstein" class="profile-photo">
+                    <img src="images/Stefanie.svg" alt="Stefanie Helfenstein" class="profile-photo">
                     <p>Stefanie Helfenstein</p>
                     <a href="https://github.com/shelfens" class="github-link" target="_blank">
                         <i class="fab fa-github"></i>
                     </a>
                 </div>
                 <div class="author">
-                    <img src="images/pp.png" alt="Casimir Nüsperling" class="profile-photo">
+                    <img src="images/Casimir.svg" alt="Casimir Nüsperling" class="profile-photo">
                     <p>Casimir Nüsperling</p>
                     <a href="https://github.com/cmaximilian" class="github-link" target="_blank">
                         <i class="fab fa-github"></i>
@@ -209,29 +207,42 @@
 
         <section class="slide" id="Credits">
             <h2>Credits</h2>
-            <div class="fullscreen-text centered-content">
-                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tellus lectus, ultrices in
-                tortor sit amet, dignissim placerat nisl. Aenean facilisis imperdiet auctor. Proin hendrerit,
-                nisl a vulputate pulvinar, eros mauris lobortis dui, vel suscipit erat ligula quis sem. Maecenas
-                ultrices risus at ipsum tincidunt, sed placerat lacus malesuada. Fusce aliquet orci quis tempus
-                vulputate. Proin a purus non ex hendrerit volutpat non id libero. Praesent vitae mauris tellus.
-                Suspendisse tempor nunc leo. Morbi sapien enim, ultricies a porttitor eget, tempus non velit.
-                </p>
+            <div>
+                <ol class="credits-list">
+                    <li>
+                        <a href="https://bl.ocks.org/d3noob/013054e8d7807dff76247b81b0e29030" target="_blank">Malcolm Maclean, "Sankey Diagram"</a>
+                    </li>
+                    <li>
+                        <a href="https://www.d3-graph-gallery.com/graph/line_basic.html" target="_blank">D3 Graph Gallery, "Basic Line Graph"</a>
+                    </li>
+                    <li>
+                        <a href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/175711/open-peeps-sheet.png" target="_blank">Open Peeps</a>
+                    </li>
+                    <li>
+                        <a href="https://d3js.org/" target="_blank">D3.js</a>
+                    </li>
+                    <li>
+                        <a href="https://d3js.org/d3-geo-projection.v4.min.js" target="_blank">D3 Geo Projection</a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/watch?v=vpChBWgwrgw&t=88s" target="_blank">Le Norvégien, "D3.js Tutorial"</a>
+                    </li>
+                </ol>
             </div>
-            <p>© Copyright 2024</p>
+            <div class="centered-content">
+                <p>© Copyright 2024</p>
+            </div>
         </section>
     </main>
 
     <script src="js/scripts.js"></script>
+    <script src="js/sankeytest.js"></script>
 
 </body>
 
 </html>
 
 <!-- 
-    TO-DO :
-    - points on the side to navigate
-    - test rectangle with visualization of United
     - add standard css as Casimir said
 
 
