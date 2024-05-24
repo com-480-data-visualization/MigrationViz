@@ -114,12 +114,9 @@ h1 {
     text-align: center;
     margin-top: 0;
     font-size: calc(8vw + 8vh);
-    font-family: Times New Roman;
+    font-family: 'Roboto Condensed';
+    font-weight: 300;
   }
-
-#Title h1{
-    text-shadow: 2px 2px 4px white; /* x-offset, y-offset, blur-radius, color */
-}
 
 #Intro p{
   text-align: justify;
@@ -130,7 +127,8 @@ h2 {
     padding-top: calc(1vw + 1vh);
     text-align: center;
     font-size: calc(4vw + 4vh);
-    font-family: Times New Roman;
+    font-family: 'Roboto Condensed';
+    font-weight: 300;
 }
 
 #Credits h2,
@@ -150,6 +148,25 @@ p {
     text-align: justify;
     font-size: calc(1vw + 1vh);
 }
+
+.styled-text h1 {
+  text-transform: uppercase;
+  font-size: calc(7vw + 7vh);
+}
+
+.styled-text h1::first-letter {
+  font-size: calc(8vw + 8vh);
+}
+
+.styled-text h2 {
+  text-transform: uppercase;
+  font-size: calc(4vw + 4vh);
+}
+
+.styled-text h2::first-letter {
+  font-size: calc(4.5vw + 4.5vh);
+}
+
 
 
 .mendatory-scrolling{
@@ -172,7 +189,7 @@ p {
     margin: 5px 0px;
     text-align: center;
     color: white;
-    background-color: #c7522a;
+    background-color: #a7d7d7;
     border-radius: 5px;
     text-decoration: none;
   }
@@ -191,8 +208,8 @@ p {
 
   .menu-link {
     padding: 5px 5px;
-    color: white;
-    background-color: #c7522a;
+    color: black;
+    background-color: #E5C185;
     border-radius: 5px;
     text-decoration: none;
 }
