@@ -76,7 +76,7 @@ ul {
   }
 }  */
 
-#Intro {
+#Intro, #Credits {
   margin-right: 120px;
   margin-left: 120px;
 }
@@ -135,7 +135,8 @@ h2 {
 
 #Credits h2,
 #United h2,
-#Authors h2 {
+#Authors h2,
+#Intro h2 {
   margin-bottom: 0px;
 }
 
@@ -249,8 +250,8 @@ p {
 }
 
 .profile-photo {
-  width: 300px; 
-  height: 300px;
+  width: calc(17vw);
+  height: calc(17vw);
   border-radius: 50%;
   object-fit: cover;
   background-color: #008585;
@@ -299,6 +300,30 @@ p {
 .info-panel p {
   font-size: 14px;
   text-align: left;  /* Adjust the font size as needed */
+}
+
+/* --------------------------------------------------------------*/
+/* ------------------   CREDITS SECTION   -----------------------*/
+/* --------------------------------------------------------------*/
+
+.credits-list {
+  font-size: calc(1vw + 1vh);
+  text-align: justify;
+  list-style: decimal inside;
+}
+
+.credits-list a {
+  color: #008585;
+  text-decoration: none;
+}
+
+.credits-list a:hover {
+  text-decoration: underline;
+}
+
+.centered-content p {
+  font-size: calc(1vw + 1vh);
+  text-align: center;
 }
 
 /* --------------------------------------------------------------*/
