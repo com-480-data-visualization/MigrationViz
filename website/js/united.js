@@ -99,7 +99,39 @@ function mouseleave(event, d) {
 function updateInfoPanel(content) {
     var infoPanel = document.querySelector('.hover-info');
     infoPanel.innerHTML = content;
+    updateImage();
 }    
+
+// Array of image paths or URLs
+var imagePaths = [
+    '../images/opeep/img_1.png',
+    '../images/opeep/img_2.png',
+    '../images/opeep/img_3.png',
+    '../images/opeep/img_4.png',
+    '../images/opeep/img_5.png',
+    '../images/opeep/img_6.png',
+    '../images/opeep/img_7.png',
+    '../images/opeep/img_8.png',
+    '../images/opeep/img_9.png',
+    '../images/opeep/img_10.png',
+    '../images/opeep/img_11.png',
+    '../images/opeep/img_12.png',
+    '../images/opeep/img_13.png',
+    // Add paths for all your images here
+];
+
+// Index to keep track of the current image
+var currentImageIndex = 0;
+
+// Function to update the image
+function updateImage() {
+    // Get the img element
+    var imgElement = document.getElementById('person-image');
+    // Update the src attribute with the next image path
+    imgElement.src = imagePaths[currentImageIndex];
+    // Increment the current image index or reset to 0 if it exceeds the array length
+    currentImageIndex = (currentImageIndex + 1) % imagePaths.length;
+}
 
 // Calculate the sum of people dying per month
 function sumNrPerMonth(data) {
