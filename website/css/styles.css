@@ -231,9 +231,19 @@ p {
 /* --------------------------------------------------------------*/
 
 .two-columns {
+  height: calc(100vh - 2*(5vw + 5vh));
   display: flex;
   flex-direction: row;
-  align-items: flex-start; /* Align items at the top */
+  align-items: center;
+  justify-content: center;
+}
+
+.big-two-columns {
+  height: calc(100vh);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .text-column {
