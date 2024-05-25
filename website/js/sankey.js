@@ -31,7 +31,7 @@ const continentColors_Sankey = {
 };
 
 // dimension and margin of graph
-var margin = {top:10, right:10, bottom:10, left:200},
+var margin = {top:10, right:10, bottom:10, left:10},
     width = 900 - margin.left - margin.right,
     height = 700 - margin.top - margin.bottom;
 
@@ -40,8 +40,8 @@ d3.select('#sankey-slider').append("label")
     .attr("for", "sankey-range")
     .text("Timeline")
     .style("margin-bottom", "10px")
-    .style("display", "block")
-    .style("text-align", "center");
+    .style("text-align", "center")
+    .style("display", "block");
 
 // Create the slider
 const slider = d3.select('#sankey-slider').append("input")
@@ -51,7 +51,7 @@ const slider = d3.select('#sankey-slider').append("input")
     .attr("max", years[years.length - 1])
     .attr("value", years[0])
     .attr("step", 5) // Assume the step is 5 years, adjust if necessary
-    .style("width", "100%")
+    .style("width", "70%")
     .on("input", function() {
         const selectedYear = parseInt(this.value); // Use the slider value as the year
         updateSankeyViz(selectedYear);
@@ -59,7 +59,11 @@ const slider = d3.select('#sankey-slider').append("input")
 
 // Add ticks to the slider
 const tickContainer = d3.select('#sankey-slider').append("div")
-    .attr("class", "tick-container");
+    .attr("class", "tick-container")
+    .style("width", "70%")
+    // center it
+    .style("margin", "auto")
+
 
 tickContainer.selectAll("div")
     .data(years)
