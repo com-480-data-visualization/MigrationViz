@@ -122,7 +122,7 @@ var imagePaths = [
 ];
 
 // Index to keep track of the current image
-var currentImageIndex = 0;
+var currentImageIndex = -1;
 
 // Function to update the image
 function updateImage() {
