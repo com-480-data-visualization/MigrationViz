@@ -132,6 +132,7 @@ function updateImage() {
     // Increment the current image index or reset to 0 if it exceeds the array length
     currentImageIndex = (currentImageIndex + 1) % imagePaths.length;
 }
+document.addEventListener('DOMContentLoaded', updateImage);
 
 // Calculate the sum of people dying per month
 function sumNrPerMonth(data) {
