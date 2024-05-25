@@ -177,7 +177,7 @@ function updateMapPoints(data) {
     // Add the new text for partial sum
     var partialSumText = svg_united.append("text")
         .attr("id", "partialSumText")
-        .attr("x", 980 - 10) 
+        .attr("x", 1300 - 30) 
         .attr("y", 40) 
         .attr("text-anchor", "end") 
         .attr("class", "text_sum")
@@ -187,7 +187,7 @@ function updateMapPoints(data) {
     // Add the new text for the total sum
     var totalSumText = svg_united.append("text")
         .attr("id", "totalSumText")
-        .attr("x", 980 - 10) 
+        .attr("x", 1300 - 30) 
         .attr("y", 20) 
         .attr("text-anchor", "end") 
         .attr("class", "text_sum")
@@ -225,11 +225,6 @@ function updateMapPoints(data) {
     // Create a string with the two sums in it
     var sum_deaths = [totalSum, partialSum];
 
-    // Define, where the text & circles will be
-    const margin = {top: 0, right: 20, bottom: 60, left: 600},
-        width = 900 - margin.left - margin.right,
-        height = 80- margin.top - margin.bottom;
-
     // Calculate the radius of the circle
     var R = sum_deaths.map(function(d) {
             return Math.sqrt(d / Math.max(...sum_deaths));
@@ -239,7 +234,7 @@ function updateMapPoints(data) {
     var propcircle = svg_united.append("svg")
         .attr("id", "propcircle")
         .append("g")
-        .attr("transform", "translate(" + 890+ "," + 50 + ")");
+        .attr("transform", "translate(" + 1190+ "," + 50 + ")");
 
     // Calculate the max. radius
     var maxRadius = Math.max(...R);
