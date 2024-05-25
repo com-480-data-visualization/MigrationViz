@@ -20,7 +20,7 @@ html, body {
   background-color: #cfecec;
 }
 
-#Intro, #Credits {
+#Intro, #Credits, #United {
   margin-right: 160px;
   margin-left: 160px;
 }
@@ -62,11 +62,16 @@ body {
     color: black;
 }
 
-#united-viz, #undesa-viz, #sankey-viz {
-  max-width: 45vw;
-  max-height: 45vh;
+#undesa-viz, #sankey-viz {
+  max-width: 50vw;
   margin:auto;
 }
+
+#united-viz{
+  max-width: 65vw;
+  margin:auto;
+}
+
 
 .right {
     margin-right: 150px;
@@ -86,27 +91,20 @@ h1 {
 }
 
 h2 {
+    margin-top: 0px;
+    margin-bottom: 0px;
     padding-top: calc(1vw + 1vh);
     text-align: center;
     font-size: calc(4vw + 4vh);
     font-family: 'Roboto Condensed';
     font-weight: 300;
     color: #006b6b;
-
 }
 
 
 #Intro p{
   text-align: justify;
   font-size: calc(1vw + 1vh);
-}
-
-
-#Credits h2,
-#United h2,
-#Authors h2,
-#Intro h2 {
-  margin-bottom: 0px;
 }
 
 
@@ -240,14 +238,16 @@ p {
 
 .text-column {
   flex: 1; /* Takes up 1 part of the available space */
-  padding-right: 50px; /* Optional padding for spacing */
+  padding-right: 20px; /* Optional padding for spacing */
   padding-left: 50px;
-  text-align: left;
 }
 
 .viz-column {
   flex: 2; /* Takes up 2 parts of the available space */
-  /* No padding-right here if you want the viz to be full width */
+}
+
+.big-viz-column{
+  flex: 4;
 }
 
 .centered-content {
@@ -311,15 +311,24 @@ p {
   /*position: absolute;*/
  /* Adjust as needed */
   left: 0px;
-  width: 300px; /* Fixed width */
-  height: 445px; /*Maximum height */
+  width: 18vw; /* Fixed width */
+  height: 50vh; /*Maximum height */
   overflow-y: hidden; /* Enable vertical scrollbar if content exceeds maximum height */
   background-color: rgba(251, 242, 196, 0.4);
   border: 2px solid rgba(229, 193, 133, 0.6);
-  padding: 10px;
+  padding-left: 10px;
 }
 
 /* Style for the heading */
+.info-panel h1 {
+  padding-top: 0px;
+  text-align: center;
+  font-size: 22px;
+  font-family: 'Roboto Condensed';
+  color: #006b6b;
+}
+
+
 .info-panel h2 {
   padding-top: 0px;
   text-align: center;

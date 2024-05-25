@@ -1,8 +1,9 @@
 
 function initializeUnited() {
 // set width and height of svg_united
-var width = 1000
+var width = 1300
 var height = 800
+var height_rect = 200
 var aspect = width / height;
 
 // The total sum of deaths reported by united against refugee deaths
@@ -53,7 +54,7 @@ var timelineGroup = svg_group.append("g")
 
 timelineGroup.append("rect")
     .attr("width", width)
-    .attr("height", height)
+    .attr("height", height_rect)
     .style("fill", "white");
 
 
@@ -311,7 +312,7 @@ function sumNrPerMonth(data) {
 // Function to create the timeline
 function Timeline(data) {
     var margin = {top: 20, right: 0, bottom: 450, left: 40},
-        width = 1000 - margin.left - margin.right,
+        width = 1300 - margin.left - margin.right,
         height = 600 - margin.top - margin.bottom;
         aspect = width / height;
     
