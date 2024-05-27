@@ -47,10 +47,10 @@ const params_Sankey = {
 };
 
 // Conseil : pour debuger définir des variables data
-const data_1990 = d3.json("data/sankey_1990.json");
+// const data_1990 = d3.json("https://raw.githubusercontent.com/com-480-data-visualization/MigrationViz/master/website/data/sankey_1990.json").then((data)=>{return data;});
 
 class SankeyPlot {
-    constructor(params, data) {
+    constructor(params) {
 
         this.margin = params.margin;
         this.width = 900 - this.margin.left - this.margin.right;
@@ -60,8 +60,8 @@ class SankeyPlot {
         this.continentOrder = params.continentOrder;
         this.continentColors = params.continentColors;
         
-        this.data = data;
-        console.log('data', this.data);
+        // this.data = data;
+        // console.log('data', this.data);
 
         // slider to do 
         // this.slider = d3.select(params.svgElementId)
@@ -90,15 +90,40 @@ class SankeyPlot {
         // }
         //     })
 
-        Promise.all([
-            d3.json("data/sankey_1990.json"),
-        ]).then((data) => {
-            console.log(data)
-            this.graph = d3.sankey(data)
+        d3.json("https://raw.githubusercontent.com/com-480-data-visualization/MigrationViz/master/website/data/sankey_data.json").then((data) => {
+            
+            console.log(data[1990]);
+
+            let sankey = d3.sankey()
             .nodeWidth(15)
             .nodePadding(10)
             .extent([1, 1], [this.width - 1, this.height -6 ]); // WHY ?
-            console.log('this.graph', this.graph);
+
+            this.graph = sankey(data[1990])
+            
+            console.log(this.graph.links);
+
+  
+
+        });
+    }
+            /* this.sankey = d3.sankey()
+                .nodeWidth(20)
+                .nodePadding(10)
+                .size([width, height]); */
+
+
+
+
+            // ------------------------
+            
+/*             // this.graph = d3.sankey(data)
+            const  graph = d3.sankey(data)
+            .nodeWidth(15)
+            .nodePadding(10)
+            .extent([1, 1], [this.width - 1, this.height -6 ]); // WHY ?
+            console.log('this.graph', graph);
+            console.log("graph_nodes", graph.nodes)
 
             this.link = this.svg.append("g")
                 .selectAll(".link")
@@ -115,6 +140,9 @@ class SankeyPlot {
                 .data(graph.nodes)
                 .enter().append("g")
                 .attr("class", "node");
+
+ */
+            // -------------------------
 
         // this.node.append("rect")
         //     .attr("x", (d) => d.x0)
@@ -133,10 +161,10 @@ class SankeyPlot {
         //     .filter((d) => d.x0 < this.width / 2)
         //     .attr("x", (d) => d.x1 + 6)
         //     .attr("text-anchor", "start");
-    }
+  
     
 
-    initSankey() {
+    // initSankey() {
         // const sankey = d3.sankey()
         //     .nodeWidth(15)
         //     .nodePadding(10)
@@ -179,7 +207,7 @@ class SankeyPlot {
         //     .filter((d) => d.x0 < this.width / 2)
         //     .attr("x", (d) => d.x1 + 6)
         //     .attr("text-anchor", "start");
-        } 
+     //   }
 }
 
 // unclear where to put that 
@@ -187,7 +215,7 @@ var formatNumber = d3.format(",.0f"); // zero decimal places
 var format = function(d) { return formatNumber(d); };
 
 
-const sankeyPlot = new SankeyPlot(params_Sankey, data_1990);
+sankeyPlot = new SankeyPlot(params_Sankey);
 
 console.log('Sankey', sankeyPlot);
 
