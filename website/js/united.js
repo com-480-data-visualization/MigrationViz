@@ -1,8 +1,9 @@
 
 function initializeUnited() {
 // set width and height of svg_united
-var width = 1000
+var width = 1300
 var height = 800
+var height_rect = 200
 var aspect = width / height;
 
 // The total sum of deaths reported by united against refugee deaths
@@ -53,7 +54,7 @@ var timelineGroup = svg_group.append("g")
 
 timelineGroup.append("rect")
     .attr("width", width)
-    .attr("height", height)
+    .attr("height", height_rect)
     .style("fill", "white");
 
 
@@ -99,7 +100,40 @@ function mouseleave(event, d) {
 function updateInfoPanel(content) {
     var infoPanel = document.querySelector('.hover-info');
     infoPanel.innerHTML = content;
+    updateImage();
 }    
+
+// Array of image paths or URLs
+var imagePaths = [
+    './images/opeep/img_1.png',
+    './images/opeep/img_2.png',
+    './images/opeep/img_3.png',
+    './images/opeep/img_4.png',
+    './images/opeep/img_5.png',
+    './images/opeep/img_6.png',
+    './images/opeep/img_7.png',
+    './images/opeep/img_8.png',
+    './images/opeep/img_9.png',
+    './images/opeep/img_10.png',
+    './images/opeep/img_11.png',
+    './images/opeep/img_12.png',
+    './images/opeep/img_13.png',
+    // Add paths for all your images here
+];
+
+// Index to keep track of the current image
+var currentImageIndex = -1;
+
+// Function to update the image
+function updateImage() {
+    // Get the img element
+    var imgElement = document.getElementById('person-image');
+    // Update the src attribute with the next image path
+    imgElement.src = imagePaths[currentImageIndex];
+    // Increment the current image index or reset to 0 if it exceeds the array length
+    currentImageIndex = (currentImageIndex + 1) % imagePaths.length;
+}
+document.addEventListener('DOMContentLoaded', updateImage);
 
 // Calculate the sum of people dying per month
 function sumNrPerMonth(data) {
@@ -143,7 +177,7 @@ function updateMapPoints(data) {
     // Add the new text for partial sum
     var partialSumText = svg_united.append("text")
         .attr("id", "partialSumText")
-        .attr("x", 980 - 10) 
+        .attr("x", 1300 - 30) 
         .attr("y", 40) 
         .attr("text-anchor", "end") 
         .attr("class", "text_sum")
@@ -153,7 +187,7 @@ function updateMapPoints(data) {
     // Add the new text for the total sum
     var totalSumText = svg_united.append("text")
         .attr("id", "totalSumText")
-        .attr("x", 980 - 10) 
+        .attr("x", 1300 - 30) 
         .attr("y", 20) 
         .attr("text-anchor", "end") 
         .attr("class", "text_sum")
@@ -191,11 +225,6 @@ function updateMapPoints(data) {
     // Create a string with the two sums in it
     var sum_deaths = [totalSum, partialSum];
 
-    // Define, where the text & circles will be
-    const margin = {top: 0, right: 20, bottom: 60, left: 600},
-        width = 900 - margin.left - margin.right,
-        height = 80- margin.top - margin.bottom;
-
     // Calculate the radius of the circle
     var R = sum_deaths.map(function(d) {
             return Math.sqrt(d / Math.max(...sum_deaths));
@@ -205,7 +234,7 @@ function updateMapPoints(data) {
     var propcircle = svg_united.append("svg")
         .attr("id", "propcircle")
         .append("g")
-        .attr("transform", "translate(" + 890+ "," + 50 + ")");
+        .attr("transform", "translate(" + 1190+ "," + 50 + ")");
 
     // Calculate the max. radius
     var maxRadius = Math.max(...R);
@@ -278,7 +307,7 @@ function sumNrPerMonth(data) {
 // Function to create the timeline
 function Timeline(data) {
     var margin = {top: 20, right: 0, bottom: 450, left: 40},
-        width = 1000 - margin.left - margin.right,
+        width = 1300 - margin.left - margin.right,
         height = 600 - margin.top - margin.bottom;
         aspect = width / height;
     
