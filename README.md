@@ -22,7 +22,15 @@ To run our project locally, you need to do:
 - Move into the ```website``` folder
 - Start a local server (e.g. using ```http-server```)
 
-## Dataset
+## Dataset Sources
+
+## Dataset Processing
+
+### Map creation
+
+
+
+### UNDESA data extraction
 
 ## Project Milestones
 
