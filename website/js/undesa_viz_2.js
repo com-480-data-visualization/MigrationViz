@@ -151,6 +151,7 @@ const mouseover = function (event, d) {
     // width on all sides as there are no overlaps
 
     // BUG: When moving the cursor very quickly some borders of countries stay black
+    console.log(this)
     d3.select(this)
         .raise()
         .transition()
