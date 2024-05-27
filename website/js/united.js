@@ -105,19 +105,19 @@ function updateInfoPanel(content) {
 
 // Array of image paths or URLs
 var imagePaths = [
-    '../images/opeep/img_1.png',
-    '../images/opeep/img_2.png',
-    '../images/opeep/img_3.png',
-    '../images/opeep/img_4.png',
-    '../images/opeep/img_5.png',
-    '../images/opeep/img_6.png',
-    '../images/opeep/img_7.png',
-    '../images/opeep/img_8.png',
-    '../images/opeep/img_9.png',
-    '../images/opeep/img_10.png',
-    '../images/opeep/img_11.png',
-    '../images/opeep/img_12.png',
-    '../images/opeep/img_13.png',
+    './images/opeep/img_1.png',
+    './images/opeep/img_2.png',
+    './images/opeep/img_3.png',
+    './images/opeep/img_4.png',
+    './images/opeep/img_5.png',
+    './images/opeep/img_6.png',
+    './images/opeep/img_7.png',
+    './images/opeep/img_8.png',
+    './images/opeep/img_9.png',
+    './images/opeep/img_10.png',
+    './images/opeep/img_11.png',
+    './images/opeep/img_12.png',
+    './images/opeep/img_13.png',
     // Add paths for all your images here
 ];
 
