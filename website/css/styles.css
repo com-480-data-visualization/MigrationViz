@@ -320,10 +320,10 @@ p {
 
 .info-panel {
   /*position: absolute;*/
- /* Adjust as needed */
+
   left: 0px;
-  width: 18vw; /* Fixed width */
-  height: 50vh; /*Maximum height */
+  width: 22vw; /* Fixed width */
+  height: 82vh; /*Maximum height */
   overflow-y: hidden; /* Enable vertical scrollbar if content exceeds maximum height */
   background-color: rgba(251, 242, 196, 0.4);
   border: 2px solid rgba(229, 193, 133, 0.6);
