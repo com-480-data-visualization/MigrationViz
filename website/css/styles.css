@@ -62,9 +62,15 @@ body {
     color: black;
 }
 
-#undesa-viz, #sankey-viz {
-  max-width: 50vw;
-  max-height: 60vh;
+#sankey-viz {
+  max-width: 40vw;
+  max-height: 50vh;
+  margin:auto;
+}
+
+#undesa-viz {
+  max-width: 70vw;
+  max-height: 70vh;
   margin:auto;
 }
 

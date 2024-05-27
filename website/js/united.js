@@ -291,6 +291,19 @@ function initializeUnited() {
         return sums;
     }
 
+    d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then(function (data) {
+        console.log("World GeoJSON Data:", data);
+        svg_map.append("g")
+            .selectAll("path")
+            .data(data.features)
+            .join("path")
+            .attr("fill", "#74a892")
+            .style("opacity", 1)
+            .attr("d", d3.geoPath().projection(projection))
+            .style("stroke", "black")
+            .style("opacity", .55);
+    });
+
     // Function to create the timeline
     function Timeline(data) {
         var margin = { top: 20, right: 0, bottom: 450, left: 40 },
