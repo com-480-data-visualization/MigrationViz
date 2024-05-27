@@ -1,9 +1,8 @@
-
 function initializeUnited() {
-    // set width and height of svg_united
-    var width = 1350
-    var height = 800
-    var height_rect = 200
+    // Set width and height of svg_united
+    var width = 1350;
+    var height = 800;
+    var height_rect = 200;
     var aspect = width / height;
 
     // The total sum of deaths reported by united against refugee deaths
@@ -11,9 +10,9 @@ function initializeUnited() {
 
     // Map and projection
     var projection = d3.geoMercator()
-        .center([4, 35])                // GPS of location to zoom on
-        .scale(500)                       // This is like the zoom
-        .translate([width / 2, height / 2])
+        .center([4, 35]) // GPS of location to zoom on
+        .scale(500) // This is like the zoom
+        .translate([width / 2, height / 2]);
 
     // The svg_united
     var svg_group = d3.select("#united-viz")
@@ -38,14 +37,10 @@ function initializeUnited() {
             .join("path")
             .attr("fill", "#74a892") // Change color of the Map
             .style("opacity", 1) // Change opacity of the country fill
-            .attr("d", d3.geoPath()
-                .projection(projection)
-            )
-            .style("stroke", "black") // Linecolor
-            .style("opacity", .55) // Opacity of map, total
-    })
-
-
+            .attr("d", d3.geoPath().projection(projection))
+            .style("stroke", "black") // Line color
+            .style("opacity", .55); // Opacity of map, total
+    });
 
     var timelineGroup = svg_group.append("g")
         .attr("id", "timeline-group")
@@ -56,20 +51,13 @@ function initializeUnited() {
         .attr("height", height_rect)
         .style("fill", "white");
 
-
     var rad = d3.scaleSqrt().range([1.8, 2.8]);
-
-
-
 
     // Define the function to zoom
     function zoomed(event, data) {
         const { transform } = event;
-        projection.scale(transform.k * 800)
-            .translate([transform.x, transform.y]);
-        svg_map.selectAll("path")
-            .attr("d", d3.geoPath().projection(projection));
-
+        projection.scale(transform.k * 800).translate([transform.x, transform.y]);
+        svg_map.selectAll("path").attr("d", d3.geoPath().projection(projection));
         svg_united.selectAll(".circle")
             .attr("cx", d => projection([d.long, d.lat])[0])
             .attr("cy", d => projection([d.long, d.lat])[1])
@@ -80,7 +68,7 @@ function initializeUnited() {
 
     // Define mouseover, mousemove, and mouseleave function
     function mouseover(event, d) {
-        infoPanel.style("opacity", 1);
+        d3.select('.hover-info').style("opacity", 1);
     }
 
     function mousemove(event, d) {
@@ -92,7 +80,7 @@ function initializeUnited() {
     }
 
     function mouseleave(event, d) {
-        infoPanel.style("opacity", 0);
+        d3.select('.hover-info').style("opacity", 0);
     }
 
     // Update the Info Panel on the website
@@ -139,15 +127,18 @@ function initializeUnited() {
         var sums = {};
 
         data.forEach(entry => {
-            var date = parseDate(entry.date_sorted)
+            var date = parseDate(entry.date_sorted);
             var month = date.getMonth() + 1; // JavaScript months are zero-based, so add 1
             var year = date.getFullYear();
 
+            if (!sums[year]) {
+                sums[year] = {};
+            }
             if (!sums[year][month]) {
                 sums[year][month] = 0;
             }
 
-            sums[year][month] += parseInt(entry.Nr);
+            sums[year][month] += parseInt(entry.num_death);
         });
 
         return sums;
@@ -156,13 +147,11 @@ function initializeUnited() {
     // Get the right Dateformat
     function parseDate(dateString) {
         var [day, month, year] = dateString.split('/');
-
         var parsedYear = parseInt(year) < 93 ? '20' + year : '19' + year;
-
         return new Date(parsedYear, month - 1, day);
     }
 
-    // Update the Points on the map according to the selected timeperiod
+    // Update the Points on the map according to the selected time period
     function updateMapPoints(data) {
         const circles = svg_united.selectAll("circle").data(data, d => d.long + d.lat + d.name + d.num_death);
 
@@ -180,8 +169,7 @@ function initializeUnited() {
             .attr("y", 40)
             .attr("text-anchor", "end")
             .attr("class", "text_sum")
-            .text("Partial Number of Deaths : " + partialSum)
-
+            .text("Partial Number of Deaths : " + partialSum);
 
         // Add the new text for the total sum
         var totalSumText = svg_united.append("text")
@@ -211,12 +199,12 @@ function initializeUnited() {
             .on("mouseleave", mouseleave);
 
         // Remove exiting points
-        circles.exit().remove()
+        circles.exit().remove();
 
         // Initialize zoom element
         var zoom = d3.zoom()
             .scaleExtent([0.5, 8])
-            .on("zoom", function (event) { zoomed(event, data); })
+            .on("zoom", function (event) { zoomed(event, data); });
 
         //svg_united.call(zoom);
         svg_map.call(zoom);
@@ -355,7 +343,7 @@ function initializeUnited() {
         timeline.append("path")
             .datum(lineData)
             .attr("class", "line_tl")
-            .attr("d", line)
+            .attr("d", line);
 
         // Append the line on the bottom, define the ticks
         timeline.append("g")
@@ -392,7 +380,7 @@ function initializeUnited() {
             .call(brush.move, initialSelection);
     }
 
-    Timeline(united)
+    Timeline(united);
 
 }
 
