@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Load d3.js -->
+    <script src="https://d3js.org/d3.v6.js"></script>
+    <!-- Load map projections -->
+    <script src="https://d3js.org/d3-geo-projection.v4.min.js"></script>
+    <!-- Load data -->
+    <!-- TODO: Find better way to import data -->
+
+    <!-- Generale Files -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <!-- Files for united -->
+    <link rel="stylesheet" href="css/united.css">
+    <script type='text/javascript' src='data/united_data.js'></script>
+</head>
+<body>
+    <section class="slide" id="United2">
+        <div class="big-two-columns">
+            
+            <div class="big-viz-column">
+                <div id="united-viz">
+                </div>
+            </div>
+
+            <div class="text-column right">
+                <div class="info-panel">
+                    <h1>Info Panel</h1>
+                    <img id="person-image" src="" alt="" class="obeep-image">
+                    <div class="hover-info">
+                        <!-- Hover tool information will be dynamically updated here -->
+                        <p>You can zoom in and out of the map as you wish. The points repesent deadly events on the
+                            border and inside of Europe.</p>
+                        <p>Choose the timeperiod you are interested in.</p>
+                        <p>Here, you receive
+                            additional information on the event.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <script src="js/united_2.js"></script>
+
+</body>
+</html>
