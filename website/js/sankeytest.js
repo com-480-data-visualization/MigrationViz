@@ -80,6 +80,7 @@ class SankeyPlot {
             .attr("width", this.width)
             .attr("height", this.height)
             .attr("viewBox", `0 0 ${this.width + this.margin.left + this.margin.right} ${this.height + this.margin.top + this.margin.bottom}`)
+            // .append("g")  // Append a group element to handle margins
             .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
             .call(responsivefy);
         //     .on("click", function(event){
@@ -89,23 +90,60 @@ class SankeyPlot {
         //             svg_sankey.selectAll(".link").style("opacity", 1);
         // }
         //     })
+        console.log('width', this.width);
+        console.log('height', this.height);
 
         d3.json("https://raw.githubusercontent.com/com-480-data-visualization/MigrationViz/master/website/data/sankey_data.json").then((data) => {
             
-            console.log(data[1990]);
-
             let sankey = d3.sankey()
-            .nodeWidth(15)
-            .nodePadding(10)
-            .extent([1, 1], [this.width - 1, this.height -6 ]); // WHY ?
+                .nodeWidth(15)
+                .nodePadding(10)
+                .extent([1, 1], [this.width, this.height]); // WHY ?
 
-            this.graph = sankey(data[1990])
+            let graph = sankey({
+                nodes: data[1990].nodes.map(d => Object.assign({}, d)),
+                links: data[1990].links.map(d => Object.assign({}, d))
+            });
+
+            this.graph = graph;
+                        
+            console.log("Graph after Sankey layout:", this.graph);
+            console.log("Nodes:", this.graph.nodes);
+            console.log("Links:", this.graph.links);
             
-            console.log(this.graph.links);
+            this.link = this.svg.append("g")
+                .selectAll(".link")
+                .data(this.graph.links)
+                .enter().append("path")
+                .attr("class", "link")
+                    .attr("d", d3.sankeyLinkHorizontal())
+                    .attr("stroke-width", (d) => Math.max(1, d.width));
+                
+            this.graph.links.forEach(function(link) {
+                console.log(`Source: ${link.source}, Target: ${link.target}, Value: ${link.value}`);
 
+            });
+
+            this.node = this.svg.append("g")
+                .selectAll(".node")
+                .data(this.graph.nodes)
+                .enter().append("g")
+                .attr("class", "node");
+
+            this.node.append("rect")
+                .attr("x", (d) => d.x0)
+                .attr("y", (d) => d.y0)
+                .attr("height", (d) => d.y1 - d.y0)
+                .attr("width", sankey.nodeWidth())
+                .attr("fill", (d) => this.continentColors[d.continent])
+                .attr("stroke", "#000");
+
+            
   
-
+        }).catch(error => {
+            console.error('Error loading or parsing data:', error);
         });
+
     }
             /* this.sankey = d3.sankey()
                 .nodeWidth(20)
@@ -215,9 +253,9 @@ var formatNumber = d3.format(",.0f"); // zero decimal places
 var format = function(d) { return formatNumber(d); };
 
 
-sankeyPlot = new SankeyPlot(params_Sankey);
+SankeyPlotTest = new SankeyPlot(params_Sankey);
 
-console.log('Sankey', sankeyPlot);
+console.log('Sankey', SankeyPlotTest);
 
 // sankeyPlot.initSankey();
 
