@@ -21,13 +21,13 @@ const years = [1990, 1995, 2000, 2005, 2010, 2015, 2020];
 const continentOrder = ["AFRICA", "EUROPE", "ASIA", "LATIN AMERICA AND THE CARIBBEAN","NORTHERN AMERICA", "OTHER", "OCEANIA"];
 
 const continentColors_Sankey = {
-    "AFRICA": "#c7522a",
-    "ASIA": "#f7b801",
-    "EUROPE": "#3066be",
-    "LATIN AMERICA AND THE CARIBBEAN": "#008585",
-    "NORTHERN AMERICA": "#d1b1cb",
-    "OCEANIA": "#e40613",
-    "OTHER": "#4E0110"
+    "AFRICA": "#004343",
+    "ASIA": "#008585",
+    "EUROPE": "#80c2c2",
+    "LATIN AMERICA AND THE CARIBBEAN": "#74a892",
+    "NORTHERN AMERICA": "#b8cdab",
+    "OCEANIA": "#fbf2c4",
+    "OTHER": "#80a1a1"
 };
 
 // dimension and margin of graph
