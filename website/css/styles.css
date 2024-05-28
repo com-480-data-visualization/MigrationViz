@@ -21,10 +21,9 @@ html, body {
 }
 
 #Intro, #Credits, #United {
-  margin-right: 160px;
-  margin-left: 160px;
+  margin-right: 260px;
+  margin-left: 260px;
 }
-
 
 #Intro, #Sankey {
   position: relative;
@@ -33,9 +32,10 @@ html, body {
 .intro-image {
   position: absolute;
   bottom: 0px; /* Adjust as needed */
-  right: 10px; /* Adjust as needed */
+  left: 10px; /* Adjust as needed */
   width: 400px; /* Adjust as needed */
   height: auto; /* Maintain aspect ratio */
+  z-index: -1;
 }
 
 .sankey-image {
@@ -89,12 +89,14 @@ body {
 }
 
 h1 { 
-    text-align: center;
-    margin-top: 0;
-    font-size: calc(8vw + 8vh);
-    font-family: 'Roboto Condensed';
-    font-weight: 300;
-    color: #006b6b;
+  text-align: center;
+  margin-top: 0;
+  font-size: calc(8vw + 8vh);
+  font-family: Montserrat;
+  /*font-family: 'Roboto Condensed';*/
+  font-weight: 300;
+  color: #006b6b;
+  font-weight: bold;
 }
 
 h2 {
@@ -103,9 +105,11 @@ h2 {
     padding-top: calc(1vw + 1vh);
     text-align: center;
     font-size: calc(4vw + 4vh);
-    font-family: 'Roboto Condensed';
+    font-family: Montserrat;
     font-weight: 300;
     color: #006b6b;
+    padding-bottom: 3vh;
+    font-weight: bold;
 }
 
 
@@ -118,30 +122,27 @@ h2 {
 h3 {
     text-align: center;
     font-size: calc(1.5vw + 1.5vh);
+    padding-bottom: 1vh;
 }
 
 p {
     text-align: justify;
     font-size: calc(1vw + 1vh);
+    padding-bottom: 1vh;
+    font-family: Montserrat;
+
 }
 
-.styled-text h1 {
-  text-transform: uppercase;
+h1 {
+  /*text-transform: uppercase;*/
   font-size: calc(7vw + 7vh);
 }
 
-.styled-text h1::first-letter {
-  font-size: calc(8vw + 8vh);
-}
-
-.styled-text h2 {
-  text-transform: uppercase;
+.h2 {
+  /*-transform: uppercase;*/
   font-size: calc(4vw + 4vh);
 }
 
-.styled-text h2::first-letter {
-  font-size: calc(4.5vw + 4.5vh);
-}
 
 
 
@@ -153,9 +154,9 @@ p {
 
 #fixedMenu {
     position: fixed;
+    font-size: 16px;
     top: 35%;
     right: 10px;
-    /*transform: translateY(-50%);*/
     z-index: 10;
     transition: all 1s;
   }
@@ -176,7 +177,6 @@ p {
     background-color: #008585;
   }
 
-  /* Style pour le lien actif */
   #fixedMenu a.active {
     padding: 5px 5px;
     background-color: #008585;
@@ -185,13 +185,15 @@ p {
   }
 
   #fixedMenu.shrinked {
-    width: 20px; /* Adjust as needed */
+    right: 10px;
+    width: 30px;
     padding: 5px 10px;
 }
 
 #fixedMenu.shrinked a {
     overflow: hidden; /* Hide overflowing text */
-    padding: 5px 15px;
+    width: 34px;
+    padding: 5px 10px;
     margin: 5px 0px;
     border-radius: 50%;
     color: rgba(0, 0, 0, 0);
@@ -206,10 +208,10 @@ p {
     padding: 5px 10px;
 }
 
-  .menu-link {
+.menu-link {
     padding: 5px 5px;
     color: black;
-    background-color: #E5C185;
+    background-color: #a7d7d7;
     border-radius: 5px;
     text-decoration: none;
 }

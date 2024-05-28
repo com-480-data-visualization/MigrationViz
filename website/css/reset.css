@@ -1,0 +1,65 @@
+/* Reset CSS */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, main, nav, section {
+    display: block;
+}
+
+/* Setting line-height for a more consistent baseline */
+body {
+    line-height: 1.5;
+}
+
+/* Remove list styles on ul, ol elements with a list role */
+ul, ol {
+    list-style: none;
+}
+
+/* Remove quotes from blockquote and q elements */
+blockquote, q {
+    quotes: none;
+}
+blockquote::before, blockquote::after,
+q::before, q::after {
+    content: '';
+    content: none;
+}
+
+/* Table spacing reset */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Reset input and button styles */
+input, button, textarea, select {
+    font: inherit;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+}
+
+/* Reset anchor styles */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Remove default focus outlines */
+:focus {
+    outline: none;
+}
