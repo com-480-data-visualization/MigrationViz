@@ -47,7 +47,7 @@ function initializeUnited() {
         .attr("transform", `translate(0, ${635})`);
 
     timelineGroup.append("rect")
-        .attr("width", width)
+        .attr("width", width+1)
         .attr("height", height_rect)
         .style("fill", "white");
 
@@ -306,7 +306,7 @@ function initializeUnited() {
 
     // Function to create the timeline
     function Timeline(data) {
-        var margin = { top: 20, right: 0, bottom: 450, left: 40 },
+        var margin = { top: 10, right: 0, bottom: 470, left: 40 },
             width = 1300 - margin.left - margin.right,
             height = 600 - margin.top - margin.bottom;
         aspect = width / height;
