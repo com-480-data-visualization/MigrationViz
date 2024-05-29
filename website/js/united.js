@@ -304,90 +304,95 @@ function initializeUnited(united) {
     // Function to create the timeline
     function Timeline(data) {
         var margin = { top: 10, right: 0, bottom: 470, left: 60 },
-            width = 1300 - margin.left - margin.right,
+            width = 1160 - margin.left - margin.right,
             height = 600 - margin.top - margin.bottom;
         aspect = width / height;
-
+    
         // Calculate the sum per month 
         var sumPerMonth = sumNrPerMonth(data);
-
-        // Put into dateformat
+    
+        // Put into date format
         data.forEach(function (d) {
             d.date_sorted = parseDate(d.date_sorted);
         });
-
+    
         var dates = data.map(d => d.date_sorted);
         var maxDate = d3.max(dates);
-
+    
         // Create the line Data
         var lineData = Object.keys(sumPerMonth).map(function (key) {
             return { date: key, value: sumPerMonth[key] };
         });
-
+    
         // Parse date strings into Date objects
         lineData.forEach(function (d) {
             var parts = d.date.split('.');
             d.date = new Date(parseInt(parts[1]), parseInt(parts[0]) - 1);
         });
-
+    
         // Define x variable
         var x = d3.scaleTime()
             .domain(d3.extent(lineData, function (d) { return d.date; }))
             .rangeRound([0, width]);
-
+    
         // Define y variable
         var y = d3.scaleLinear()
             .domain([0, d3.max(lineData, function (d) { return d.value; })])
             .range([height, 0]);
-
+    
         // Define line
         var line = d3.line()
             .x(function (d) { return x(d.date); })
             .y(function (d) { return y(d.value); });
-
+    
         // Add element of timeline
-        timeline = timelineGroup.append("g")
+        var timeline = timelineGroup.append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+    
         // Append line to timeline
         timeline.append("path")
             .datum(lineData)
             .attr("class", "line_tl")
             .attr("d", line);
-
+    
+        // Generate ticks for every 5 years
+        var years = d3.timeYear.every(5);
+    
         // Append the line on the bottom, define the ticks
         timeline.append("g")
             .attr("class", "axis axis--x")
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x)
-                .ticks(d3.timeYear)
+                .ticks(years)
+                .tickFormat(d3.timeFormat("%Y"))
                 .tickPadding(6))
             .selectAll("text");
-
+    
         timeline.append("g")
             .attr("class", "axis axis--y")
             .call(d3.axisLeft(y)
                 .ticks(4));
-
+    
         // Initialize brush element
         var brush = d3.brushX()
             .extent([[0, 0], [width, height]])
             .on("end", function (event) {
                 brushCallback(event, data, x);
             });
-
+    
         // Calculate default start and end dates
         var endDate = maxDate;
         var startDate = new Date(endDate.getFullYear() - 5, endDate.getMonth(), endDate.getDate()); // 5 years ago
-
+    
         var initialSelection = [x(startDate), x(endDate)];
-
+    
         // Append the brush element to the timeline
         timeline.append("g")
             .attr("class", "brush")
             .call(brush)
             .call(brush.move, initialSelection);
     }
+    
 
     Timeline(united);
 
