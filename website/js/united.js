@@ -1,6 +1,6 @@
-function initializeUnited() {
+function initializeUnited(united) {
     // Set width and height of svg_united
-    var width = 1350;
+    var width = 1150;
     var height = 800;
     var height_rect = 200;
     var aspect = width / height;
@@ -29,18 +29,6 @@ function initializeUnited() {
     var svg_united = svg_group.append("g")
         .attr("id", "points-group");
 
-    // Load external data and boot
-    d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then(function (data) {
-        svg_map.append("g")
-            .selectAll("path")
-            .data(data.features)
-            .join("path")
-            .attr("fill", "#74a892") // Change color of the Map
-            .style("opacity", 1) // Change opacity of the country fill
-            .attr("d", d3.geoPath().projection(projection))
-            .style("stroke", "black") // Line color
-            .style("opacity", .55); // Opacity of map, total
-    });
 
     var timelineGroup = svg_group.append("g")
         .attr("id", "timeline-group")
@@ -72,9 +60,19 @@ function initializeUnited() {
     }
 
     function mousemove(event, d) {
+        var date = new Date(d.date_sorted);
+    
+        // Get the day, month, and year separately
+        var day = date.getDate();
+        var month = date.getMonth() + 1; // Months are zero-indexed, so we add 1
+        var year = date.getFullYear();
+        
+        // Format the date string as DD.MM.YYYY
+        var formattedDate = `${day < 10 ? '0' + day : day}.${month < 10 ? '0' + month : month}.${year}`;
+        
         var infoContent = `<h2>${d.name}</h2>`;
         infoContent += `<p><em>Number of deaths:</em> ${d.num_death}</p>`;
-        infoContent += `<p><em>Date found:</em> ${d.date_found}</p>`;
+        infoContent += `<p><em>Date found:</em> ${formattedDate}</p>`;
         infoContent += `<p><em>Cause of death:</em> ${d.cause_death}</p>`;
         updateInfoPanel(infoContent);
     }
@@ -146,7 +144,7 @@ function initializeUnited() {
 
     // Get the right Dateformat
     function parseDate(dateString) {
-        var [day, month, year] = dateString.split('/');
+        var [day, month, year] = dateString.split('_');
         var parsedYear = parseInt(year) < 93 ? '20' + year : '19' + year;
         return new Date(parsedYear, month - 1, day);
     }
@@ -165,7 +163,7 @@ function initializeUnited() {
         // Add the new text for partial sum
         var partialSumText = svg_united.append("text")
             .attr("id", "partialSumText")
-            .attr("x", 1300 - 30)
+            .attr("x", 1160 - 30)
             .attr("y", 40)
             .attr("text-anchor", "end")
             .attr("class", "text_sum")
@@ -174,7 +172,7 @@ function initializeUnited() {
         // Add the new text for the total sum
         var totalSumText = svg_united.append("text")
             .attr("id", "totalSumText")
-            .attr("x", 1300 - 30)
+            .attr("x", 1160 - 30)
             .attr("y", 20)
             .attr("text-anchor", "end")
             .attr("class", "text_sum")
@@ -221,7 +219,7 @@ function initializeUnited() {
         var propcircle = svg_united.append("svg")
             .attr("id", "propcircle")
             .append("g")
-            .attr("transform", "translate(" + 1190 + "," + 50 + ")");
+            .attr("transform", "translate(" + 1050 + "," + 50 + ")");
 
         // Calculate the max. radius
         var maxRadius = Math.max(...R);
@@ -243,7 +241,7 @@ function initializeUnited() {
                 if (i === 0) {
                     return "#fbf2c4";
                 } else {
-                    return "#e5c185";
+                    return "rgba(0, 133, 133, 0.3)";
                 }
             })
             .style("opacity", .8);
@@ -297,104 +295,112 @@ function initializeUnited() {
             .selectAll("path")
             .data(data.features)
             .join("path")
-            .attr("fill", "#74a892")
-            .style("opacity", 1)
+            .attr("fill", "#008585")
             .attr("d", d3.geoPath().projection(projection))
             .style("stroke", "black")
-            .style("opacity", .55);
+            .style("opacity", .35);
     });
 
     // Function to create the timeline
     function Timeline(data) {
-        var margin = { top: 10, right: 0, bottom: 470, left: 40 },
-            width = 1300 - margin.left - margin.right,
+        var margin = { top: 10, right: 0, bottom: 470, left: 60 },
+            width = 1160 - margin.left - margin.right,
             height = 600 - margin.top - margin.bottom;
         aspect = width / height;
-
+    
         // Calculate the sum per month 
         var sumPerMonth = sumNrPerMonth(data);
-
-        // Put into dateformat
+    
+        // Put into date format
         data.forEach(function (d) {
             d.date_sorted = parseDate(d.date_sorted);
         });
-
+    
         var dates = data.map(d => d.date_sorted);
         var maxDate = d3.max(dates);
-
+    
         // Create the line Data
         var lineData = Object.keys(sumPerMonth).map(function (key) {
             return { date: key, value: sumPerMonth[key] };
         });
-
+    
         // Parse date strings into Date objects
         lineData.forEach(function (d) {
             var parts = d.date.split('.');
             d.date = new Date(parseInt(parts[1]), parseInt(parts[0]) - 1);
         });
-
+    
         // Define x variable
         var x = d3.scaleTime()
             .domain(d3.extent(lineData, function (d) { return d.date; }))
             .rangeRound([0, width]);
-
+    
         // Define y variable
         var y = d3.scaleLinear()
             .domain([0, d3.max(lineData, function (d) { return d.value; })])
             .range([height, 0]);
-
+    
         // Define line
         var line = d3.line()
             .x(function (d) { return x(d.date); })
             .y(function (d) { return y(d.value); });
-
+    
         // Add element of timeline
-        timeline = timelineGroup.append("g")
+        var timeline = timelineGroup.append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+    
         // Append line to timeline
         timeline.append("path")
             .datum(lineData)
             .attr("class", "line_tl")
             .attr("d", line);
-
+    
+        // Generate ticks for every 5 years
+        var years = d3.timeYear.every(5);
+    
         // Append the line on the bottom, define the ticks
         timeline.append("g")
             .attr("class", "axis axis--x")
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x)
-                .ticks(d3.timeYear)
-                .tickPadding(0))
-            .selectAll("text")
-            .attr("x", 6);
-
+                .ticks(years)
+                .tickFormat(d3.timeFormat("%Y"))
+                .tickPadding(6))
+            .selectAll("text");
+    
         timeline.append("g")
             .attr("class", "axis axis--y")
             .call(d3.axisLeft(y)
                 .ticks(4));
-
+    
         // Initialize brush element
         var brush = d3.brushX()
             .extent([[0, 0], [width, height]])
             .on("end", function (event) {
                 brushCallback(event, data, x);
             });
-
+    
         // Calculate default start and end dates
         var endDate = maxDate;
         var startDate = new Date(endDate.getFullYear() - 5, endDate.getMonth(), endDate.getDate()); // 5 years ago
-
+    
         var initialSelection = [x(startDate), x(endDate)];
-
+    
         // Append the brush element to the timeline
         timeline.append("g")
             .attr("class", "brush")
             .call(brush)
             .call(brush.move, initialSelection);
     }
+    
 
     Timeline(united);
 
 }
+
+// load the data
+d3.json("data/united_data.json").then(function(uniteddata){
+    initializeUnited(uniteddata);
+});
 
 initializeUnited();
