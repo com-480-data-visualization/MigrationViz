@@ -30,8 +30,12 @@ function whenDocumentLoaded(action) {
     }
 }
 
+// unclear where to put that 
+var formatNumber = d3.format(",.0f"); // zero decimal places
+var format = function(d) { return formatNumber(d); };
+
 const params_Sankey = {
-    svgElementId: "#sankey-viz",
+    svgElementId: "#sankey-viz-test",
     margin: {top: 10, right: 20, bottom: 10, left: 20},
     continentColors: {
         "AFRICA": "#c7522a",
@@ -51,17 +55,14 @@ const params_Sankey = {
 
 class SankeyPlot {
     constructor(params) {
-
         this.margin = params.margin;
-        this.width = 900 - this.margin.left - this.margin.right;
-        this.height = 700 - this.margin.top - this.margin.bottom;
+        this.extraMargin = 100;
+        this.width = 1200 - this.margin.left - this.margin.right;
+        this.height = 800 - this.margin.top - this.margin.bottom;
         
         this.years = params.years ;
         this.continentOrder = params.continentOrder;
         this.continentColors = params.continentColors;
-        
-        // this.data = data;
-        // console.log('data', this.data);
 
         // slider to do 
         // this.slider = d3.select(params.svgElementId)
@@ -80,7 +81,7 @@ class SankeyPlot {
             .attr("width", this.width)
             .attr("height", this.height)
             .attr("viewBox", `0 0 ${this.width + this.margin.left + this.margin.right} ${this.height + this.margin.top + this.margin.bottom}`)
-            // .append("g")  // Append a group element to handle margins
+            .append("g")
             .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
             .call(responsivefy);
         //     .on("click", function(event){
@@ -90,15 +91,13 @@ class SankeyPlot {
         //             svg_sankey.selectAll(".link").style("opacity", 1);
         // }
         //     })
-        console.log('width', this.width);
-        console.log('height', this.height);
 
         d3.json("https://raw.githubusercontent.com/com-480-data-visualization/MigrationViz/master/website/data/sankey_data.json").then((data) => {
             
             let sankey = d3.sankey()
                 .nodeWidth(15)
                 .nodePadding(10)
-                .extent([1, 1], [this.width, this.height]); // WHY ?
+                .extent([[this.extraMargin, 1], [this.width - this.extraMargin, this.height]]); // perhaps -1 ; -6 
 
             let graph = sankey({
                 nodes: data[1990].nodes.map(d => Object.assign({}, d)),
@@ -108,21 +107,18 @@ class SankeyPlot {
             this.graph = graph;
                         
             console.log("Graph after Sankey layout:", this.graph);
-            console.log("Nodes:", this.graph.nodes);
-            console.log("Links:", this.graph.links);
             
             this.link = this.svg.append("g")
                 .selectAll(".link")
                 .data(this.graph.links)
                 .enter().append("path")
                 .attr("class", "link")
-                    .attr("d", d3.sankeyLinkHorizontal())
-                    .attr("stroke-width", (d) => Math.max(1, d.width));
+                .attr("d", d3.sankeyLinkHorizontal())
+                .attr("stroke-width", (d) => Math.max(1, d.width));
                 
-            this.graph.links.forEach(function(link) {
-                console.log(`Source: ${link.source}, Target: ${link.target}, Value: ${link.value}`);
-
-            });
+            // this.graph.links.forEach((link) => {
+            //     console.log(`Source: ${link.source}, Target: ${link.target}, Value: ${link.value}`);
+            // });
 
             this.node = this.svg.append("g")
                 .selectAll(".node")
@@ -131,126 +127,103 @@ class SankeyPlot {
                 .attr("class", "node");
 
             this.node.append("rect")
-                .attr("x", (d) => d.x0)
-                .attr("y", (d) => d.y0)
+                .attr("x", (d) => {
+                        console.log(`Node ${d.name}: x0 = ${d.x0}`);
+                        return d.x0;
+                })
+                .attr("y", (d) => {
+                            console.log(`Node ${d.name}: y0 = ${d.y0}`);
+                            return d.y0;
+                })
                 .attr("height", (d) => d.y1 - d.y0)
                 .attr("width", sankey.nodeWidth())
-                .attr("fill", (d) => this.continentColors[d.continent])
-                .attr("stroke", "#000");
+                .style("fill", (d) => {
+                    return this.continentColors[d.name.toUpperCase()] || '#ccc'; 
+                })
+                .style("stroke", (d) => {
+                    return d3.rgb(this.continentColors[d.name.toUpperCase()] || '#ccc').darker(2);
+                });
 
+            this.node.append("text")
+                .attr("x", (d) => d.x0 < this.width / 2 ? d.x0 - 6 : d.x1 + 6)
+                .attr("y", (d) => (d.y0 + d.y1) / 2)
+                .attr("dy", "0.35em")
+                .attr("text-anchor", (d) => d.x0 < this.width / 2 ? "end" : "start")
+                .text((d) => d.name);
+
+            // Tooltip 
+            this.tooltipSankey = d3.select(params.svgElementId)
+                .append("div")
+                .attr("class", "tooltip-undesa")
+                .style("opacity", 0)
+                .style("position", "absolute")
+                .style("text-align", "center")
+                .style("width", "120px")
+                .style("height", "auto")
+                .style("padding", "2px")
+                .style("pointer-events", "none");
+
+            this.link
+                .on("mouseover", function(event, d) {
+                this.tooltipSankey.html(`From: ${d.source.name}<br>To: ${d.target.name}<br>Value: ${format(d.value)}`)
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY + 10) + "px")
+                .style("opacity", 1);
+                })
+                .on("mousemove", function(event) {
+                    this.tooltipSankey.style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY + 10) + "px");
+                })
+                .on("mouseout", function() {
+                    this.tooltip_sankey.style("opacity", 0);
+                });
             
-  
-        }).catch(error => {
+            // Existing event handlers for nodes, ensure they are correctly set up
+            node.selectAll("rect")
+                .on("mouseover", function(event, d) {
+                    this.tooltip_sankey.html(`Name: ${d.name}<br>Value: ${format(d.value)}`)
+                        .style("left", (event.pageX + 10) + "px")
+                        .style("top", (event.pageY + 10) + "px")
+                        .style("opacity", 1);
+                })
+                .on("mousemove", function(event) {
+                    this.tooltip_sankey.style("left", (event.pageX + 10) + "px")
+                                .style("top", (event.pageY + 10) + "px");
+                })
+                .on("mouseout", function() {
+                    this.tooltip_sankey.style("opacity", 0);
+                })
+                .on("click", function(event, clickedNode) {
+                    event.stopPropagation();  // Prevent click from propagating to the SVG background
+
+                    // Reset all nodes and links to a lower opacity
+                    this.node.selectAll("rect").style("opacity", 0.2);
+                    this.link.style("opacity", 0.1);
+
+                    // Highlight the selected node
+                    d3.select(this).style("opacity", 1);
+
+                    // Highlight links and connected nodes
+                    this.link.filter(d => d.source === clickedNode || d.target === clickedNode)
+                        .style("opacity", 1)  // Make connected links fully visible
+                        .each(function(d) {
+                            // Select the nodes connected by these links and make them fully visible
+                            this.node.selectAll("rect")
+                                .filter(n => n === d.source || n === d.target)
+                                .style("opacity", 1);
+                        });
+                });
+
+        }).catch((error) => {
             console.error('Error loading or parsing data:', error);
         });
 
-    }
-            /* this.sankey = d3.sankey()
-                .nodeWidth(20)
-                .nodePadding(10)
-                .size([width, height]); */
 
+        
+    };
 
-
-
-            // ------------------------
-            
-/*             // this.graph = d3.sankey(data)
-            const  graph = d3.sankey(data)
-            .nodeWidth(15)
-            .nodePadding(10)
-            .extent([1, 1], [this.width - 1, this.height -6 ]); // WHY ?
-            console.log('this.graph', graph);
-            console.log("graph_nodes", graph.nodes)
-
-            this.link = this.svg.append("g")
-                .selectAll(".link")
-                .data(graph.links)
-                .enter().append("path")
-                .attr("class", "link")
-                .attr("d", d3.sankeyLinkHorizontal())
-                .attr("stroke-width", (d) => d.width);
-            });
-            console.log('this.link', this.link); // undefined 
-
-            this.node = this.svg.append("g")
-                .selectAll(".node")
-                .data(graph.nodes)
-                .enter().append("g")
-                .attr("class", "node");
-
- */
-            // -------------------------
-
-        // this.node.append("rect")
-        //     .attr("x", (d) => d.x0)
-        //     .attr("y", (d) => d.y0)
-        //     .attr("height", (d) => d.y1 - d.y0)
-        //     .attr("width", sankey.nodeWidth())
-        //     .attr("fill", (d) => this.continentColors[d.continent])
-        //     .attr("stroke", "#000");
-
-        // this.node.append("text")
-        //     .attr("x", (d) => d.x0 - 6)
-        //     .attr("y", (d) => (d.y1 + d.y0) / 2)
-        //     .attr("dy", "0.35em")
-        //     .attr("text-anchor", "end")
-        //     .text((d) => d.name)
-        //     .filter((d) => d.x0 < this.width / 2)
-        //     .attr("x", (d) => d.x1 + 6)
-        //     .attr("text-anchor", "start");
-  
-    
-
-    // initSankey() {
-        // const sankey = d3.sankey()
-        //     .nodeWidth(15)
-        //     .nodePadding(10)
-        //     .extent([[1, 1], [this.width - 1, this.height - 6]]);
-        // console.log('d3.sankey', sankey)
-        // this.graph = d3.sankey(this.data)
-        //     .nodeWidth(15)
-        //     .nodePadding(10)
-        //     .extent([1, 1], [this.width - 1, this.height -6 ]); // WHY ?
-        // console.log('this.graph', this.graph)
-
-        // this.link = this.svg.append("g")
-        //     .selectAll(".link")
-        //     .data(this.graph.links)
-        //     .enter().append("path")
-        //     .attr("class", "link")
-        //     .attr("d", d3.sankeyLinkHorizontal())
-        //     .attr("stroke-width", (d) => d.width);
-
-        // this.node = this.svg.append("g")
-        //     .selectAll(".node")
-        //     .data(this.graph.nodes)
-        //     .enter().append("g")
-        //     .attr("class", "node");
-
-        // this.node.append("rect")
-        //     .attr("x", (d) => d.x0)
-        //     .attr("y", (d) => d.y0)
-        //     .attr("height", (d) => d.y1 - d.y0)
-        //     .attr("width", sankey.nodeWidth())
-        //     .attr("fill", (d) => this.continentColors[d.continent])
-        //     .attr("stroke", "#000");
-
-        // this.node.append("text")
-        //     .attr("x", (d) => d.x0 - 6)
-        //     .attr("y", (d) => (d.y1 + d.y0) / 2)
-        //     .attr("dy", "0.35em")
-        //     .attr("text-anchor", "end")
-        //     .text((d) => d.name)
-        //     .filter((d) => d.x0 < this.width / 2)
-        //     .attr("x", (d) => d.x1 + 6)
-        //     .attr("text-anchor", "start");
-     //   }
 }
 
-// unclear where to put that 
-var formatNumber = d3.format(",.0f"); // zero decimal places
-var format = function(d) { return formatNumber(d); };
 
 
 SankeyPlotTest = new SankeyPlot(params_Sankey);
