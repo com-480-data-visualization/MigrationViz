@@ -1,7 +1,7 @@
 .circle {
-  stroke: #74a892;
-  fill: 74a892;
-  fill-opacity: .4;
+  stroke: #008585;
+  fill: 008585;
+  fill-opacity: .3;
   stroke-width: 1;
 }
 
@@ -15,7 +15,7 @@
 .line_tl {
   fill: black;
   fill-opacity: 1;
-  stroke: #74a892; /* Set line color */
+  stroke: #008585; /* Set line color */
   stroke-width: 1px;
 }
 

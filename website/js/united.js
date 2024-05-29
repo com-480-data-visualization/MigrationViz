@@ -29,18 +29,6 @@ function initializeUnited(united) {
     var svg_united = svg_group.append("g")
         .attr("id", "points-group");
 
-    // Load external data and boot
-    d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then(function (data) {
-        svg_map.append("g")
-            .selectAll("path")
-            .data(data.features)
-            .join("path")
-            .attr("fill", "#74a892") // Change color of the Map
-            .style("opacity", 1) // Change opacity of the country fill
-            .attr("d", d3.geoPath().projection(projection))
-            .style("stroke", "black") // Line color
-            .style("opacity", .55); // Opacity of map, total
-    });
 
     var timelineGroup = svg_group.append("g")
         .attr("id", "timeline-group")
@@ -72,9 +60,19 @@ function initializeUnited(united) {
     }
 
     function mousemove(event, d) {
+        var date = new Date(d.date_sorted);
+    
+        // Get the day, month, and year separately
+        var day = date.getDate();
+        var month = date.getMonth() + 1; // Months are zero-indexed, so we add 1
+        var year = date.getFullYear();
+        
+        // Format the date string as DD.MM.YYYY
+        var formattedDate = `${day < 10 ? '0' + day : day}.${month < 10 ? '0' + month : month}.${year}`;
+        
         var infoContent = `<h2>${d.name}</h2>`;
         infoContent += `<p><em>Number of deaths:</em> ${d.num_death}</p>`;
-        infoContent += `<p><em>Date found:</em> ${d.date_found}</p>`;
+        infoContent += `<p><em>Date found:</em> ${formattedDate}</p>`;
         infoContent += `<p><em>Cause of death:</em> ${d.cause_death}</p>`;
         updateInfoPanel(infoContent);
     }
@@ -146,7 +144,7 @@ function initializeUnited(united) {
 
     // Get the right Dateformat
     function parseDate(dateString) {
-        var [day, month, year] = dateString.split('/');
+        var [day, month, year] = dateString.split('_');
         var parsedYear = parseInt(year) < 93 ? '20' + year : '19' + year;
         return new Date(parsedYear, month - 1, day);
     }
@@ -243,7 +241,7 @@ function initializeUnited(united) {
                 if (i === 0) {
                     return "#fbf2c4";
                 } else {
-                    return "#e5c185";
+                    return "rgba(0, 133, 133, 0.3)";
                 }
             })
             .style("opacity", .8);
@@ -297,16 +295,15 @@ function initializeUnited(united) {
             .selectAll("path")
             .data(data.features)
             .join("path")
-            .attr("fill", "#74a892")
-            .style("opacity", 1)
+            .attr("fill", "#008585")
             .attr("d", d3.geoPath().projection(projection))
             .style("stroke", "black")
-            .style("opacity", .55);
+            .style("opacity", .35);
     });
 
     // Function to create the timeline
     function Timeline(data) {
-        var margin = { top: 10, right: 0, bottom: 470, left: 40 },
+        var margin = { top: 10, right: 0, bottom: 470, left: 60 },
             width = 1300 - margin.left - margin.right,
             height = 600 - margin.top - margin.bottom;
         aspect = width / height;
@@ -364,9 +361,8 @@ function initializeUnited(united) {
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x)
                 .ticks(d3.timeYear)
-                .tickPadding(0))
-            .selectAll("text")
-            .attr("x", 6);
+                .tickPadding(6))
+            .selectAll("text");
 
         timeline.append("g")
             .attr("class", "axis axis--y")
