@@ -1,4 +1,4 @@
-function initializeUnited() {
+function initializeUnited(united) {
     // Set width and height of svg_united
     var width = 1350;
     var height = 800;
@@ -396,5 +396,10 @@ function initializeUnited() {
     Timeline(united);
 
 }
+
+// load the data
+d3.json("data/united_data.json").then(function(uniteddata){
+    initializeUnited(uniteddata);
+});
 
 initializeUnited();
