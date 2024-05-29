@@ -118,7 +118,7 @@ h3 {
 
 p {
   text-align: justify;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   padding-bottom: 1vh;
   font-family: Montserrat;
 }
@@ -204,7 +204,11 @@ p {
 }
 
 .obeep-image {
-  width: 12rem;
+  width: 16rem;
+  height: 16rem;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #a7d7d7;
 }
 
 #Title {
