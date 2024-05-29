@@ -127,6 +127,12 @@ p {
   font-size: 1.7rem;
 }
 
+b {
+  font-weight: bold;
+  color: #006b6b;
+}
+
+
 .mendatory-scrolling {
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
@@ -264,6 +270,7 @@ p {
 .author p {
   margin: 0.2rem 0;
   text-align: center;
+  font-size: 2rem !important;
 }
 
 .profile-photo {
@@ -299,10 +306,10 @@ p {
 .info-panel {
   left: 0;
   width: 22vw;
-  height: 82vh;
+  height: 65vh;
   overflow-y: hidden;
-  background-color: rgba(251, 242, 196, 0.4);
-  border: 2px solid rgba(229, 193, 133, 0.6);
+  background-color: #cfecec;
+  border-radius: 30px;
   padding-left: 1rem;
 }
 
