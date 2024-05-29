@@ -146,7 +146,7 @@ function initializeUnited(united) {
 
     // Get the right Dateformat
     function parseDate(dateString) {
-        var [day, month, year] = dateString.split('/');
+        var [day, month, year] = dateString.split('_');
         var parsedYear = parseInt(year) < 93 ? '20' + year : '19' + year;
         return new Date(parsedYear, month - 1, day);
     }
