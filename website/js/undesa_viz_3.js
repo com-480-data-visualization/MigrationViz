@@ -6,12 +6,13 @@ const params = {
     // Regions are defined by the UN M49 standard
     // https://unstats.un.org/unsd/methodology/m49/#geo-regions
     continentColors: {
-        "Africa": "#f07d00",
-        "Europe": "#0069b3",
-        "Asia": "#b80d7f",
-        "Americas": "#ffcc01",
-        "Oceania": "#e40613",
-        "Antarctica": "#21bbef"
+        "AFRICA": "#004343",
+        "ASIA": "#008585",
+        "EUROPE": "#80c2c2",
+        "LATIN AMERICA AND THE CARIBBEAN": "#74a892",
+        "NORTHERN AMERICA": "#b8cdab",
+        "OCEANIA": "#fbf2c4",
+        "OTHER": "#80a1a1"
     },
     // Defines the radius of the circles indicating refugee numbers for example
     radiusFactor: 50,
@@ -34,7 +35,8 @@ function responsivefy(svg) {
 }
 
 var world;
-var metaData;
+var UndesaData;
+var countryCodes;
 
 class chartUndesa {
     constructor(params) {
@@ -65,84 +67,127 @@ class chartUndesa {
         // https://d3-graph-gallery.com/graph/choropleth_hover_effect.html
         this.tooltip = d3.select(params.svgElementId)
             .append("div")
-            .attr("class", "tooltip");
+            .attr("class", "tooltip-undesa")
         // --------------------------------------
         // Define the color used to show percentages
         // TODO: Rename into colorPercentage?
         const color = d3.scaleQuantize([0.0, 100.0], d3.schemeBlues[5]);
         // --------------------------------------
-        // Load UNDESA data
-        // TODO: Rewrite so that data in json and generally more clean
-        let myMap = new Map();
-        unhcr.forEach(function (dictionary) {
-            myMap.set(dictionary.country, dictionary.refugees + dictionary.asylum_seekers);
-        });
-        console.log(myMap)
         Promise.all([
             // Load  GeoJSON map
-            // TODO: Exchange GeoJSON by TopoJSON
-            // TODO: Maybe the link below could be an interesting source?
-            // https://unpkg.com/world-atlas@1/world/110m.json
-            // d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson"),
-            d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"),
-            // Load country meta data
-            // TODO: Find different json maybe
-            // Alternative: https://raw.githubusercontent.com/mledoze/countries/master/dist/countries-unescaped.json
-            d3.json("https://raw.githubusercontent.com/mledoze/countries/master/dist/countries.json"),
-            // d3.json("https://raw.githubusercontent.com/martynafford/natural-earth-geojson/master/50m/cultural/ne_50m_admin_0_map_units.json")
+            // TODO: Exchange GeoJSON by TopoJSON            
+            d3.json("https://raw.githubusercontent.com/com-480-data-visualization/MigrationViz/master/data_processing/data_world/map/map.geojson"),
+            // d3.json("https://raw.githubusercontent.com/com-480-data-visualization/MigrationViz/master/website/data/map.topojson"),
+            // Load data 
+            d3.json("https://raw.githubusercontent.com/com-480-data-visualization/MigrationViz/master/website/data/undesa_data.json"),
+            // Load centroid and country code data
+            d3.json("https://raw.githubusercontent.com/com-480-data-visualization/MigrationViz/master/data_processing/data_world/map/country-centroids.json")
         ]).then((data) => {
-            console.log(data[0])
-            let worldGeojson = topojson.feature(data[0], data[0].objects.countries)
+            // let worldGeojson = topojson.feature(data[0], data[0].objects.data)
+            let worldGeojson = structuredClone(data[0]);
+            let switzerlandGeojson = structuredClone(data[0]);
+            worldGeojson.features = worldGeojson.features.slice(0, 235); // 235, 227
+            switzerlandGeojson.features = switzerlandGeojson.features.slice(235, 261)
+            // Debugging
+            // TODO: Remove 
             world = worldGeojson
-            let countriesMetaData = data[1]
-            metaData = countriesMetaData
-            console.log(worldGeojson)
+            // --------------------------------------
+            // Treat UNDESA data
+            let undesaData = [];
+            for (let i = 0; i < data[1]["code"].length; i++) {
+                let indx = worldGeojson.features.findIndex((obj) => Number(obj.properties["m49"]) === data[1]["code"][i]);
+                undesaData.push({
+                    "iso_3166_2": worldGeojson.features[indx].properties["iso_3166_2"],
+                    "m49": data[1]["code"][i],
+                    "name": data[1]["name"][i],
+                    "latitude": worldGeojson.features[indx].properties["latitude"],
+                    "longitude": worldGeojson.features[indx].properties["longitude"],
+                    "cx": projection([worldGeojson.features[indx].properties["longitude"], worldGeojson.features[indx].properties["latitude"]])[0],
+                    "cy": projection([worldGeojson.features[indx].properties["longitude"], worldGeojson.features[indx].properties["latitude"]])[1],
+                    "region": worldGeojson.features[indx].properties["region"],
+                    "sovereignt": worldGeojson.features[indx].properties["sovereignt"],
+                    "type": worldGeojson.features[indx].properties["type"],
+                    "metaData": data[1]["type"][i],
+                    "refugees": data[1]["data"][4]["data"]['2020'][i],
+                    "percentRefugees": data[1]["data"][5]["data"]['2020.1'][i]
+                });
+            }
+            console.log(undesaData);
+            UndesaData = undesaData
+            // --------------------------------------
+            // Treat country centroid and code data
+            countryCodes = data[2];
+            let alpha3 = [];
+            worldGeojson.features.forEach((obj) => alpha3.push(obj.properties["iso_3166_2"]));
+            const convertAlpha = (alph3) => {
+                try { return countryCodes.find((obj) => obj.alpha3 === alph3)['alpha2'] } catch {
+                    if (alph3 == "SDS") { return "SS" }
+                    else if (alph3 == "CUW") { return "CW" }
+                    else if (alph3 == "SAH") { return "EH" }
+                    else if (alph3 == "PSX") { return "PS" }
+                    else if (alph3 == "MAF") { return "MF" }
+                    else if (alph3 == "BLM") { return "BL" }
+                    else if (alph3 == "SXM") { return "SX" }
+                    else if (alph3 == "BES") { return "BQ-BO" }
+                    return ""
+                }
+            };
+            let alpha3ToAlpha2 = {}
+            alpha3.forEach(alph3 => alpha3ToAlpha2[alph3] = convertAlpha(alph3));
+            // console.log(alpha3ToAlpha2);
+            // --------------------------------------
+            // Convert geographic to cartesian coordinates for centroids
+            // Input for projection is [lng,lat] and not [lat,lng]
+            let centroidsCartesianWorld = [];
+            worldGeojson.features.forEach((feature) => { centroidsCartesianWorld.push(projection([feature.properties["longitude"], feature.properties["latitude"]])) })
             // --------------------------------------
             // Create different groups
             // Order of creating groups decides what is on top
-            this.map_container = this.svg.append('g');
+            this.map_countriesWorld = this.svg.append('g');
+            this.map_circles = this.svg.append('g')
             this.map_countour = this.svg.append('g')
             // --------------------------------------
             // Add countries
-            this.map_container.append("g")
-                .selectAll("path")
-                .join("country")
+            this.map_countriesWorld.selectAll("path")
+                // .join("country")
                 .data(worldGeojson.features)
                 .join("path")
                 .attr("fill", "#dcdcdc")
                 .attr("d", d3.geoPath().projection(projection))
+                .attr("class", function (d) { return "map_country map_country_code_" + d.properties["iso_3166_2"] })
                 .attr("class", function (d, i) { return "map_country map_country_index_" + String(i) })
-                .style("stroke", "white");
+                .style("stroke", "white")
+                .style("stroke-width", 0.75);
             // --------------------------------------
             // Add circles indicating refugees
-
-
-/* 
-    svg.append("g")
-        .selectAll("circle")
-        .data(data[0]["features"].map(item => item.id).filter(item => isNaN(item)).filter(item => !["OSA", "SDS", "ABV"].includes(item)))
-        .join("circle")
-        .attr("cx", function (d) { try { return projection([data[1][data[1].findIndex(({ cca3 }) => cca3 === d)]['latlng'][1], data[1][data[1].findIndex(({ cca3 }) => cca3 === d)]['latlng'][0]])[0] } catch (e) { console.log(d); return 0 } })
-        .attr("cy", function (d) { return projection([data[1][data[1].findIndex(({ cca3 }) => cca3 === d)]['latlng'][1], data[1][data[1].findIndex(({ cca3 }) => cca3 === d)]['latlng'][0]])[1] })
-        .attr("r", function (d) {
-            try {
-                let val = Math.sqrt(undesa['data'][4]['data']['2020'][undesa['code'].findIndex((ccn3) => ccn3 === parseInt(data[1][data[1].findIndex(({ cca3 }) => cca3 === d)]['ccn3']))] / Math.PI) / radiusFactor;
-                // console.log(val); 
-                return val;
-            } catch (e) {
-                console.log(e);
-                console.log(d)
-                return 0;
-            }
-        })
-        .style("fill", function (d) { try { return continentColors[data[1][data[1].findIndex(({ cca3 }) => cca3 === d)]['region']] } catch { return "black" } })
-        .attr("stroke", function (d) { try { return continentColors[data[1][data[1].findIndex(({ cca3 }) => cca3 === d)]['region']] } catch { return "black" } })
-        .attr("stroke-width", 1)
-        .attr("fill-opacity", .2)
-        .attr("class", "map_circle")
- */
-
-
+            let radiusFactor = 50;
+            this.map_circles.selectAll("circle")
+                .data(undesaData)
+                .join("circle")
+                .attr("cx", function (d) { return d.cx; })
+                .attr("cy", function (d) { return d.cy; })
+                .attr("r", function (d) {
+                    if (isNaN(d.refugees)) {
+                        // Means the country eihter doesnt report
+                        // Or data has been removed out of privacy reasons
+                        return 0;
+                    }
+                    else {
+                        try {
+                            let val = Math.sqrt(d.refugees / Math.PI) / radiusFactor;
+                            return val;
+                        } catch (e) {
+                            console.log(e);
+                            console.log(d)
+                            return 0;
+                        }
+                    }
+                })
+                .attr("class", function (d) { return "map_circle map_circle_code_" + d.iso_3166_2 })
+                .style("fill", function (d) { try { return params.continentColors[d.region] } catch { return "black" } })
+                .attr("stroke", function (d) { try { return params.continentColors[d.region] } catch { return "black" } })
+                .attr("stroke-width", 1)
+                .attr("fill-opacity", .2);
 
 
 
@@ -158,31 +203,31 @@ class chartUndesa {
                 .style("stroke", "#ccc")
                 .style("stroke-width", 2);
             // --------------------------------------
+
             // Highlight country closest to cursor and show info using tooltip
             // The highlighted country is the one with a black border around it
             let indexHighlightedCountry = -1;
             const dist = function (p1, p2) { return Math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2); }
-            this.svg.on("mouseover", () => {this.tooltip.style("opacity", 1)});
+            this.svg.on("mouseover", () => { this.tooltip.style("opacity", 1) });
             this.svg.on("mousemove", (event) => {
                 let svgBoundingRect = this.svg.node().getBoundingClientRect();
                 // Make sure that even after responsivefy() function resized
                 // that the mouse position is appropiatley scaled for calculations
-                let svgScalingFactor = this.width/svgBoundingRect.width;
+                let svgScalingFactor = this.width / svgBoundingRect.width;
                 // Mouse position relative to the svg 
-                let relativeMousePos = [svgScalingFactor*(event.x - svgBoundingRect.left), svgScalingFactor*(event.y - svgBoundingRect.top)];
-                // Convert geographic to cartesian coordinates for centroids
-                // Input for projection is [lng,lat] and not [lat,lng]
-                let centroidsCartesian = centroids.map((latlng) => projection([latlng[1], latlng[0]]));
+                let relativeMousePos = [svgScalingFactor * (event.x - svgBoundingRect.left), svgScalingFactor * (event.y - svgBoundingRect.top)];
+
+                //let centroidsCartesian = centroids.map((latlng) => projection([latlng[1], latlng[0]]));
                 let indexClosestCountry = 0;
-                for (let i = 0; i < centroidsCartesian.length; i++) {
-                    if (dist(relativeMousePos, centroidsCartesian[i]) < dist(relativeMousePos, centroidsCartesian[indexClosestCountry])) {
+                for (let i = 0; i < centroidsCartesianWorld.length; i++) {
+                    if (dist(relativeMousePos, centroidsCartesianWorld[i]) < dist(relativeMousePos, centroidsCartesianWorld[indexClosestCountry])) {
                         indexClosestCountry = i;
                     }
                 }
                 // Triggered when country changes
                 if (indexHighlightedCountry != indexClosestCountry) {
                     // TODO: The white is not the same anymore after going over it
-                     d3.select(".map_country_index_" + String(indexHighlightedCountry))
+                    d3.select(".map_country_index_" + String(indexHighlightedCountry))
                         .transition()
                         .duration(200)
                         .style("stroke", "white")
@@ -198,22 +243,57 @@ class chartUndesa {
                     // Update tooltip text
                     // TODO: Find country flag display option accross browsers, make sure it is compatible
                     // TODO: Add country classes to circles and make stroke width bigger when hovering over country
-                    this.tooltip.html("Flag" + "<b>&ensp;" + worldGeojson.features[indexHighlightedCountry].properties['name'] + "</b>" + "<br>" + worldGeojson.features[indexHighlightedCountry].id + "<br>" + "some value")
+                    let textDependency = "";
+                    if (worldGeojson.features[indexHighlightedCountry].properties['type'] == "Dependency")  textDependency = "<br>Dependency of " + worldGeojson.features[indexHighlightedCountry].properties['sovereignt'];
+                    let numberRefugee = undesaData.find((obj)=>obj.m49 == worldGeojson.features[indexHighlightedCountry].properties['m49'])["refugees"];
+                    let textNumber = "";
+                    if (numberRefugee == "..") {textNumber= "Data not available or reported to UN."}
+                    else if (numberRefugee == "~") {textNumber= "< 5"}
+                    else {textNumber=numberRefugee.toLocaleString("CH")};
+                    let textEstimateMetaData = "Estimates derived from data";
+                    undesaData.find((obj)=>obj.m49 == worldGeojson.features[indexHighlightedCountry].properties['m49'])["metaData"]
+                    .split('').forEach((char,i) => {
+                        console.log(char,i);
+                        if (i != 0 && char != ' ') {textEstimateMetaData += " and"}  
+                        if (char == 'B') {textEstimateMetaData += " on foreign-born population"}
+                        else if (char == 'C') {textEstimateMetaData += " on foreign citizens"}
+                        else if (char == 'R') {textEstimateMetaData += " on data of the UNHCR or UNRWA"}
+                        else if (char == 'I') {textEstimateMetaData += " imputed (i.e. no data)"}
+                    });
+                    this.tooltip.html("<b>" + worldGeojson.features[indexHighlightedCountry].properties['name'] + "</b>" 
+                    + textDependency
+                    + "<p>" + "Refugees: " + "<span>" + textNumber + "</span>"
+                    + "<br>" + "Pct. migrants:" + "</p>"
+                    + "<div><text>" + textEstimateMetaData + "</text></div>")
+                    // d3.select(".tooltip").append("div").html("<br>" + textEstimateMetaData)
                 }
                 // Update position of tooltip when mouse is moved
                 this.tooltip
-                .style("left", (event.x - parseInt(d3.select(".tooltip").style("width")) / 2) + "px")
-                .style("top", (event.y + 30) + "px")      
+                    .style("left", (event.x - parseInt(d3.select(".tooltip-undesa").style("width")) / 2) + "px")
+                    .style("top", (event.y + 30) + "px")
             })
+
             this.svg.on("mouseleave", () => {
                 this.tooltip.style("opacity", 0);
                 d3.select(".map_country_index_" + String(indexHighlightedCountry))
-                        .transition()
-                        .duration(200)
-                        .style("stroke", "white")
-                        .style("stroke-width", "0.5px");
-                indexHighlightedCountry = -1;    
+                    .transition()
+                    .duration(200)
+                    .style("stroke", "white")
+                    .style("stroke-width", "0.75px");
+                indexHighlightedCountry = -1;
             })
+            // Zoom in functionality test
+            /*
+            const zoomIn = () => {
+                this.map_countriesWorld.transition().duration(750).call(
+                    d3.zoom().on("zoom", (event) => {
+                        this.map_countriesWorld.attr("transform", event.transform);
+                    }).transform,
+                    d3.zoomIdentity.translate(10, 100).scale(1)
+                );
+            };
+            zoomIn();
+            */
         });
     }
 }
