@@ -1,5 +1,3 @@
-/* HEAVILY INSPIRED FROM https://bl.ocks.org/d3noob/013054e8d7807dff76247b81b0e29030 by Malcolm Maclean
-NEED TO CHECK similarities and how it looks like */
 .node rect {
   cursor: pointer;
   fill-opacity: .9;
@@ -7,6 +5,8 @@ NEED TO CHECK similarities and how it looks like */
   }
   
 .node text {
+  font-family: Montserrat;
+  font-weight: bold;
   pointer-events: none;
   text-shadow: 0 1px 0 #fff;
 }
@@ -38,26 +38,15 @@ NEED TO CHECK similarities and how it looks like */
 .tick-container {
   position: relative;
   width: 100%;
-  height: 20px; /* Adjust as necessary to fit your design */
+  height: 20px;
   margin-top: 5px;
 }
 
 .tick_sk {
   position: absolute;
   white-space: nowrap;
-  font-size: 12px;
+  font-size: inherit;
+  font-family: inherit;
   text-align: center;
   transform: translateX(-50%);
 }
-
-/* div.tooltip{
-  position: absolute;
-  text-align: center;
-  width: 60px;
-  height: 28px;
-  padding: 2px;
-  background-color: antiquewhite;
-  border: 0px;
-  border-radius: 8px;
-  pointer-events: none;
-} */

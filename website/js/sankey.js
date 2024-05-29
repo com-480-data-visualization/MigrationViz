@@ -1,8 +1,3 @@
-// Inspiration for the responsify function comes from
-// Brendan Sudol and his blog
-// https://brendansudol.github.io/writing/responsive-d3
-// FIXME There are multiple mistakes in this code (missing ; container defined without var which could be a problem for later)
-// but I did not write it thus I will not change it
 function responsivefy(svg) {
     var container_sankey = d3.select(svg.node().parentNode);
     svg.call(resize);
@@ -39,6 +34,7 @@ var margin = {top:10, right:10, bottom:10, left:10},
 d3.select('#sankey-slider').append("label")
     .attr("for", "sankey-range")
     .text("Timeline")
+    .style("font-family", "Montserrat")
     .style("margin-bottom", "10px")
     .style("text-align", "center")
     .style("display", "block");
@@ -72,6 +68,7 @@ tickContainer.selectAll("div")
     .style("position", "absolute")
     .style("left", d => `${(d - years[0]) / (years[years.length - 1] - years[0]) * 100}%`)
     .style("transform", "translateX(0%)")
+    .style("font-family", "Montserrat")
     .text(d => d);
 
 ////////////// FUNCTIONS ////////////////////
@@ -214,6 +211,6 @@ var sankey = d3.sankey()
     .size([width, height]);
 
 // load the data
-d3.json("data/sankey_2020.json").then(function(sankeydata){
+d3.json("data/sankey_1990.json").then(function(sankeydata){
     produce_sankey(sankeydata);
 });
