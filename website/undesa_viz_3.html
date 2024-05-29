@@ -12,10 +12,10 @@
     <script src="https://d3js.org/topojson.v1.min.js"></script>
     <!-- Load data -->
     <!-- TODO: Find better way to import data -->
-    <script type='text/javascript' src='../data_world/unhcr_data.js'></script>
-    <script type='text/javascript' src='../data_world/undesa_data.js'></script>
-    <script type='text/javascript' src='data/centroids_natural_earth_country_maps.js'></script>
+    <script type='text/javascript' src='data/unhcr_data.js'></script>
+    <script type='text/javascript' src='data/undesa_data.js'></script>
 
+    <link rel="stylesheet" href="css/undesa.css">
 </head>
 
 <body>
@@ -34,14 +34,15 @@
 
     <style>
      
-
+        /*
         .tooltip {
             opacity: 1;
             background-color: rgba(255, 255, 255, 0.5);
             padding: 7px;
             position: absolute;
             font-family: Arial, Helvetica, sans-serif;
-        }
+        } */
+
 
         /*  
         ----- BUTTON ----- 
@@ -80,6 +81,9 @@
     </style>¨
 
     <script type='text/javascript' src='./js/undesa_viz_3.js'></script>
+    <svg class="icon">
+        <use xlink:href="./data/flag_sprite.svg#ZW"></use>
+      </svg>
 </body>
 
 </html>
