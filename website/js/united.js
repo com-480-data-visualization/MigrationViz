@@ -1,6 +1,6 @@
 function initializeUnited(united) {
     // Set width and height of svg_united
-    var width = 1350;
+    var width = 1150;
     var height = 800;
     var height_rect = 200;
     var aspect = width / height;
@@ -163,7 +163,7 @@ function initializeUnited(united) {
         // Add the new text for partial sum
         var partialSumText = svg_united.append("text")
             .attr("id", "partialSumText")
-            .attr("x", 1300 - 30)
+            .attr("x", 1160 - 30)
             .attr("y", 40)
             .attr("text-anchor", "end")
             .attr("class", "text_sum")
@@ -172,7 +172,7 @@ function initializeUnited(united) {
         // Add the new text for the total sum
         var totalSumText = svg_united.append("text")
             .attr("id", "totalSumText")
-            .attr("x", 1300 - 30)
+            .attr("x", 1160 - 30)
             .attr("y", 20)
             .attr("text-anchor", "end")
             .attr("class", "text_sum")
@@ -219,7 +219,7 @@ function initializeUnited(united) {
         var propcircle = svg_united.append("svg")
             .attr("id", "propcircle")
             .append("g")
-            .attr("transform", "translate(" + 1190 + "," + 50 + ")");
+            .attr("transform", "translate(" + 1050 + "," + 50 + ")");
 
         // Calculate the max. radius
         var maxRadius = Math.max(...R);
