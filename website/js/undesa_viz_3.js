@@ -112,7 +112,7 @@ class chartUndesa {
                     "percentRefugees": data[1]["data"][5]["data"]['2020.1'][i]
                 });
             }
-            console.log(undesaData);
+            // console.log(undesaData);
             UndesaData = undesaData
             // --------------------------------------
             // Treat country centroid and code data
@@ -253,14 +253,17 @@ class chartUndesa {
                     let textEstimateMetaData = "Estimates derived from data";
                     undesaData.find((obj)=>obj.m49 == worldGeojson.features[indexHighlightedCountry].properties['m49'])["metaData"]
                     .split('').forEach((char,i) => {
-                        console.log(char,i);
                         if (i != 0 && char != ' ') {textEstimateMetaData += " and"}  
                         if (char == 'B') {textEstimateMetaData += " on foreign-born population"}
                         else if (char == 'C') {textEstimateMetaData += " on foreign citizens"}
                         else if (char == 'R') {textEstimateMetaData += " on data of the UNHCR or UNRWA"}
                         else if (char == 'I') {textEstimateMetaData += " imputed (i.e. no data)"}
                     });
-                    this.tooltip.html("<b>" + worldGeojson.features[indexHighlightedCountry].properties['name'] + "</b>" 
+                    // console.log(worldGeojson.features[indexHighlightedCountry].properties['iso_3166_2']);
+                    let alpha2 = alpha3ToAlpha2[worldGeojson.features[indexHighlightedCountry].properties['iso_3166_2']]
+                    let flagURL = "https://raw.githubusercontent.com/com-480-data-visualization/MigrationViz/1c196ddaa9e0c4fd860bec1aaae98b7e9bfa4afa/website/data/flags/"
+                    // console.log(alpha2);
+                    this.tooltip.html("<svg width=\"16\" height=\"12\"><image xlink:href=\"" + flagURL + alpha2 + ".svg\" width=\"16\" height=\"12\"/></svg>" + "<b>&ensp;" + worldGeojson.features[indexHighlightedCountry].properties['name'] + "</b>" 
                     + textDependency
                     + "<p>" + "Refugees: " + "<span>" + textNumber + "</span>"
                     + "<br>" + "Pct. migrants:" + "</p>"
