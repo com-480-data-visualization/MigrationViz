@@ -60,9 +60,19 @@ function initializeUnited(united) {
     }
 
     function mousemove(event, d) {
+        var date = new Date(d.date_sorted);
+    
+        // Get the day, month, and year separately
+        var day = date.getDate();
+        var month = date.getMonth() + 1; // Months are zero-indexed, so we add 1
+        var year = date.getFullYear();
+        
+        // Format the date string as DD.MM.YYYY
+        var formattedDate = `${day < 10 ? '0' + day : day}.${month < 10 ? '0' + month : month}.${year}`;
+        
         var infoContent = `<h2>${d.name}</h2>`;
         infoContent += `<p><em>Number of deaths:</em> ${d.num_death}</p>`;
-        infoContent += `<p><em>Date found:</em> ${d.date_found}</p>`;
+        infoContent += `<p><em>Date found:</em> ${formattedDate}</p>`;
         infoContent += `<p><em>Cause of death:</em> ${d.cause_death}</p>`;
         updateInfoPanel(infoContent);
     }
