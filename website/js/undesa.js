@@ -82,7 +82,7 @@ class chartUndesa {
             d3.json("https://raw.githubusercontent.com/com-480-data-visualization/MigrationViz/master/website/data/undesa_data.json"),
             // Load centroid and country code data
             d3.json("https://raw.githubusercontent.com/com-480-data-visualization/MigrationViz/master/data_processing/data_world/map/country-centroids.json"),
-            d3.json("data/contourWesternAsia.json")
+            d3.json("https://raw.githubusercontent.com/com-480-data-visualization/MigrationViz/master/website/data/contourWesternAsia.json")
         ]).then((data) => {
             // let worldGeojson = topojson.feature(data[0], data[0].objects.data)
             let worldGeojson = structuredClone(data[0]);
@@ -212,12 +212,9 @@ class chartUndesa {
                 .attr("x", x_coo)
                 .attr("y", y_coo)
                 .attr("text-anchor", "left")
-                .attr("font-size", "0.6em");
             this.textWesternAsia.append("tspan").attr("dx", "0em").attr("dy", "0em").text("More than 3x the");
-            this.textWesternAsia.append("tspan").attr("font-size", "0.5em").attr("x", x_coo).attr("y", y_coo).attr("dx", "0em").attr("dy", "1em").text("number of refugees");
+            this.textWesternAsia.append("tspan").attr("x", x_coo).attr("y", y_coo).attr("dx", "0em").attr("dy", "1em").text("number of refugees");
             this.textWesternAsia.append("tspan").attr("x", x_coo).attr("y", y_coo).attr("dx", "0em").attr("dy", "2em").text("in Europe live here");
-                
-
             // --------------------------------------
             // Draws a contour around the map
             // Is appended after the group 'g'
@@ -362,7 +359,7 @@ class chartUndesa {
     updateD3Visualization(value, color, undesaData, radiusFactor) {
         if (value == "Option1") {
             d3.select(".undesa-legend").transition(d3.transition().duration(300)).style("opacity", 0);
-            d3.select(".western_asia").transition(d3.transition().duration(300)).style("opacity", 0);
+            d3.select(".western_asia").transition(d3.transition().duration(300)).style("opacity", 1);
             d3.selectAll(".map_circle").transition(d3.transition().duration(600))
                 .attr("r", function (d) {
                     let refugees = undesaData.find((obj) => obj.iso_3166_2 == d['iso_3166_2'])["refugees"];
@@ -383,7 +380,7 @@ class chartUndesa {
         }
         else if (value == "Option2") {
             d3.select(".undesa-legend").transition(d3.transition().duration(300)).style("opacity", 1);
-            d3.select(".western_asia").transition(d3.transition().duration(300)).style("opacity", 1);
+            d3.select(".western_asia").transition(d3.transition().duration(300)).style("opacity", 0);
             d3.selectAll(".map_circle").transition(d3.transition().duration(600))
                 .attr("r", 0);
             d3.selectAll(".map_country").transition(d3.transition().duration(300))
