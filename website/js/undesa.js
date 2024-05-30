@@ -208,11 +208,11 @@ class chartUndesa {
             // Convert geographic coordinates to SVG coordinates
             const [x_coo, y_coo] = projection(coo);
             // Add text at the specified coordinates
-            this.contour_WesternAsia = this.svg.append("text")
+            this.textWesternAsia = this.contour_WesternAsia.append("text")
                 .attr("x", x_coo)
                 .attr("y", y_coo)
                 .attr("text-anchor", "left")
-                .attr("font-size", "0.75em")
+                .attr("font-size", "0.75em");
             this.textWesternAsia.append("tspan").attr("dx", "0em").attr("dy", "0em").text("More than 3x the");
             this.textWesternAsia.append("tspan").attr("x", x_coo).attr("y", y_coo).attr("dx", "0em").attr("dy", "1em").text("number of refugees");
             this.textWesternAsia.append("tspan").attr("x", x_coo).attr("y", y_coo).attr("dx", "0em").attr("dy", "2em").text("in Europe live here");
