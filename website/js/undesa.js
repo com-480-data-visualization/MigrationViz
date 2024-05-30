@@ -212,9 +212,9 @@ class chartUndesa {
                 .attr("x", x_coo)
                 .attr("y", y_coo)
                 .attr("text-anchor", "left")
-                .attr("font-size", "0.75em");
+                .attr("font-size", "0.6em");
             this.textWesternAsia.append("tspan").attr("dx", "0em").attr("dy", "0em").text("More than 3x the");
-            this.textWesternAsia.append("tspan").attr("x", x_coo).attr("y", y_coo).attr("dx", "0em").attr("dy", "1em").text("number of refugees");
+            this.textWesternAsia.append("tspan").attr("font-size", "0.5em").attr("x", x_coo).attr("y", y_coo).attr("dx", "0em").attr("dy", "1em").text("number of refugees");
             this.textWesternAsia.append("tspan").attr("x", x_coo).attr("y", y_coo).attr("dx", "0em").attr("dy", "2em").text("in Europe live here");
                 
 
