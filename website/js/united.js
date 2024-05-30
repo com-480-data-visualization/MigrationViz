@@ -1,9 +1,9 @@
 function initializeUnited(united) {
     // Set width and height of svg_united
-    var width = 800;
-    var height = 556;
-    // var width = 1150;
-    // var height = 800;
+    //var width = 800;
+    //var height = 556;
+    var width = 1150;
+    var height = 800;
     var height_rect = 200;
     var aspect = width / height;
 
@@ -363,8 +363,8 @@ function initializeUnited(united) {
         // Append the line on the bottom, define the ticks
         timeline.append("g")
             .attr("class", "axis axis--x")
-            //.attr("transform", "translate(0," + height + ")")
-            .attr("height", height)
+            .attr("transform", "translate(0," + height + ")")
+            //.attr("height", height)
             .call(d3.axisBottom(x)
                 .ticks(years)
                 .tickFormat(d3.timeFormat("%Y"))
