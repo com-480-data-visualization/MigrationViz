@@ -4,11 +4,10 @@
     overflow-wrap: break-word; 
     width: 15.5em;
     opacity: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    /*font-family: Arial, Helvetica, sans-serif;*/
     font-size: 1em;
     background:rgba(255,255,255,.9);
     box-shadow: rgba(0,0,0,.2) 1px 1px 9px;
-    padding: 4rem;
     /*transition: opacity .3s;*/
     /* border: 1px solid #ccc;
     border-radius: 5px; */
@@ -21,7 +20,7 @@
 }
 
 .tooltip-undesa > div {
-    font-family: Arial, Helvetica, sans-serif;
+    /*font-family: Arial, Helvetica, sans-serif;*/
     line-height: 1.25em;
 }
 

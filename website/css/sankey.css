@@ -1,14 +1,19 @@
 .node rect {
   cursor: pointer;
-  fill-opacity: .9;
+  /*fill-opacity: .9;*/
   shape-rendering: crispEdges;
+  background:rgba(255,255,255,.9);
+  box-shadow: rgba(0,0,0,.2) 1px 1px 9px;
+  padding: 1.75rem 1.5rem;
   }
   
 .node text {
-  font-family: Montserrat;
-  font-weight: bold;
+  /*font-family: Montserrat;*/
+  /*font-weight: bold;*/
   pointer-events: none;
   text-shadow: 0 1px 0 #fff;
+  font-size: 1em;
+  
 }
 
 .link {
