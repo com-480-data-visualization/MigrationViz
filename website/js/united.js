@@ -69,12 +69,13 @@ function initializeUnited(united) {
         
         // Format the date string as DD.MM.YYYY
         var formattedDate = `${day < 10 ? '0' + day : day}.${month < 10 ? '0' + month : month}.${year}`;
-        
-        var infoContent = `<h2>${d.name}</h2>`;
-        infoContent += `<p><em>Number of deaths:</em> ${d.num_death}</p>`;
-        infoContent += `<p><em>Date found:</em> ${formattedDate}</p>`;
-        infoContent += `<p><em>Cause of death:</em> ${d.cause_death}</p>`;
+
+        var infoContent = `<h2 style="font-family: Montserrat, sans-serif;">${d.name}</h2>`;
+        infoContent += `<p style="font-family: Montserrat, sans-serif;"><span style="font-weight: bold;">Number of deaths:</span> ${d.num_death}</p>`;
+        infoContent += `<p style="font-family: Montserrat, sans-serif;"><span style="font-weight: bold;">Date found:</span> ${formattedDate}</p>`;
+        infoContent += `<p style="font-family: Montserrat, sans-serif;"><span style="font-weight: bold;">Cause of death:</span> ${d.cause_death}</p>`;
         updateInfoPanel(infoContent);
+        
     }
 
     function mouseleave(event, d) {
