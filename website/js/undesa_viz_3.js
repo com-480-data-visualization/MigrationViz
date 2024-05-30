@@ -44,7 +44,7 @@ class chartUndesa {
         // The width and height here give rather the ratio
         // and not the final width and height, they are
         // resized using the resize function to the container
-        this.width = 945;
+        this.width = 780;
         this.height = 480;
         // Build svg
         this.svg = d3.select(params.svgElementId)
@@ -109,7 +109,9 @@ class chartUndesa {
                     "type": worldGeojson.features[indx].properties["type"],
                     "metaData": data[1]["type"][i],
                     "refugees": data[1]["data"][4]["data"]['2020'][i],
-                    "percentRefugees": data[1]["data"][5]["data"]['2020.1'][i]
+                    "percentRefugees": data[1]["data"],
+                    "percentMigrants": data[1]["data"][2]["data"]["2020"][i],
+                    "percentRefugeesOfMigrants": data[1]["data"][5]["data"]['2020.1'][i]
                 });
             }
             // console.log(undesaData);
@@ -160,7 +162,7 @@ class chartUndesa {
                 .style("stroke-width", 0.75);
             // --------------------------------------
             // Add circles indicating refugees
-            let radiusFactor = 50;
+            let radiusFactorRefugees = 50;
             this.map_circles.selectAll("circle")
                 .data(undesaData)
                 .join("circle")
@@ -174,7 +176,7 @@ class chartUndesa {
                     }
                     else {
                         try {
-                            let val = Math.sqrt(d.refugees / Math.PI) / radiusFactor;
+                            let val = Math.sqrt(d.refugees / Math.PI) / radiusFactorRefugees;
                             return val;
                         } catch (e) {
                             console.log(e);
@@ -188,10 +190,6 @@ class chartUndesa {
                 .attr("stroke", function (d) { try { return params.continentColors[d.region] } catch { return "black" } })
                 .attr("stroke-width", 1)
                 .attr("fill-opacity", .2);
-
-
-
-
             // --------------------------------------
             // Draws a contour around the map
             // Is appended after the group 'g'
@@ -208,7 +206,7 @@ class chartUndesa {
             // The highlighted country is the one with a black border around it
             let indexHighlightedCountry = -1;
             const dist = function (p1, p2) { return Math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2); }
-            this.svg.on("mouseover", () => { this.tooltip.style("opacity", 1) });
+            this.svg.on("mouseover", () => { this.tooltip.style("opacity", 1).style("padding", "1.25rem 1rem") });
             this.svg.on("mousemove", (event) => {
                 let svgBoundingRect = this.svg.node().getBoundingClientRect();
                 // Make sure that even after responsivefy() function resized
@@ -244,40 +242,44 @@ class chartUndesa {
                     // TODO: Find country flag display option accross browsers, make sure it is compatible
                     // TODO: Add country classes to circles and make stroke width bigger when hovering over country
                     let textDependency = "";
-                    if (worldGeojson.features[indexHighlightedCountry].properties['type'] == "Dependency")  textDependency = "<br>Dependency of " + worldGeojson.features[indexHighlightedCountry].properties['sovereignt'];
-                    let numberRefugee = undesaData.find((obj)=>obj.m49 == worldGeojson.features[indexHighlightedCountry].properties['m49'])["refugees"];
-                    let textNumber = "";
-                    if (numberRefugee == "..") {textNumber= "Data not available or reported to UN."}
-                    else if (numberRefugee == "~") {textNumber= "< 5"}
-                    else {textNumber=numberRefugee.toLocaleString("CH")};
+                    if (worldGeojson.features[indexHighlightedCountry].properties['type'] == "Dependency") textDependency = "<br>Dependency of " + worldGeojson.features[indexHighlightedCountry].properties['sovereignt'];
+                    let numberRefugee = undesaData.find((obj) => obj.m49 == worldGeojson.features[indexHighlightedCountry].properties['m49'])["refugees"];
+                    let textNumberRefugees = "";
+                    if (numberRefugee == "..") { textNumberRefugees = "No data." }
+                    else if (numberRefugee == "~") { textNumberRefugees = "< 5" }
+                    else { textNumberRefugees = numberRefugee.toLocaleString("CH") };
+                    let percentageMigrants =  undesaData.find((obj) => obj.m49 == worldGeojson.features[indexHighlightedCountry].properties['m49'])["percentMigrants"];
+                    let textPercentageMigrants = "";
+                    if (percentageMigrants == "..") { textPercentageMigrants = "No data." }
+                    else if (percentageMigrants == "~") { textPercentageMigrants = "< 5%" }
+                    else { textPercentageMigrants = percentageMigrants.toFixed(1) + "%"};
                     let textEstimateMetaData = "Estimates derived from data";
-                    undesaData.find((obj)=>obj.m49 == worldGeojson.features[indexHighlightedCountry].properties['m49'])["metaData"]
-                    .split('').forEach((char,i) => {
-                        if (i != 0 && char != ' ') {textEstimateMetaData += " and"}  
-                        if (char == 'B') {textEstimateMetaData += " on foreign-born population"}
-                        else if (char == 'C') {textEstimateMetaData += " on foreign citizens"}
-                        else if (char == 'R') {textEstimateMetaData += " on data of the UNHCR or UNRWA"}
-                        else if (char == 'I') {textEstimateMetaData += " imputed (i.e. no data)"}
-                    });
+                    undesaData.find((obj) => obj.m49 == worldGeojson.features[indexHighlightedCountry].properties['m49'])["metaData"]
+                        .split('').forEach((char, i) => {
+                            if (i != 0 && char != ' ') { textEstimateMetaData += " and" }
+                            if (char == 'B') { textEstimateMetaData += " on foreign-born population" }
+                            else if (char == 'C') { textEstimateMetaData += " on foreign citizens" }
+                            else if (char == 'R') { textEstimateMetaData += " on data of the UNHCR or UNRWA" }
+                            else if (char == 'I') { textEstimateMetaData += " imputed (i.e. no data)" }
+                        });
                     // console.log(worldGeojson.features[indexHighlightedCountry].properties['iso_3166_2']);
                     let alpha2 = alpha3ToAlpha2[worldGeojson.features[indexHighlightedCountry].properties['iso_3166_2']]
-                    let flagURL = "https://raw.githubusercontent.com/com-480-data-visualization/MigrationViz/1c196ddaa9e0c4fd860bec1aaae98b7e9bfa4afa/website/data/flags/"
                     // console.log(alpha2);
-                    this.tooltip.html("<svg width=\"16\" height=\"12\"><image xlink:href=\"" + flagURL + alpha2 + ".svg\" width=\"16\" height=\"12\"/></svg>" + "<b>&ensp;" + worldGeojson.features[indexHighlightedCountry].properties['name'] + "</b>" 
-                    + textDependency
-                    + "<p>" + "Refugees: " + "<span>" + textNumber + "</span>"
-                    + "<br>" + "Pct. migrants:" + "</p>"
-                    + "<div><text>" + textEstimateMetaData + "</text></div>")
+                    this.tooltip.html("<svg width=\"16\" height=\"12\" class=\"icon\"><use xlink:href=\"#" + alpha2 + "\"></use></svg>" + "<b>&ensp;" + worldGeojson.features[indexHighlightedCountry].properties['name'] + "</b>"
+                        + textDependency
+                        + "<p>" + "Refugees: " + "<span>" + textNumberRefugees + "</span>"
+                        + "<br>" + "Pct. migrants:" + "<span>" + textPercentageMigrants + "</span>" + "</p>"
+                        + "<div><text>" + textEstimateMetaData + "</text></div>")
                     // d3.select(".tooltip").append("div").html("<br>" + textEstimateMetaData)
                 }
                 // Update position of tooltip when mouse is moved
                 this.tooltip
                     .style("left", (event.x - parseInt(d3.select(".tooltip-undesa").style("width")) / 2) + "px")
-                    .style("top", (event.y + 30) + "px")
+                    .style("top", (event.y + 40) + "px")
             })
 
             this.svg.on("mouseleave", () => {
-                this.tooltip.style("opacity", 0);
+                this.tooltip.style("opacity", 0).style("padding", "0");
                 d3.select(".map_country_index_" + String(indexHighlightedCountry))
                     .transition()
                     .duration(200)
@@ -297,7 +299,76 @@ class chartUndesa {
             };
             zoomIn();
             */
+            // Loading svg into document to decrease flag loading times
+            const svgFlagUrl = 'https://raw.githubusercontent.com/com-480-data-visualization/MigrationViz/master/website/data/flag_sprite.svg';
+            const svgFlagContainer = document.getElementById('svg_flag_container');
+            fetch(svgFlagUrl)
+                .then(response => response.text())
+                .then(svgText => {
+                    const parser = new DOMParser();
+                    const svgDocument = parser.parseFromString(svgText, 'image/svg+xml');
+                    const svgElement = svgDocument.documentElement;
+                    svgFlagContainer.appendChild(svgElement);
+                })
+                .catch(error => console.error('Error fetching SVG:', error));
+            // Define colors for the change
+            const color = d3.scaleQuantize([0.0, 100.0], d3.schemeBlues[5]);
+            // Chnage of viz when prsssing on input button
+            const radioInput = document.getElementsByClassName('inp');
+            for (let i = 0; i < radioInput.length; i++) {
+                radioInput[i].addEventListener('input', () => {
+                    const newValue = radioInput[i].value;
+                    this.updateD3Visualization(newValue, color, undesaData, radiusFactorRefugees);
+                })
+            }
+
+            let ledg = Legend(d3.scaleSequential([0, 100], d3.interpolateViridis), {
+                title: "Temperature (°F)"
+              })
+            console.log(ledg);
+            console.log(typeof(ledg))
+
         });
+    }
+
+    updateD3Visualization(value, color, undesaData, radiusFactor) {
+        if (value == "Option1") {
+            d3.selectAll(".map_circle").transition(d3.transition().duration(600))
+                .attr("r", function (d) {
+                    let refugees = undesaData.find((obj) => obj.iso_3166_2 == d['iso_3166_2'])["refugees"];
+                    if (isNaN(refugees)) {
+                        // Means the country eihter doesnt report
+                        // Or data has been removed out of privacy reasons
+                        return 0;
+                    }
+                    else {
+                        try {
+                            let val = Math.sqrt(refugees / Math.PI) / radiusFactor;
+                            return val;
+                        } catch (e) { console.log(e, d); return 0; }
+                    }
+                });
+            d3.selectAll(".map_country").transition(d3.transition().duration(100))
+                .attr("fill", '#dcdcdc')
+        }
+        else if (value == "Option2") {
+            d3.selectAll(".map_circle").transition(d3.transition().duration(600))
+                .attr("r", 0);
+            d3.selectAll(".map_country").transition(d3.transition().duration(300))
+                .attr("fill", function (d) {
+                    try {
+                        let val = undesaData.find((obj) => obj.iso_3166_2 == d.properties["iso_3166_2"])["percentMigrants"];
+                        if (val == "~" || val == "..") {
+                            return color(0.0);
+                        }
+                        return color(parseFloat(val));
+                    }
+                    catch (e) {
+                        console.log("error", d);
+                        return color(0.0);
+                    } 
+                })
+        }
     }
 }
 // --------------------------------------

@@ -20,17 +20,24 @@
 
 <body>
     <div class="toggle-radio" data-style="rounded" data-color="#7CACEB">
-        <input type="radio" name="default" id="default_Option1" value="Option1" onclick="talk(value);" checked>
+        <input class="inp" type="radio" name="default" id="default_Option1" value="Option1"  checked>
         <label for="default_Option1">Refugees</label>
-        <input type="radio" name="default" id="default_Option2" value="Option2" onclick="talk(value);">
-        <label for="default_Option2">Percentage refugees in migrants</label>
+        <input class="inp" type="radio" name="default" id="default_Option2" value="Option2" >
+        <label for="default_Option2">Pct. migrants</label>
         <!-- <input type="radio" name="default" id="default_Option3" value="Option3" onclick="talk(value);">
         <label for="default_Option3">Option 3</label> -->
+        <!-- onclick="talk(value);" -->
     </div>
 
     <!-- Create a div where the graph will take place -->
     <!-- <div id="my_dataviz"></div> -->
     <div id="my_dataviz"></div>
+    <div id="svg_flag_container"></div>
+
+
+    <script>
+
+    </script>
 
     <style>
      
@@ -78,12 +85,10 @@
             transition: background 300ms linear;
             background: lightblue;
         }
-    </style>¨
+    </style>
 
     <script type='text/javascript' src='./js/undesa_viz_3.js'></script>
-    <svg class="icon">
-        <use xlink:href="./data/flag_sprite.svg#ZW"></use>
-      </svg>
+
 </body>
 
 </html>
