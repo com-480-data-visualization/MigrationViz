@@ -26,9 +26,10 @@ const continentColors_Sankey = {
 };
 
 // dimension and margin of graph
-var margin = {top:10, right:10, bottom:10, left:10},
+var margin = {top:10, right:30, bottom:10, left:30},
     width = 900 - margin.left - margin.right,
     height = 700 - margin.top - margin.bottom;
+
 
 // Add the title
 d3.select('#sankey-slider').append("label")
@@ -59,7 +60,6 @@ const tickContainer = d3.select('#sankey-slider').append("div")
     .style("width", "70%")
     // center it
     .style("margin", "auto")
-
 
 tickContainer.selectAll("div")
     .data(years)
@@ -176,6 +176,27 @@ function produce_sankey(data) {
                         .style("opacity", 1);
                 });
         });
+
+    // Add labels for Origin and Destination
+    svg_sankey.append("text")
+        .attr("x", -margin.left + 10) // Adjust x position as needed
+        .attr("y", height / 2 + 10)
+        .attr("text-anchor", "middle")
+        .attr("transform", `rotate(-90, -${margin.left - 10}, ${height / 2})`)
+        .style("font-family", "Montserrat")
+        .style("font-size", "25px")
+        .style("font-weight", "bold")
+        .text("Origin");
+
+    svg_sankey.append("text")
+        .attr("x", width + margin.right - 10) // Adjust x position as needed
+        .attr("y", height / 2 + 10)
+        .attr("text-anchor", "middle")
+        .attr("transform", `rotate(90, ${width + margin.right - 10}, ${height / 2})`)
+        .style("font-family", "Montserrat")
+        .style("font-size", "25px")
+        .style("font-weight", "bold")
+        .text("Destination");
 }
 
 function updateSankeyViz(selectedYear) {
