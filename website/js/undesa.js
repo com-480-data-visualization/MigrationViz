@@ -58,9 +58,9 @@ class chartUndesa {
         // --------------------------------------
         // Define the projection type
         const projection = d3.geoWinkel3() // Altertives: geoEckert4(), geoRobinson()
-            .scale(150)
+            .scale(170)
             .translate([this.width / 2, this.height / 2])
-            .center([0, 0]);
+            .center([15, 10]);
         // --------------------------------------
         // Strong inspiration from document by Yan Holtz for tooltip    
         // https://d3-graph-gallery.com/graph/bubblemap_tooltip.html
@@ -71,7 +71,7 @@ class chartUndesa {
         // --------------------------------------
         // Define the color used to show percentages
         // TODO: Rename into colorPercentage?
-        const color = d3.scaleQuantize([0.0, 100.0], d3.schemeBlues[5]);
+        // const color = d3.scaleQuantize([0.0, 100.0], d3.schemeBlues[5]);
         // --------------------------------------
         Promise.all([
             // Load  GeoJSON map
@@ -193,13 +193,13 @@ class chartUndesa {
             // --------------------------------------
             // Draws a contour around the map
             // Is appended after the group 'g'
-            this.map_countour.append("path")
+            /* this.map_countour.append("path")
                 .datum({ type: "Sphere" })
                 .attr("d", d3.geoPath().projection(projection))
                 .attr("id", "countour")
                 .style("fill", "none")
                 .style("stroke", "#ccc")
-                .style("stroke-width", 2);
+                .style("stroke-width", 2); */
             // --------------------------------------
 
             // Highlight country closest to cursor and show info using tooltip
@@ -312,7 +312,8 @@ class chartUndesa {
                 })
                 .catch(error => console.error('Error fetching SVG:', error));
             // Define colors for the change
-            const color = d3.scaleQuantize([0.0, 100.0], d3.schemeBlues[5]);
+            // const color = d3.scaleQuantize([0.0, 100.0], d3.schemeBlues[5]);
+            const color = d3.scaleSequentialSqrt([0, 100.0], d3.interpolateOrRd);
             // Chnage of viz when prsssing on input button
             const radioInput = document.getElementsByClassName('inp');
             for (let i = 0; i < radioInput.length; i++) {
@@ -322,10 +323,17 @@ class chartUndesa {
                 })
             }
         });
+
+        let legd = Legend(d3.scaleSequentialSqrt([0, 100.0], d3.interpolateOrRd), {
+            title: "Percent migrants in population"
+          });
+        console.log(legd);
+        document.querySelector(".undesa-legend").appendChild(legd);
     }
 
     updateD3Visualization(value, color, undesaData, radiusFactor) {
         if (value == "Option1") {
+            d3.select(".undesa-legend").transition(d3.transition().duration(300)).style("opacity", 0);
             d3.selectAll(".map_circle").transition(d3.transition().duration(600))
                 .attr("r", function (d) {
                     let refugees = undesaData.find((obj) => obj.iso_3166_2 == d['iso_3166_2'])["refugees"];
@@ -345,6 +353,7 @@ class chartUndesa {
                 .attr("fill", '#dcdcdc')
         }
         else if (value == "Option2") {
+            d3.select(".undesa-legend").transition(d3.transition().duration(300)).style("opacity", 1);
             d3.selectAll(".map_circle").transition(d3.transition().duration(600))
                 .attr("r", 0);
             d3.selectAll(".map_country").transition(d3.transition().duration(300))
@@ -379,4 +388,3 @@ function whenDocumentLoaded(action) {
 whenDocumentLoaded(() => {
     undesaChart = new chartUndesa(params); // console-inspectable global plot_object
 });
-
