@@ -242,7 +242,7 @@ class chartUndesa {
                     // TODO: Find country flag display option accross browsers, make sure it is compatible
                     // TODO: Add country classes to circles and make stroke width bigger when hovering over country
                     let textDependency = "";
-                    if (worldGeojson.features[indexHighlightedCountry].properties['type'] == "Dependency") textDependency = "<br>Dependency of " + worldGeojson.features[indexHighlightedCountry].properties['sovereignt'];
+                    if (worldGeojson.features[indexHighlightedCountry].properties['type'] == "Dependency") textDependency = "Dependency of " + worldGeojson.features[indexHighlightedCountry].properties['sovereignt'];
                     let numberRefugee = undesaData.find((obj) => obj.m49 == worldGeojson.features[indexHighlightedCountry].properties['m49'])["refugees"];
                     let textNumberRefugees = "";
                     if (numberRefugee == "..") { textNumberRefugees = "No data." }
@@ -265,11 +265,11 @@ class chartUndesa {
                     // console.log(worldGeojson.features[indexHighlightedCountry].properties['iso_3166_2']);
                     let alpha2 = alpha3ToAlpha2[worldGeojson.features[indexHighlightedCountry].properties['iso_3166_2']]
                     // console.log(alpha2);
-                    this.tooltip.html("<svg width=\"16\" height=\"12\" class=\"icon\"><use xlink:href=\"#" + alpha2 + "\"></use></svg>" + "<b>&ensp;" + worldGeojson.features[indexHighlightedCountry].properties['name'] + "</b>"
-                        + textDependency
-                        + "<p>" + "Refugees: " + "<span>" + textNumberRefugees + "</span>"
-                        + "<br>" + "Pct. migrants:" + "<span>" + textPercentageMigrants + "</span>" + "</p>"
-                        + "<div><text>" + textEstimateMetaData + "</text></div>")
+                    this.tooltip.html("<div><svg width=\"16\" height=\"12\" class=\"icon\"><use xlink:href=\"#" + alpha2 + "\"></use></svg>" + "<b>&ensp;" + worldGeojson.features[indexHighlightedCountry].properties['name'] + "</b>"
+                        + "<br>" + textDependency + "</div>"
+                        + "<div class=\"undesa-data\">" + "Refugees: " + "<span>" + textNumberRefugees + "</span>"
+                        + "<br>" + "Pct. migrants:" + "<span>" + textPercentageMigrants + "</span>" + "</div>"
+                        + "<div class=\"undesa-meta-data\"><div>" + textEstimateMetaData + "</div></div>")
                     // d3.select(".tooltip").append("div").html("<br>" + textEstimateMetaData)
                 }
                 // Update position of tooltip when mouse is moved
