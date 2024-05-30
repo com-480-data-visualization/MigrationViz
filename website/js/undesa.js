@@ -204,7 +204,7 @@ class chartUndesa {
                 .style("stroke", "black")
                 .attr("fill-opacity", "0");
             // Coordinates where you want to place the text
-            const coo = [55.25, 4];
+            const coo = [55.25, 4.5];
             // Convert geographic coordinates to SVG coordinates
             const [x_coo, y_coo] = projection(coo);
             // Add text at the specified coordinates
