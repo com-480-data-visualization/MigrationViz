@@ -231,7 +231,7 @@ class chartUndesa {
             // The highlighted country is the one with a black border around it
             let indexHighlightedCountry = -1;
             const dist = function (p1, p2) { return Math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2); }
-            this.svg.on("mouseover", () => { this.tooltip.style("opacity", 1).style("padding", "1.25rem 1rem") });
+            this.svg.on("mouseover", () => { this.tooltip.style("opacity", 1).style("padding", "1.75rem 1.5rem") });
             this.svg.on("mousemove", (event) => {
                 let svgBoundingRect = this.svg.node().getBoundingClientRect();
                 // Make sure that even after responsivefy() function resized
