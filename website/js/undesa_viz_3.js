@@ -321,13 +321,6 @@ class chartUndesa {
                     this.updateD3Visualization(newValue, color, undesaData, radiusFactorRefugees);
                 })
             }
-
-            let ledg = Legend(d3.scaleSequential([0, 100], d3.interpolateViridis), {
-                title: "Temperature (°F)"
-              })
-            console.log(ledg);
-            console.log(typeof(ledg))
-
         });
     }
 
@@ -384,6 +377,6 @@ function whenDocumentLoaded(action) {
     }
 }
 whenDocumentLoaded(() => {
-    plot_object = new chartUndesa(params); // console-inspectable global plot_object
+    undesaChart = new chartUndesa(params); // console-inspectable global plot_object
 });
 
