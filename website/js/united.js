@@ -75,7 +75,6 @@ function initializeUnited(united) {
         infoContent += `<p style="font-family: Montserrat, sans-serif;"><span style="font-weight: bold;">Date found:</span> ${formattedDate}</p>`;
         infoContent += `<p style="font-family: Montserrat, sans-serif;"><span style="font-weight: bold;">Cause of death:</span> ${d.cause_death}</p>`;
         updateInfoPanel(infoContent);
-        
     }
 
     function mouseleave(event, d) {
