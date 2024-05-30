@@ -1,7 +1,9 @@
 function initializeUnited(united) {
     // Set width and height of svg_united
-    var width = 1150;
-    var height = 800;
+    var width = 800;
+    var height = 556;
+    // var width = 1150;
+    // var height = 800;
     var height_rect = 200;
     var aspect = width / height;
 
