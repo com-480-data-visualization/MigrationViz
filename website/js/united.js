@@ -366,12 +366,14 @@ function initializeUnited(united) {
                 .ticks(years)
                 .tickFormat(d3.timeFormat("%Y"))
                 .tickPadding(6))
-            .selectAll("text");
+            .selectAll("text")
+            .style("font-family", "Montserrat");
     
         timeline.append("g")
             .attr("class", "axis axis--y")
             .call(d3.axisLeft(y)
-                .ticks(4));
+                .ticks(4))
+            .style("font-family", "Montserrat");
     
         // Initialize brush element
         var brush = d3.brushX()
