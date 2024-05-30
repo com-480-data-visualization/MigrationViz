@@ -15,7 +15,6 @@
     text-align: left;    
 }
 
-
 .tooltip-undesa > div > span {
     float: right;
     text-align: right;
@@ -44,6 +43,14 @@
     line-height: 1em;
 }
 
+.undesa-legend {
+    opacity: 0;
+    float: right;
+}
+
+.undesa-menu {
+    padding: 0em 4em;
+}
 
 /*
 style=\"font-size: 0.8em;\"
@@ -58,11 +65,12 @@ https://github.com/adamculpepper/toggle-radios
 */
 
 .toggle-radio {
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
     border: 1px solid #ccc;
     border-radius: 4px;
     display: inline-flex;
-    margin: 20px;
+    margin: 8px 0px;
+    float: left;
 }
 
 .toggle-radio>input+label:not(:last-of-type) {
@@ -83,5 +91,5 @@ https://github.com/adamculpepper/toggle-radios
 /* Transitions */
 .toggle-radio>input:checked+label {
     transition: background 300ms linear;
-    background: lightblue;
+    background: #dcdcdc;
 }

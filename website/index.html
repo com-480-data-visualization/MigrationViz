@@ -65,8 +65,10 @@
         <section class="slide big-margin" id="Intro">
             <h2>Introduction</h2>
             <h3>Exploring the Human Journey: Visualizing Global Migration</h3>
-            <p>Welcome to Migration Viz, our interactive visualization project, <b>where we delve into the complex patterns
-                of global human migration</b>. As the saying tells us : A picture is worth more than a thousand words. That may be
+            <p>Welcome to Migration Viz, our interactive visualization project, <b>where we delve into the complex
+                    patterns
+                    of global human migration</b>. As the saying tells us : A picture is worth more than a thousand
+                words. That may be
                 even truer when the visualization is interactive! </p>
             <p>Our work is driven by the recognition that behind every statistic, there's a human story - a narrative of
                 hope, struggle, and resilience. We want to bring our contribution to bridge the gap between
@@ -114,22 +116,27 @@
             <h2>UNDESA</h2>
             <div class="two-columns">
                 <div class="viz-column">
-                    <div class="toggle-radio" data-style="rounded" data-color="#7CACEB">
-                        <input class="inp" type="radio" name="default" id="default_Option1" value="Option1"  checked>
-                        <label for="default_Option1">Refugees</label>
-                        <input class="inp" type="radio" name="default" id="default_Option2" value="Option2" >
-                        <label for="default_Option2">Pct. migrants</label>
+                    <div class="undesa-menu">
+                        <div class="toggle-radio" data-style="rounded" data-color="#7CACEB">
+                            <input class="inp" type="radio" name="default" id="default_Option1" value="Option1" checked>
+                            <label for="default_Option1">Refugees</label>
+                            <input class="inp" type="radio" name="default" id="default_Option2" value="Option2">
+                            <label for="default_Option2">Pct. migrants</label>
+                        </div>
+                        <div class="undesa-legend"></div>
                     </div>
 
                     <div id="my_dataviz">
+                        <script type='text/javascript' src="js/legend.js"></script>
                         <script type='text/javascript' src="js/undesa.js"></script>
                     </div>
                     <div id="svg_flag_container"></div>
 
                 </div>
                 <div class="text-column">
-                    <p> Expliquer deux cartes différents. Carte 1 : Certains pays accueillent énormément plus de réfugiés que d'autres, bcp de réfugiés dans d'autres pays 
-                        Carte 2 
+                    <p> Expliquer deux cartes différents. Carte 1 : Certains pays accueillent énormément plus de
+                        réfugiés que d'autres, bcp de réfugiés dans d'autres pays
+                        Carte 2
                     </p>
                 </div>
 
@@ -139,13 +146,20 @@
             <h2>United</h2>
             <h3>“Girl, 7, dies after boat capsizes near Dunkirk in France”</h3>
             <p>
-                Does this headline sound familiar ? Consistently reading and hearing similar headlines impacts how we pay attention to the tragedy that is taking place since 1993: <b>over 50'000 people have lost their lives trying to reach European countries </b>. 
+                Does this headline sound familiar ? Consistently reading and hearing similar headlines impacts how we
+                pay attention to the tragedy that is taking place since 1993: <b>over 50'000 people have lost their
+                    lives trying to reach European countries </b>.
             </p>
             <p>
-                 Nevertheless, public opinion is not shaken. Policies are becoming ever more repressive, the militarization of borders never stops, migrants are criminalized and suffer psychologically under the structure of the asylum system.
+                Nevertheless, public opinion is not shaken. Policies are becoming ever more repressive, the
+                militarization of borders never stops, migrants are criminalized and suffer psychologically under the
+                structure of the asylum system.
             </p>
-            <p> 
-                The public scene is often polarized and emotionally charged around the subject of migration. This last visualization aims <b>to unveil the order of magnitude of migrant deaths at the doors of Europe</b>, without overlooking the fact that each tragedy involves real people, with a family, hopes, dreams, and lives.
+            <p>
+                The public scene is often polarized and emotionally charged around the subject of migration. This last
+                visualization aims <b>to unveil the order of magnitude of migrant deaths at the doors of Europe</b>,
+                without overlooking the fact that each tragedy involves real people, with a family, hopes, dreams, and
+                lives.
             </p>
 
         </section>
@@ -227,17 +241,33 @@
             <div>
                 <ol class="credits-list">
                     <p>
-                        The website was coded using HTML, CSS and JavaScript and the visualizations rely on the <a href="https://d3js.org/" target="_blank">D3.js</a> library. Our first two visualizations <a href="#Sankey" class="menu-link">Sankey</a> and <a href="#UNDESA" class="menu-link">UNDESA</a> are based on data made available to the public by the <a href="https://www.un.org/development/desa/pd/content/international-migrant-stock" target="_blank">United Nations</a> departement of Economic and Social Affairs. 
-                        It is thanks to the tremendous work realized by the Europenan network <a href="https://unitedagainstrefugeedeaths.eu/about-united/" target="_blank">UNITED</a> that we are able to produce the <a href="#United2" class="menu-link">United</a>  visualization. 
+                        The website was coded using HTML, CSS and JavaScript and the visualizations rely on the <a
+                            href="https://d3js.org/" target="_blank">D3.js</a> library. Our first two visualizations <a
+                            href="#Sankey" class="menu-link">Sankey</a> and <a href="#UNDESA"
+                            class="menu-link">UNDESA</a> are based on data made available to the public by the <a
+                            href="https://www.un.org/development/desa/pd/content/international-migrant-stock"
+                            target="_blank">United Nations</a> departement of Economic and Social Affairs.
+                        It is thanks to the tremendous work realized by the Europenan network <a
+                            href="https://unitedagainstrefugeedeaths.eu/about-united/" target="_blank">UNITED</a> that
+                        we are able to produce the <a href="#United2" class="menu-link">United</a> visualization.
                     </p>
                     <p>
-                        We would like to credit the work previously done that we used or where inspired by. <a href="https://bl.ocks.org/d3noob/013054e8d7807dff76247b81b0e29030" target="_blank">Malcolm
-                        Maclean</a> gave us the key to design simple Sankey diagrams and we can only recommend his manual "Tips and Tricks for D3.js". We used the hand-drawn open-source illustration library <a href="https://www.openpeeps.com/"
-                        target="_blank">Open Peeps</a> designed by Pablo Stanley. The welcome page animation was taken from the code chunk of <a href="https://codepen.io/zadvorsky/pen/xxwbBQV/license?editors=0010">Szenia Zadvornykh</a>. The projections of the map of United required <a href="https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson"
-                        target="_blank">World data</a>. 
+                        We would like to credit the work previously done that we used or where inspired by. <a
+                            href="https://bl.ocks.org/d3noob/013054e8d7807dff76247b81b0e29030" target="_blank">Malcolm
+                            Maclean</a> gave us the key to design simple Sankey diagrams and we can only recommend his
+                        manual "Tips and Tricks for D3.js". We used the hand-drawn open-source illustration library <a
+                            href="https://www.openpeeps.com/" target="_blank">Open Peeps</a> designed by Pablo Stanley.
+                        The welcome page animation was taken from the code chunk of <a
+                            href="https://codepen.io/zadvorsky/pen/xxwbBQV/license?editors=0010">Szenia Zadvornykh</a>.
+                        The projections of the map of United required <a
+                            href="https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson"
+                            target="_blank">World data</a>.
                     </p>
                     <p>
-                        We hope you enjoyed our website and gained new perspectives on the topic of migration. If you are interested in further information on the topic, we recommend having a look at the <a href="https://migreurop.org/article3119.html?lang_article=fr" target="_blank">Atlas des migrations dans le monde</a>
+                        We hope you enjoyed our website and gained new perspectives on the topic of migration. If you
+                        are interested in further information on the topic, we recommend having a look at the <a
+                            href="https://migreurop.org/article3119.html?lang_article=fr" target="_blank">Atlas des
+                            migrations dans le monde</a>
                     </p>
                 </ol>
             </div>
