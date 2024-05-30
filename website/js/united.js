@@ -363,7 +363,8 @@ function initializeUnited(united) {
         // Append the line on the bottom, define the ticks
         timeline.append("g")
             .attr("class", "axis axis--x")
-            .attr("transform", "translate(0," + height + ")")
+            //.attr("transform", "translate(0," + height + ")")
+            .attr("height", height)
             .call(d3.axisBottom(x)
                 .ticks(years)
                 .tickFormat(d3.timeFormat("%Y"))
