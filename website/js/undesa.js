@@ -76,13 +76,13 @@ class chartUndesa {
         Promise.all([
             // Load  GeoJSON map
             // TODO: Exchange GeoJSON by TopoJSON            
-            d3.json("https://raw.githubusercontent.com/com-480-data-visualization/MigrationViz/master/data_processing/data_world/map/map.geojson"),
+            d3.json("../data_processing/data_world/map/map.geojson"),
             // d3.json("https://raw.githubusercontent.com/com-480-data-visualization/MigrationViz/master/website/data/map.topojson"),
             // Load data 
-            d3.json("https://raw.githubusercontent.com/com-480-data-visualization/MigrationViz/master/website/data/undesa_data.json"),
+            d3.json("data/undesa_data.json"),
             // Load centroid and country code data
-            d3.json("https://raw.githubusercontent.com/com-480-data-visualization/MigrationViz/master/data_processing/data_world/map/country-centroids.json"),
-            d3.json("https://raw.githubusercontent.com/com-480-data-visualization/MigrationViz/master/website/data/contourWesternAsia.json")
+            d3.json("../data_processing/data_world/map/country-centroids.json"),
+            d3.json("data/contourWesternAsia.json")
         ]).then((data) => {
             // let worldGeojson = topojson.feature(data[0], data[0].objects.data)
             let worldGeojson = structuredClone(data[0]);
