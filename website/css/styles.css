@@ -234,6 +234,10 @@ section {
   background-color: #a7d7d7;
 }
 
+#person-image {
+  opacity: 0;
+}
+
 #Title {
   position: relative;
 }
@@ -331,9 +335,9 @@ section {
 }
 
 .info-panel h1 {
-  padding-top: 0;
+  padding: 1rem;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-family: 'Montserrat';
   color: #006b6b;
 }
@@ -341,13 +345,12 @@ section {
 .info-panel h2 {
   padding-top: 0;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-family: 'Montserrat';
   color: #006b6b;
 }
 
 .info-panel p {
-  font-size: 0.8rem;
   font-family: 'Montserrat';
   text-align: left;
 }
@@ -359,7 +362,7 @@ section {
 
 .hover-info p {
   color: black;
-  font-size: 1rem !important;
+  font-size: 1.3rem !important;
   font-family: 'Montserrat';
 }
 

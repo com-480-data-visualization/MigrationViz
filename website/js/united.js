@@ -59,6 +59,7 @@ function initializeUnited(united) {
     // Define mouseover, mousemove, and mouseleave function
     function mouseover(event, d) {
         d3.select('.hover-info').style("opacity", 1);
+        d3.select('#person-image').style("opacity", 1); // Show the image
     }
 
     function mousemove(event, d) {
@@ -80,7 +81,11 @@ function initializeUnited(united) {
     }
 
     function mouseleave(event, d) {
-        d3.select('.hover-info').style("opacity", 0);
+        var infoContent = `<p>Here, you receive additional information on the event.</p>`
+        infoContent += `<p>You can zoom in and out of the map as you wish. The points represent deadly events on the border and inside of Europe.</p>`
+        infoContent += `<p>Choose the timeperiod you are interested in.</p>`
+        updateInfoPanel(infoContent);
+        d3.select('#person-image').style("opacity", 0); // Hide the image
     }
 
     // Update the Info Panel on the website
@@ -117,7 +122,7 @@ function initializeUnited(united) {
         var imgElement = document.getElementById('person-image');
         // Update the src attribute with the next image path
         imgElement.src = imagePaths[currentImageIndex];
-        // Increment the current image index or reset to 0 if it exceeds the array length
+        // Increment the currentImageIndex or reset to 0 if it exceeds the array length
         currentImageIndex = (currentImageIndex + 1) % imagePaths.length;
     }
     document.addEventListener('DOMContentLoaded', updateImage);
