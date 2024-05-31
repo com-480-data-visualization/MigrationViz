@@ -24,6 +24,7 @@ Our target audience ranges from curious internet travelers to future data-viz st
     ├───data           (Data files)
     ├───images         (Website images)
     ├───js             (JavaScript files)
+    └───html           (HTML files)
 ```
 To run our project locally, you need to do:
 
