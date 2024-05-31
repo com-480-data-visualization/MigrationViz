@@ -128,7 +128,7 @@ function produce_sankey(data) {
     // Add event handlers for links
     link
         .on("mouseover", function(event, d) {
-            tooltip_sankey.html(`From: ${d.source.name}<br>To: ${d.target.name}<br>Value: ${format(d.value)}`)
+            tooltip_sankey.html(`From: ${d.source.name}<br>To: ${d.target.name}<br>Nb of migrants: ${format(d.value)}`)
                 .style("left", (event.pageX + 10) + "px")
                 .style("top", (event.pageY + 10) + "px")
                 .style("opacity", 1);
@@ -144,7 +144,7 @@ function produce_sankey(data) {
     // Existing event handlers for nodes, ensure they are correctly set up
     node.selectAll("rect")
         .on("mouseover", function(event, d) {
-            tooltip_sankey.html(`Name: ${d.name}<br>Value: ${format(d.value)}`)
+            tooltip_sankey.html(`Name: ${d.name}<br>Nb of migrants: ${format(d.value)}`)
                 .style("left", (event.pageX + 10) + "px")
                 .style("top", (event.pageY + 10) + "px")
                 .style("opacity", 1);
