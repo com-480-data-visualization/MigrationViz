@@ -2,7 +2,9 @@
 
 Project for COM-480 Data Visualization Course at EPFL
 
-Live Website [here](https://com-480-data-visualization.github.io/MigrationViz/website/index.html)
+<p align="center">
+     <a href="https://com-480-data-visualization.github.io/MigrationViz/website/index.html">Live Website</a>
+</p>
 
 ## 🔴 Problematic
 The public scene is often polarized and emotionally charged around the subject of migration. Sometimes it can be difficult to obtain "unbiased" (we are aware that this does not exist strictly speaking) data-driven information on the subject. We are interested in unveiling the order of magnitude of global migration, without overlooking the fact that each incident involves a real person. Better knowledge of migrations flows, statistics, etc. can add value to the discussions on migration in our society and our perception of the subject. 
