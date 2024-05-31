@@ -49,7 +49,7 @@ Second Project Milestone
 ### Milestone 3
 Final Project Milestone
 
-[PDF Process Book](ProcessBookMigrationViz.pdf) 
+[Process Book](ProcessBookMigrationViz.pdf) 
 [Markdown](milestones/Milestone3.md).
 
 ## Authors
