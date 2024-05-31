@@ -1,4 +1,4 @@
-
+/* SANKEY CLASS - NOT FULLY WORKING */
 function responsivefy(svg) {
     var container_sankey = d3.select(svg.node().parentNode);
     svg.call(resize);
@@ -9,24 +9,6 @@ function responsivefy(svg) {
         var svgWidth = parseInt(svg.style("width"));
         svg.attr("width", containerWidth);
         svg.attr("height", Math.round(containerWidth * svgHeight / svgWidth));
-    }
-}
-
-/*
-    Run the action when we are sure the DOM has been loaded
-    https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded
-    Example:
-    whenDocumentLoaded(() => {
-        console.log('loaded!');
-        document.getElementById('some-element');
-    });
-*/
-function whenDocumentLoaded(action) {
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", action);
-    } else {
-        // `DOMContentLoaded` already fired
-        action();
     }
 }
 
@@ -49,9 +31,6 @@ const params_Sankey = {
     continentOrder: ["AFRICA", "EUROPE", "ASIA", "LATIN AMERICA AND THE CARIBBEAN", "NORTHERN AMERICA", "OTHER", "OCEANIA"],
     years: [1990, 1995, 2000, 2005, 2010, 2015, 2020],
 };
-
-// Conseil : pour debuger définir des variables data
-// const data_1990 = d3.json("https://raw.githubusercontent.com/com-480-data-visualization/MigrationViz/master/website/data/sankey_1990.json").then((data)=>{return data;});
 
 class SankeyPlot {
     constructor(params) {
@@ -217,24 +196,10 @@ class SankeyPlot {
         }).catch((error) => {
             console.error('Error loading or parsing data:', error);
         });
-
-
-        
     };
 
 }
 
-
-
 SankeyPlotTest = new SankeyPlot(params_Sankey);
 
 console.log('Sankey', SankeyPlotTest);
-
-// sankeyPlot.initSankey();
-
-
-
-// whenDocumentLoaded(() => {
-
-//     let plot = new SankeyPlot('sankey-viz');
-// })
