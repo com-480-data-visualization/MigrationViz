@@ -14,14 +14,16 @@ Our target audience ranges from curious internet travelers to future data-viz st
 
 ## 🚀 Project structure & Installation 
 ```
-├───data        (Datasets and preprocessing)
-├───img         (Images)
-├───milestones  (Milestones)
-└───website     (Website files)
-    ├───css     (Style elements)
-    ├───data    (Data)
-    ├───images  (Images used on website)
-    ├───js      (Javascript codes)
+├───data_processing    (Datasets and preprocessing)
+│   ├───data_world     (Datasets)
+│   └───notebooks      (Python notebooks)
+├───milestones         (Milestones)
+│   └───images         (Milestone images)
+└───website            (Website files)
+    ├───css            (Stylesheets)
+    ├───data           (Data files)
+    ├───images         (Website images)
+    ├───js             (JavaScript files)
 ```
 To run our project locally, you need to do:
 
