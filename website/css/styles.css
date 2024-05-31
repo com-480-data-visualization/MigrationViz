@@ -12,6 +12,7 @@ html, body {
 }
 
 .slide {
+  position: relative;
   flex: 0 0 100%;
   scroll-snap-align: start;
   height: 100vh;
@@ -30,26 +31,28 @@ html, body {
   font-size: 1.4em;
 }
 
-#Intro, #Sankey {
-  position: relative;
-}
-
-.intro-image {
+.peep-image {
   position: absolute;
-  bottom: 0; /* Use relative units for better adaptation */
-  left: 1vw; /* Adapt to viewport width */
-  width: 25vw; /* Adapt to viewport width */
-  height: auto; /* Maintain aspect ratio */
+  bottom: 0;
+  left: 1vw;
+  width: 25vw;
+  height: auto;
   z-index: -1;
 }
 
-.sankey-image {
-  position: absolute;
-  bottom: 0; /* Use relative units for better adaptation */
-  left: 22vw; /* Adapt to viewport width */
-  width: 12vw; /* Adapt to viewport width */
-  height: auto; /* Maintain aspect ratio */
-  z-index: -1;
+#sankey-peep {
+  left: 22vw;
+  width: 12vw;
+}
+
+#undesa-peep {
+  left: 60vw;
+  width: 12vw;
+}
+
+#united-peep {
+  left: 25vw;
+  width: 16vw;
 }
 
 .fullscreen-text {
@@ -238,10 +241,6 @@ section {
   opacity: 0;
 }
 
-#Title {
-  position: relative;
-}
-
 .two-columns {
   height: calc(100vh - 2*(5vw + 5vh));
   display: flex;
@@ -329,7 +328,7 @@ section {
   width: 22vw;
   height: 65vh;
   overflow-y: hidden;
-  background-color: #cfecec;
+  background-color: rgba(207, 236,	236, 0.4);
   border-radius: 30px;
   padding-left: 1rem;
 }
