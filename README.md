@@ -1,4 +1,4 @@
-# Project of Data Visualization (COM-480)
+# Project MigrationViz
 
 Project for COM-480 Data Visualization Course at EPFL
 
